@@ -19,7 +19,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once ('setupOAuth.php');
 
 // Session storage
 $storage = new Session();
@@ -57,3 +57,5 @@ if (!empty($_GET['code'])) {
     $url = $currentUri->getRelativeUri() . '?go=go';
     echo "<a href='$url'>Login with Facebook!</a>";
 }
+
+?>

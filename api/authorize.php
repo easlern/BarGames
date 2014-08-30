@@ -1,17 +1,63 @@
 <?php
-    require_once ("../code/startup.php");
-    require_once ("restfulSetup.php");
-    
-    require_once("AuthorizationResult.php");
-    
-    $postVars = GetSanitizedPostVars();
-    $login = "";
-    if (isset($postVars["login"])) $login = $postVars["login"];
-    $level = AuthorizationLevel::None;
-    if ($login !== "") $level = AuthorizationLevel::User;
-    Authorization::setSessionAuthorization(new Authorization(AuthorizationMethod::Facebook, $login, $level));
 
-    $authorization = Authorization::getSessionAuthorization();
-    $result = new AuthorizationResult($authorization->getLogin(), $authorization->getLevel());
-    print(json_encode($result));
+/**
+ * Example of retrieving an authentication token of the Facebook service
+ *
+ * PHP version 5.4
+ *
+ * @author     Benjamin Bender <bb@codepoet.de>
+ * @author     David Desberg <david@daviddesberg.com>
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
+ * @copyright  Copyright (c) 2012 The authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+
+use OAuth\OAuth2\Service\Facebook;
+use OAuth\Common\Storage\Session;
+use OAuth\Common\Consumer\Credentials;
+
+require_once('code/startup.php');
+
+/**
+ * Bootstrap the example
+ */
+require_once ('setupOAuth.php');
+
+// Session storage
+$storage = new Session();
+
+// Setup the credentials for the requests
+$credentials = new Credentials(
+    $servicesCredentials['facebook']['key'],
+    $servicesCredentials['facebook']['secret'],
+    $currentUri->getAbsoluteUri()
+);
+
+// Instantiate the Facebook service using the credentials, http client and storage mechanism for the token
+/** @var $facebookService Facebook */
+$facebookService = $serviceFactory->createService('facebook', $credentials, $storage, array());
+
+if (!empty($_GET['code'])) {
+    try{
+        // This was a callback request from facebook, get the token
+        $token = $facebookService->requestAccessToken($_GET['code']);
+
+        // Send a request with it
+        $result = json_decode($facebookService->request('/me'), true);
+
+        // Show some of the resultant data
+        echo 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
+    }
+    catch (Exception $e){
+        
+    }
+
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
+    $url = $facebookService->getAuthorizationUri();
+    header('Location: ' . $url);
+} else {
+    $url = $currentUri->getRelativeUri() . '?go=go';
+    echo "<a href='$url'>Login with Facebook!</a>";
+}
+
 ?>

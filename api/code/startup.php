@@ -2,8 +2,8 @@
 
     if (session_id() == '') session_start();
 
-    set_include_path(get_include_path() . PATH_SEPARATOR . "/home/indiegam/public_html/BarGames/code/");
-    set_include_path(get_include_path() . PATH_SEPARATOR . "/home/indiegam/public_html/BarGames/code/objects");
+    set_include_path(get_include_path() . PATH_SEPARATOR . "/home/indiegam/public_html/BarGames/api/code/");
+    set_include_path(get_include_path() . PATH_SEPARATOR . "/home/indiegam/public_html/BarGames/api/code/objects");
 
     require_once("utils.php");
 
