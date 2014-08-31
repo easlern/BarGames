@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<root>
+    <model name="Game">
+        <property name="id" type="primary key" data="integer"/>
+        <property name="locationId" type="foreign key" data="integer"/>
+        <property name="name" data="string" length="100"/>
+        <property name="categoryIds" data="integer array"/>
+    </model>
+    <model name="Location">
+        <property name="id" type="primary key" data="integer"/>
+        <property name="name" data="string" length = "100"/>
+        <property name="street" data="string" length = "100"/>
+        <property name="city" data="string" length="20"/>
+        <property name="state" data="string" length="20"/>
+        <property name="phone" data="string" length="20"/>
+    </model>
+    <model name="Category">
+        <property name="id" type="primary key" data="integer"/>
+        <property name="name" data="string" length="100"/>
+    </model>
+    <model name="User">
+        <property name="login" type="primary key" data="string" length="30"/>
+        <property name="type" data="integer"/>
+        <property name="method" data="integer"/>
+    </model>
+</root>
