@@ -1,5 +1,5 @@
 <?php
-	class User{
+	class user{
 		private $login;
 		private $type;
 		private $method;

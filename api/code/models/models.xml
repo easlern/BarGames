@@ -6,13 +6,13 @@ and open the template in the editor.
 
 
 <root>
-    <model name="Game">
+    <model name="game">
         <property name="id" type="primary key" data="integer"/>
         <property name="locationId" type="foreign key" data="integer"/>
         <property name="name" data="string" length="100"/>
         <property name="categoryIds" data="integer array"/>
     </model>
-    <model name="Location">
+    <model name="location">
         <property name="id" type="primary key" data="integer"/>
         <property name="name" data="string" length = "100"/>
         <property name="street" data="string" length = "100"/>
@@ -20,11 +20,11 @@ and open the template in the editor.
         <property name="state" data="string" length="20"/>
         <property name="phone" data="string" length="20"/>
     </model>
-    <model name="Category">
+    <model name="category">
         <property name="id" type="primary key" data="integer"/>
         <property name="name" data="string" length="100"/>
     </model>
-    <model name="User">
+    <model name="user">
         <property name="login" type="primary key" data="string" length="30"/>
         <property name="type" data="integer"/>
         <property name="method" data="integer"/>

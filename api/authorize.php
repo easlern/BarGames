@@ -45,19 +45,19 @@ if (!empty($_GET['code'])) {
         // Send a request with it
         $result = json_decode($facebookService->request('/me'), true);
 
-        // Show some of the resultant data
-        echo 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
+        // Redirect to the authentication success URL
+        header ('Location: ' . $_SESSION['FACEBOOK_AUTHENTICATION_SUCCESSFUL_RETURN_URL']);
     }
     catch (Exception $e){
-        
+        echo 'Oops! ' . $e;
     }
 
-} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
+} elseif (!empty($_GET['returnUrl'])) {
+    $_SESSION['FACEBOOK_AUTHENTICATION_SUCCESSFUL_RETURN_URL'] = SanitizePlainText($_GET['returnUrl']);
     $url = $facebookService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
-    echo "<a href='$url'>Login with Facebook!</a>";
+    include ('authorize.html');
 }
 
 ?>

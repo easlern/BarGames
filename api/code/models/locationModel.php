@@ -1,5 +1,5 @@
 <?php
-	class Location{
+	class location{
 		private $id;
 		private $name;
 		private $street;
