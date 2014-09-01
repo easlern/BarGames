@@ -1,0 +1,229 @@
+@font-face 
+{
+    font-family: 'FuturaLTBold';
+    src: url('../fonts/futura_lt_bold.eot?') format('eot'),
+         url('../fonts/futura_lt_bold.woff') format('woff'),
+         url('../fonts/futura_lt_bold.ttf') format('truetype'),
+         url('../fonts/futura_lt_bold.svg#webfontoSNlKGYG') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face 
+{
+    font-family: 'FuturaLTLight';
+    src: url('../fonts/futura_lt_light-webfont.eot?') format('eot'),
+         url('../fonts/futura_lt_light-webfont.woff') format('woff'),
+         url('../fonts/futura_lt_light-webfont.ttf') format('truetype'),
+         url('../fonts/futura_lt_light-webfont.svg#webfontdDHkHvd3') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face 
+{
+    font-family: 'FuturaLTMedium';
+    src: url('../fonts/futura_lt_medium-webfont.eot?') format('eot'),
+         url('../fonts/futura_lt_medium-webfont.woff') format('woff'),
+         url('../fonts/futura_lt_medium-webfont.ttf') format('truetype'),
+         url('../fonts/futura_lt_medium-webfont.svg#webfontJzazbJKI') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face 
+{
+    font-family: 'FuturaLTRegular';
+    src: url('../fonts/futura_lt_heavy-webfont.eot?') format('eot'),
+         url('../fonts/futura_lt_heavy-webfont.woff') format('woff'),
+         url('../fonts/futura_lt_heavy-webfont.ttf') format('truetype'),
+         url('../fonts/futura_lt_heavy-webfont.svg#webfontS1iOUlBQ') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+media="all"
+* {
+	-webkit-font-smoothing: antialiased!important;
+}
+
+.awesome-search
+{
+	position: relative;
+	padding: 0;
+}
+
+.awesome-search i {
+	position: absolute;
+	color: rgba(49,49,49,.6);
+	left: 5px;
+	top: 4px;
+	-webkit-transition: .25s;
+	transition: .25s;
+	font-size: 27px;
+	width: 30px;
+}
+
+.awesome-search input:focus {
+	color: #313131;
+	box-shadow: 0 1px 0 rgba(127,121,108,.4),0 1px 3px rgba(127,121,108,.2);
+}
+
+.awesome-search input:focus~i {
+	color: #313131;
+}
+
+.awesome-search input::-webkit-input-placeholder { /* WebKit browsers */
+    color: rgba(49,49,49,.6);
+}
+.awesome-search input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: rgba(49,49,49,.6);
+    opacity:  1;
+}
+.awesome-search input":-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: rgba(49,49,49,.6);
+    opacity:  1;
+}
+.awesome-search input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: rgba(49,49,49,.6);
+}
+
+.awesome-search input
+{
+	width: 100%;
+	padding: 5px 0 5px 40px;
+	border-style: none;
+	color: rgba(49,49,49,.8);
+	background-color: #fff;
+	font-size: 18px;
+	font-weight: bold;
+	font-family: 'FuturaLTMedium', sans-serif;
+	border-radius: 5px;
+	box-shadow: 0 1px 0 rgba(127,121,108,.2),0 1px 3px rgba(127,121,108,.1);
+}
+
+.borderLink
+{
+	border: 1px solid white;
+	border-radius: 3px;
+	padding: 2px 12px !important;
+	margin-top: 21px  !important;
+}
+
+.borderLink i
+{
+	color: #FEC600;
+	font-size: 17px;
+	margin-right: 5px;
+}
+
+.compassIcon
+{
+	font-size: 32px !important;
+	top: 2px !important;
+}
+
+.landing
+{
+	background: url(../images/background.jpg) no-repeat;
+	background-size: cover;
+}
+
+.mainContent
+{
+	min-height: 800px;
+	position: relative;
+	text-align: center;
+}
+
+.mainDescription
+{
+	color: #FFFFFF;
+	font-size: 35px;
+	font-style: italic;
+	margin: 0 auto 15px auto;
+	/* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+ */
+	text-shadow:3px 4px 4px rgba(0,0,0,0.75);
+	filter: glow(color=black,strength=3), alpha(opacity=100); /* now both will work */  
+	max-width: 700px;
+}
+
+.mainHeader
+{
+	color: #FFFFFF;
+	font-size: 85px;
+	font-family: 'FuturaLTBold', sans-serif;
+	margin-top: 150px;
+	text-transform: uppercase;
+}
+
+.navbar
+{
+	height: 50px;
+}
+
+.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+	margin-left: 0;
+}
+
+.navbar-brand
+{
+	color: #FFFFFF !important;
+	font-size: 35px;
+	font-weight: normal;
+	font-family: 'FuturaLTBold', sans-serif;
+	line-height: 105%;
+	padding: 0;
+	margin: 15px 25px 0 0;
+}
+
+.navbar-brand span
+{
+	color: #408AC9;
+}
+
+.navbar-default
+{
+	background-color: transparent;
+	border: none;
+}
+
+.navbar-default .navbar-nav > li > a 
+{
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 15px;
+	font-family: 'FuturaLTRegular', sans-serif;
+	padding: 0;
+	margin: 25px 25px 0 25px;
+	letter-spacing: 1px;
+}
+
+.navbar-right li:last-child a
+{
+	margin-right: 0;
+}
+
+.searchSection
+{
+	margin-top: 60px;
+}
+
+.starLine
+{
+	display: inline-block;
+	width: 150px;
+	height: 6px;
+	background-color: white;
+	vertical-align: middle;
+}
+
+.starSeparation i
+{
+	color: #FFDF2B;
+	display: inline-block;
+	font-size: 30px;
+	vertical-align: middle;
+	margin: 0 10px;
+}	
