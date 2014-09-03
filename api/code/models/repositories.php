@@ -1,23 +1,23 @@
 <?php
 
 	class TestGameRepository{
-		public getGameById ($id){
-			return new Game($id, 0, 0, "test_name", array(0,1,2));
+		public function getGameById ($id){
+			return new Game($id, 0, "test_name", array(0,1,2));
 		}
 	}
 	class TestLocationRepository{
-		public getLocationById ($id){
-			return new Location($id, 0, "test_name", "test_street", "test_city", "test_state", "test_phone");
+		public function getLocationById ($id){
+			return new Location($id, "test_name", "test_street", "test_city", "test_state", "test_phone");
 		}
 	}
 	class TestCategoryRepository{
-		public getCategoryById ($id){
-			return new Category($id, 0, "test_name");
+		public function getCategoryById ($id){
+			return new Category($id, "test_name");
 		}
 	}
 	class TestUserRepository{
-		public getUserById ($id){
-			return new User($id, "test_login", 0, 0);
+		public function getUserById ($id){
+			return new User($id, 0, 0);
 		}
 	}
 

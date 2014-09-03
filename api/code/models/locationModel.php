@@ -50,5 +50,16 @@
 		public function setPhone($value){
 			$this->phone = $value;
 		}
+
+		public function toJson(){
+			$json = new stdClass();
+			$json->id = $this->getId();
+			$json->name = $this->getName();
+			$json->street = $this->getStreet();
+			$json->city = $this->getCity();
+			$json->state = $this->getState();
+			$json->phone = $this->getPhone();
+			return json_encode ($json);
+		}
 	}
 ?>

@@ -18,5 +18,12 @@
 		public function setName($value){
 			$this->name = $value;
 		}
+
+		public function toJson(){
+			$json = new stdClass();
+			$json->id = $this->getId();
+			$json->name = $this->getName();
+			return json_encode ($json);
+		}
 	}
 ?>

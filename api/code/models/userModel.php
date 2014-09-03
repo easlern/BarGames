@@ -26,5 +26,13 @@
 		public function setMethod($value){
 			$this->method = $value;
 		}
+
+		public function toJson(){
+			$json = new stdClass();
+			$json->login = $this->getLogin();
+			$json->type = $this->getType();
+			$json->method = $this->getMethod();
+			return json_encode ($json);
+		}
 	}
 ?>

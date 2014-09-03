@@ -39,10 +39,11 @@ function IsAuthorized(){
     return true;
 }
 function IsCsrfGood(){
-    if (isset($_POST["csrfToken"]) && SanitizePlainText($_POST["csrfToken"]) == GetCsrfToken()){
-        return true;
-    }
-    return false;
+    $goodCsrf = false;
+    
+    if (isset($_POST["csrfToken"]) && SanitizePlainText($_POST["csrfToken"]) == GetCsrfToken()) $goodCsrf = true;
+    if (Utils::GetMode() == Utils::MODE_DEV && isset($_GET["csrfTokenOverride"])) $goodCsrf = true;
+    return $goodCsrf;
 }
 function IsBlocked(){
     $ip = $_SERVER["REMOTE_ADDR"];
