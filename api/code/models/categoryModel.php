@@ -1,7 +1,12 @@
 <?php
-	class category{
+	class Category{
 		private $id;
 		private $name;
+
+		function __construct ($id, $name){
+			$this->id = $id;
+			$this->name = $name;
+		}
 
 		public function getId(){
 			return $this->id;
@@ -10,9 +15,6 @@
 			return $this->name;
 		}
 
-		public function setId($value){
-			$this->id = $value;
-		}
 		public function setName($value){
 			$this->name = $value;
 		}

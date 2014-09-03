@@ -1,9 +1,16 @@
 <?php
-	class game{
+	class Game{
 		private $id;
 		private $locationId;
 		private $name;
 		private $categoryIds;
+
+		function __construct ($id, $locationId, $name, $categoryIds){
+			$this->id = $id;
+			$this->locationId = $locationId;
+			$this->name = $name;
+			$this->categoryIds = $categoryIds;
+		}
 
 		public function getId(){
 			return $this->id;
@@ -18,9 +25,6 @@
 			return $this->categoryIds;
 		}
 
-		public function setId($value){
-			$this->id = $value;
-		}
 		public function setLocationid($value){
 			$this->locationId = $value;
 		}

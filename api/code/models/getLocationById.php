@@ -1,4 +1,5 @@
 <?php
+
 	require_once ('locationModel.php');
 	require_once ('restfulSetup.php');
 	require_once ('repositories.php');
@@ -12,4 +13,5 @@
 		$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");
 		print (json_encode ($errorObject));
 	}
+
 ?>
