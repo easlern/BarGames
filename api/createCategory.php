@@ -1,21 +1,21 @@
 <?php
 
 	require_once ('code/startup.php');
-	require_once ('locationModel.php');
+	require_once ('categoryModel.php');
 	require_once ('restfulSetup.php');
 	require_once ('repositories.php');
 
-	$postVars = GetSanitizedPostVars();
-	if (!isset ($postVars["id"])){
+	$putVars = GetSanitizedPutVars();
+	if (!isset ($putVars["id"])){
 		$errorObject = new ApiErrorResponse ("Missing required parameters.");
 		print (json_encode ($errorObject));
 		exit();
 	}
 
-	$repo = Repositories::getLocationRepository();
+	$repo = Repositories::getCategoryRepository();
 	if (IsAuthorized() && IsCsrfGood()){
-		$location = $repo->getLocationById($postVars["id"]);
-		print ($location->toJson());
+		$category = $repo->getCategoryById($putVars["id"]);
+		print ($category->toJson());
 	}
 	else{
 		$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");

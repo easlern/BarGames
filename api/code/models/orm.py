@@ -87,6 +87,42 @@ def makeWebAccessors():
         outputFile.write ('\t}\n')
         outputFile.write ('\n?>\n')
         outputFile.close()
+    for model in models:
+        modelName = model.getAttribute('name')
+        properties = model.getElementsByTagName('property')
+        outputFile = open ('create' + cap(modelName) + '.php', 'w')
+        outputFile.write ('<?php\n\n')
+        outputFile.write ('\trequire_once (\'code/startup.php\');\n')
+        outputFile.write ('\trequire_once (\'' + modelName + 'Model.php\');\n') # is this needed when autoload is in play?
+        outputFile.write ('\trequire_once (\'restfulSetup.php\');\n')
+        outputFile.write ('\trequire_once (\'repositories.php\');\n') # is this needed when autoload is in play?
+        outputFile.write ('\n\t$putVars = GetSanitizedPutVars();\n')
+        outputFile.write ('\tif (')
+        firstProp = True
+        for prop in properties:
+            if (prop.getAttribute ('type') != 'primary key'):
+                continue
+            propName = prop.getAttribute ('name')
+            if (not firstProp):
+                outputFile.write (' || ')
+            outputFile.write ('!isset ($putVars["' + propName + '"])')
+            firstProp = False
+        outputFile.write ('){\n')
+        outputFile.write ('\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
+        outputFile.write ('\t\tprint (json_encode ($errorObject));\n')
+        outputFile.write ('\t\texit();\n')
+        outputFile.write ('\t}\n')
+        outputFile.write ('\n\t$repo = Repositories::get' + cap(modelName) + 'Repository();\n')
+        outputFile.write ('\tif (IsAuthorized() && IsCsrfGood()){\n')
+        outputFile.write ('\t\t$' + modelName + ' = $repo->get' + cap(modelName) + 'ById($putVars["id"]);\n')
+        outputFile.write ('\t\tprint ($' + modelName + '->toJson());\n')
+        outputFile.write ('\t}\n')
+        outputFile.write ('\telse{\n')
+        outputFile.write ('\t\t$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");\n')
+        outputFile.write ('\t\tprint (json_encode($errorObject));\n')
+        outputFile.write ('\t}\n')
+        outputFile.write ('\n?>\n')
+        outputFile.close()
 
 def makeRepositories():
     outputFile = open ('repositories.php', 'w')

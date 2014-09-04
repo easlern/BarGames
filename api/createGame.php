@@ -1,21 +1,21 @@
 <?php
 
 	require_once ('code/startup.php');
-	require_once ('categoryModel.php');
+	require_once ('gameModel.php');
 	require_once ('restfulSetup.php');
 	require_once ('repositories.php');
 
-	$postVars = GetSanitizedPostVars();
-	if (!isset ($postVars["id"])){
+	$putVars = GetSanitizedPutVars();
+	if (!isset ($putVars["id"])){
 		$errorObject = new ApiErrorResponse ("Missing required parameters.");
 		print (json_encode ($errorObject));
 		exit();
 	}
 
-	$repo = Repositories::getCategoryRepository();
+	$repo = Repositories::getGameRepository();
 	if (IsAuthorized() && IsCsrfGood()){
-		$category = $repo->getCategoryById($postVars["id"]);
-		print ($category->toJson());
+		$game = $repo->getGameById($putVars["id"]);
+		print ($game->toJson());
 	}
 	else{
 		$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");

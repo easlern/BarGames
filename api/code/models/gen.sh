@@ -1,3 +1,3 @@
 python orm.py
-cp get*ById.php ../../
-
+mv get*ById.php ../../
+mv create*.php ../../

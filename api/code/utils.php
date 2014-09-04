@@ -16,7 +16,16 @@ function GetSanitizedPostVars(){
     $vars = array();
     foreach($_POST as $key=>$value)
     {
-        if (strlen($key) < 1024) $vars[$key] = SanitizePlainText($value);
+        if (strlen ($key) < 1024 && strlen ($value) < 1024) $vars [$key] = SanitizePlainText ($value);
+    }
+    return $vars;
+}
+function GetSanitizedPutVars(){
+    $vars = array();
+    $postVars = array();
+    parse_str (file_get_contents ("php://input"), $postVars);
+    foreach ($postVars as $key=>$value){
+        if (strlen ($key) < 1024 && strlen ($value) < 1024) $vars [$key] = SanitizePlainText ($value);
     }
     return $vars;
 }
