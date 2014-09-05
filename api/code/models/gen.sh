@@ -1,3 +1,4 @@
 python orm.py
-mv get*ById.php ../../
-mv create*.php ../../
+#find . -name '*.php' -not -name '*Model.php' -not -name 'repos*php' -exec mv {} ../../ \; -print
+mv *Controller.php ../controllers/
+mv index.php ../

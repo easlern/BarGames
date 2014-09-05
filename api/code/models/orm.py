@@ -51,16 +51,41 @@ def makeObjects():
         outputFile.close()
 
 def makeWebAccessors():
+    outputFile = open ('index.php', 'w')
+    outputFile.write ('<?php\n')
+    outputFile.write ('\trequire_once(\'code/startup.php\');\n')
+    outputFile.write ('\n\tif (strlen($_SERVER[\'REQUEST_URI\']) > 1024) exit();\n')
+    outputFile.write ('\n\t$requestURI = explode(\'/\', $_SERVER[\'REQUEST_URI\']);\n')
+    outputFile.write ('\t$scriptName = explode(\'/\',$_SERVER[\'SCRIPT_NAME\']);\n')
+    outputFile.write ('\tfor($i = 0; $i < sizeof ($scriptName); $i++)\n')
+    outputFile.write ('\t{\n')
+    outputFile.write ('\t\tif ($requestURI [$i] == $scriptName [$i])\n')
+    outputFile.write ('\t\t{\n')
+    outputFile.write ('\t\t\tunset($requestURI [$i]);\n')
+    outputFile.write ('\t\t}\n')
+    outputFile.write ('\t}\n')
+    outputFile.write ('\n\t$command = SanitizeStringArray (array_values ($requestURI));\n')
+    outputFile.write ('\t$controller = strtolower ($command [0]);\n')
+    outputFile.write ('\t$args = array_slice ($command, 1);\n')
+    outputFile.write ('\n\tswitch ($controller){\n')
+    for model in models:
+        modelName = model.getAttribute ('name')
+        outputFile.write ('\t\tcase "' + modelName + '":\n')
+        outputFile.write ('\t\t\t$cont = new ' + modelName + '();\n')
+        outputFile.write ('\t\t\t$cont->handle ($args);\n')
+        outputFile.write ('\t\t\tbreak;\n')
+    outputFile.write ('\t}\n')
+    outputFile.write ('?>\n')
     for model in models:
         modelName = model.getAttribute('name')
         properties = model.getElementsByTagName('property')
-        outputFile = open ('get' + cap(modelName) + 'ById.php', 'w')
+        outputFile = open (modelName + 'Controller.php', 'w')
         outputFile.write ('<?php\n\n')
         outputFile.write ('\trequire_once (\'code/startup.php\');\n')
-        outputFile.write ('\trequire_once (\'' + modelName + 'Model.php\');\n') # is this needed when autoload is in play?
+        outputFile.write ('\trequire_once (\'' + modelName + 'Model.php\');\n')
         outputFile.write ('\trequire_once (\'restfulSetup.php\');\n')
-        outputFile.write ('\trequire_once (\'repositories.php\');\n') # is this needed when autoload is in play?
-        outputFile.write ('\n\t$postVars = GetSanitizedPostVars();\n')
+        outputFile.write ('\trequire_once (\'repositories.php\');\n')
+        outputFile.write ('\n\t$getVars = GetSanitizedGetVars();\n')
         outputFile.write ('\tif (')
         firstProp = True
         for prop in properties:
@@ -69,7 +94,7 @@ def makeWebAccessors():
             propName = prop.getAttribute ('name')
             if (not firstProp):
                 outputFile.write (' || ')
-            outputFile.write ('!isset ($postVars["' + propName + '"])')
+            outputFile.write ('!isset ($getVars["' + propName + '"])')
             firstProp = False
         outputFile.write ('){\n')
         outputFile.write ('\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
@@ -85,17 +110,6 @@ def makeWebAccessors():
         outputFile.write ('\t\t$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");\n')
         outputFile.write ('\t\tprint (json_encode($errorObject));\n')
         outputFile.write ('\t}\n')
-        outputFile.write ('\n?>\n')
-        outputFile.close()
-    for model in models:
-        modelName = model.getAttribute('name')
-        properties = model.getElementsByTagName('property')
-        outputFile = open ('create' + cap(modelName) + '.php', 'w')
-        outputFile.write ('<?php\n\n')
-        outputFile.write ('\trequire_once (\'code/startup.php\');\n')
-        outputFile.write ('\trequire_once (\'' + modelName + 'Model.php\');\n') # is this needed when autoload is in play?
-        outputFile.write ('\trequire_once (\'restfulSetup.php\');\n')
-        outputFile.write ('\trequire_once (\'repositories.php\');\n') # is this needed when autoload is in play?
         outputFile.write ('\n\t$putVars = GetSanitizedPutVars();\n')
         outputFile.write ('\tif (')
         firstProp = True
@@ -122,7 +136,7 @@ def makeWebAccessors():
         outputFile.write ('\t\tprint (json_encode($errorObject));\n')
         outputFile.write ('\t}\n')
         outputFile.write ('\n?>\n')
-        outputFile.close()
+    outputFile.close()
 
 def makeRepositories():
     outputFile = open ('repositories.php', 'w')

@@ -12,22 +12,24 @@ function GetCsrfToken(){
     return $_SESSION['CSRF_TOKEN'];
 }
 
-function GetSanitizedPostVars(){
+
+function SanitizeStringArray ($arr){
     $vars = array();
-    foreach($_POST as $key=>$value)
-    {
-        if (strlen ($key) < 1024 && strlen ($value) < 1024) $vars [$key] = SanitizePlainText ($value);
+    foreach ($arr as $key=>$val){
+        if (strlen ($key) < 1024 && strlen ($val) < 1024) $vars [$key] = SanitizePlainText ($val);
     }
     return $vars;
 }
+function GetSanitizedGetVars(){
+    return SanitizeStringArray($_GET);
+}
+function GetSanitizedPostVars(){
+    return SanitizeStringArray($_POST);
+}
 function GetSanitizedPutVars(){
-    $vars = array();
-    $postVars = array();
-    parse_str (file_get_contents ("php://input"), $postVars);
-    foreach ($postVars as $key=>$value){
-        if (strlen ($key) < 1024 && strlen ($value) < 1024) $vars [$key] = SanitizePlainText ($value);
-    }
-    return $vars;
+    parse_str (file_get_contents ("php://input"), $putVars);
+    
+    return SanitizeStringArray($putVars);
 }
 
 function SanitizePlainText($text){
