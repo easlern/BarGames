@@ -16,8 +16,13 @@
 			unset($requestURI [$i]);
 		}
 	}
+	$route = $requestURI;
+	foreach ($route as $key=>$val){
+		$queryLoc = strpos ($val, "?");
+		if ($queryLoc !== FALSE) $route[$key] = substr ($val, 0, $queryLoc);
+	}
 
-	$command = SanitizeStringArray (array_values ($requestURI));
+	$command = SanitizeStringArray (array_values ($route));
 	$controllerName = strtolower ($command [0]);
 	$args = array_slice ($command, 1);
 	$controllerInstance = NULL;
