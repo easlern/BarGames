@@ -205,6 +205,11 @@ media="all"
 	margin-right: 0;
 }
 
+.placeholder
+{
+	color: rgba(49,49,49,.6) !important;
+}
+
 .searchSection
 {
 	margin-top: 60px;
