@@ -1,11 +1,20 @@
 <?php
-	class location{
+	class Location{
 		private $id;
 		private $name;
 		private $street;
 		private $city;
 		private $state;
 		private $phone;
+
+		function __construct ($id, $name, $street, $city, $state, $phone){
+			$this->id = $id;
+			$this->name = $name;
+			$this->street = $street;
+			$this->city = $city;
+			$this->state = $state;
+			$this->phone = $phone;
+		}
 
 		public function getId(){
 			return $this->id;
@@ -26,9 +35,6 @@
 			return $this->phone;
 		}
 
-		public function setId($value){
-			$this->id = $value;
-		}
 		public function setName($value){
 			$this->name = $value;
 		}
@@ -43,6 +49,17 @@
 		}
 		public function setPhone($value){
 			$this->phone = $value;
+		}
+
+		public function toJson(){
+			$json = new stdClass();
+			$json->id = $this->getId();
+			$json->name = $this->getName();
+			$json->street = $this->getStreet();
+			$json->city = $this->getCity();
+			$json->state = $this->getState();
+			$json->phone = $this->getPhone();
+			return json_encode ($json);
 		}
 	}
 ?>

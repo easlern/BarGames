@@ -7,13 +7,29 @@ const INVALID_PARAMS = 6;
 const SUCCESS = 0;
 
 
-function GetSanitizedPostVars(){
+function GetCsrfToken(){
+    if (!isset($_SESSION['CSRF_TOKEN'])) $_SESSION['CSRF_TOKEN'] = SafeRandomNumberString(10);
+    return $_SESSION['CSRF_TOKEN'];
+}
+
+
+function SanitizeStringArray ($arr){
     $vars = array();
-    foreach($_POST as $key=>$value)
-    {
-        if (strlen($key) < 1024) $vars[$key] = SanitizePlainText($value);
+    foreach ($arr as $key=>$val){
+        if (strlen ($key) < 1024 && strlen ($val) < 1024) $vars [$key] = SanitizePlainText ($val);
     }
     return $vars;
+}
+function GetSanitizedGetVars(){
+    return SanitizeStringArray($_GET);
+}
+function GetSanitizedPostVars(){
+    return SanitizeStringArray($_POST);
+}
+function GetSanitizedPutVars(){
+    parse_str (file_get_contents ("php://input"), $putVars);
+    
+    return SanitizeStringArray($putVars);
 }
 
 function SanitizePlainText($text){
@@ -31,23 +47,14 @@ function SanitizePlainText($text){
 }
 
 function IsAuthorized(){
-    $ip = $_SERVER["REMOTE_ADDR"];
-    $connection = Connections::GetConnection($ip);
-    if ($connection == null){
-        LogInfo("utils.php: IP $ip connection was not found in the database.");
-        return false;
-    }
-    else if (!isset($_POST["authorizationKey"])){
-        LogInfo("utils.php: IP $ip did not provide authorization key.");
-        return false;
-    }
-    if ($_POST["authorizationKey"] != $connection->GetAuthorizationKey()){
-        LogInfo("utils.php: IP $ip sent incorrect (" . $_POST["authorizationKey"] . ") authorization key.");
-        LogInfo("Expected: " . $connection->GetAuthorizationKey());
-        return false;
-    }
-    
     return true;
+}
+function IsCsrfGood(){
+    $goodCsrf = false;
+    
+    if (isset($_POST["csrfToken"]) && SanitizePlainText($_POST["csrfToken"]) == GetCsrfToken()) $goodCsrf = true;
+    if (Utils::GetMode() == Utils::MODE_DEV && isset($_GET["csrfTokenOverride"])) $goodCsrf = true;
+    return $goodCsrf;
 }
 function IsBlocked(){
     $ip = $_SERVER["REMOTE_ADDR"];

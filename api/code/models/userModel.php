@@ -1,8 +1,14 @@
 <?php
-	class user{
+	class User{
 		private $login;
 		private $type;
 		private $method;
+
+		function __construct ($login, $type, $method){
+			$this->login = $login;
+			$this->type = $type;
+			$this->method = $method;
+		}
 
 		public function getLogin(){
 			return $this->login;
@@ -14,14 +20,19 @@
 			return $this->method;
 		}
 
-		public function setLogin($value){
-			$this->login = $value;
-		}
 		public function setType($value){
 			$this->type = $value;
 		}
 		public function setMethod($value){
 			$this->method = $value;
+		}
+
+		public function toJson(){
+			$json = new stdClass();
+			$json->login = $this->getLogin();
+			$json->type = $this->getType();
+			$json->method = $this->getMethod();
+			return json_encode ($json);
 		}
 	}
 ?>
