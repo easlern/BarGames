@@ -32,8 +32,8 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					  <ul class="nav navbar-nav">
-						<li><a href="#">Features</a></li>
-						<li><a href="#">About</a></li>
+						<li><a href="#" class="leftLink">Features</a></li>
+						<li><a href="#" class="leftLink">About</a></li>
 					  </ul>
 					  <ul class="nav navbar-nav navbar-right">
 						<li><a href="#" class="borderLink">Login</a></li>
@@ -52,22 +52,25 @@
 							<div class="starLine"></div>
 						</div>
 						<div class="row searchSection">
-							<div class="col-md-4 col-xs-4">
+							<div class="col-md-4 col-sm-4">
 								<div class="game-search">
 									<input autocomplete="off" id="game_location" placeholder="your location..." tabindex="2" type="text" value="">
-									<i class="fa fa-compass compassIcon"></i>   
+									<i class="fa fa-compass compassIcon inputIcon"></i>   
 								</div>
 							</div>
-							<div class="col-md-4 col-xs-4">
+							<div class="col-md-4 col-sm-4">
 								<div class="game-search">
 									<input autocomplete="off" placeholder="the game..." tabindex="2" type="text" value="">
-									<i class="fa fa-soccer-ball-o"></i>   
+									<i class="fa fa-soccer-ball-o inputIcon"></i>   
 								</div>
 							</div>
-							<div class="col-md-4 col-xs-4">
-								<div class="game-search">
-									<input autocomplete="off" placeholder="distance to travel..." tabindex="2" type="text" value="">
-									<i class="fa fa-car"></i>   
+							<div class="col-md-4 col-sm-4">
+								<div class="game-search travelInput">
+									<input autocomplete="off" placeholder="distance..." tabindex="2" type="text" value="">
+									<i class="fa fa-car inputIcon"></i>  
+									<button type="submit" class="btn btn-primary searchSubmit">
+										<i class="fa fa-search"></i>
+									</button>									
 								</div>
 							</div>
 						</div>
@@ -113,11 +116,11 @@
 						<p class="mobileDescription">We've joined the 21st century. Take your sports with you wherever you go. Be sure to explore new bars and new friends along the way. Our app will adjust to your location and give you up to date information on the games in your area. Our app is available both on the iPhone in the App Store and on Android in the Google Play Store.</p>
 						<a href="#" class="appDownload">
 							<i class="fa fa-download"></i>
-							<span>Download The App</span>
+							Download The App
 						</a>
 					</div>
-					<div class="col-md-6">
-						<div class="mobileImage"></div>
+					<div class="col-md-6 mobileImage">
+						<img class="smartPhoneImage" src="images/smartphone.png"></img>
 					</div>
 				<div>
 			</div>

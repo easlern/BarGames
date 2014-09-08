@@ -56,12 +56,24 @@ media="all"
 	font-size: 20px;
 	padding: 9px 18px;
 	text-transform: uppercase;
+	-webkit-transition: all 0.2s ease-in-out;
+	-webkit-transition-delay: 0;
+	-moz-transition: all 0.2s ease-in-out 0;
+	-o-transition: all 0.2s ease-in-out 0;
+	transition: all 0.2s ease-in-out 0;
 }
 
-.appDownload:hover, .appDownload:visited, .appDownload:active
+.appDownload:visited, .appDownload:active
 {
 	color: #333;
 	text-decoration: none;
+}
+
+.appDownload:hover
+{
+	background-color: #333;
+	color: #FFFFFF;
+	text-decoration: none;	
 }
 
 .appDownload i
@@ -71,9 +83,19 @@ media="all"
 	vertical-align: middle;
 }
 
-.appDownload span
+@media (max-width: 767px)
 {
-	display: inline-block;
+	.appDownload
+	{
+		font-size: 15px;
+		font-family: 'FuturaLTRegular', sans-serif;
+		font-weight: bold;
+	}
+	
+	.appDownload i
+	{
+		font-size: 20px;
+	}
 }
 
 .borderLink
@@ -81,7 +103,12 @@ media="all"
 	border: 1px solid white;
 	border-radius: 3px;
 	padding: 2px 12px !important;
-	margin-top: 21px  !important;
+	margin: 21px 25px 0 25px !important;
+	-webkit-transition: all 0.2s ease-in-out;
+	-webkit-transition-delay: 0;
+	-moz-transition: all 0.2s ease-in-out 0;
+	-o-transition: all 0.2s ease-in-out 0;
+	transition: all 0.2s ease-in-out 0;
 }
 
 .borderLink i
@@ -89,6 +116,16 @@ media="all"
 	color: #FEC600;
 	font-size: 17px;
 	margin-right: 5px;
+}
+
+.borderLink:hover
+{
+	background-color: #FFFFFF !important;
+}
+
+.borderLink:hover i
+{
+	color: #FF0202;
 }
 
 .calendar
@@ -160,7 +197,7 @@ media="all"
 	padding: 0;
 }
 
-.game-search i {
+.game-search .inputIcon {
 	position: absolute;
 	color: rgba(49,49,49,.6);
 	left: 5px;
@@ -197,6 +234,7 @@ media="all"
 
 .game-search input
 {
+	margin-bottom: 10px;
 	width: 100%;
 	padding: 5px 0 5px 40px;
 	border-style: none;
@@ -214,6 +252,23 @@ media="all"
 	background: url(../images/background.jpg) no-repeat;
 	background-size: cover;
 	margin-bottom: 50px;
+}
+
+.leftLink
+{
+	padding: 2px 14px !important;
+	margin: 23px 7px 0 7px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-webkit-transition-delay: 0;
+	-moz-transition: all 0.2s ease-in-out 0;
+	-o-transition: all 0.2s ease-in-out 0;
+	transition: all 0.2s ease-in-out 0;
+}
+
+.leftLink:hover
+{
+	background-color: rgba(255,255,255,0.2) !important;
+	color: #FFFFFF !important;
 }
 
 .mainContent
@@ -244,6 +299,20 @@ media="all"
 	text-transform: uppercase;
 }
 
+@media (max-width: 767px)
+{
+	.mainDescription
+	{
+		font-size: 25px;
+	}
+
+	.mainHeader
+	{
+		font-size: 45px;
+		margin-top: 100px;
+	}
+}
+
 .missionStatement
 {
 	color: #FFFFFF;
@@ -251,6 +320,14 @@ media="all"
 	margin: 45px auto;
 	text-shadow: 3px 4px 4px rgba(0,0,0,0.75);
 	filter: glow(color=black,strength=3), alpha(opacity=100);
+}
+
+@media (max-width: 767px)
+{
+	.missionStatement
+	{
+		font-size: 23px;
+	}
 }
 
 .mobileDescription
@@ -272,9 +349,15 @@ media="all"
 
 .mobileImage
 {
-	background: url(../images/smartphone.png) center no-repeat;
-	width: 480px;
-	height: 469px;
+	text-align: center;
+}
+
+@media (max-width: 767px)
+{
+	.mobileImage
+	{
+		margin-top: 20px;
+	}
 }
 
 .navbar
@@ -302,6 +385,14 @@ media="all"
 	color: #408AC9;
 }
 
+@media (max-width: 397px)
+{
+	.navbar-brand
+	{
+		font-size: 24px;
+	}
+}
+
 .navbar-default
 {
 	background-color: transparent;
@@ -315,8 +406,6 @@ media="all"
 	font-weight: bold;
 	font-size: 15px;
 	font-family: 'FuturaLTRegular', sans-serif;
-	padding: 0;
-	margin: 25px 25px 0 25px;
 	letter-spacing: 1px;
 }
 
@@ -346,6 +435,22 @@ media="all"
 	margin-top: 60px;
 }
 
+.searchSubmit
+{
+	font-size: 20px;
+	float: right;
+	height: 35px;
+	padding: 0;
+	text-align: center;
+	width: 18%;
+}	
+
+.smartPhoneImage
+{	
+	max-width: 540px;
+	width: 100%;
+}
+
 .starLine
 {
 	display: inline-block;
@@ -362,7 +467,54 @@ media="all"
 	font-size: 30px;
 	vertical-align: middle;
 	margin: 0 10px;
-}	
+}
+
+@media (max-width: 767px)
+{
+	.starLine
+	{
+		width: 100px;
+		height: 3px;
+	}
+	
+	.starSeparation i
+	{
+		font-size: 25px;
+	}
+}
+
+@media (max-width: 327px)
+{
+	.starLine
+	{
+		width: 50px;
+	}
+	
+	.starSeparation i
+	{
+		font-size: 20px;
+	}
+}
+
+.travelInput
+{
+	display: inline-block;
+	width: 100%;
+}
+
+.travelInput input
+{
+	float: left;
+	width: 80%;
+}
+
+@media (max-width: 767px)
+{
+	.searchSubmit, .travelInput input
+	{
+		width: 100%;
+	}
+}
 
 .trophy
 {
