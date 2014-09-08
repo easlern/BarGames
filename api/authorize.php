@@ -39,6 +39,8 @@ $facebookService = $serviceFactory->createService('facebook', $credentials, $sto
 
 if (!empty($_GET['code'])) {
     try{
+        // TODO: create an authorization object for this user
+        
         // This was a callback request from facebook, get the token
         $token = $facebookService->requestAccessToken($_GET['code']);
 

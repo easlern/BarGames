@@ -49,6 +49,9 @@ function SanitizePlainText($text){
 function IsAuthorized(){
     return true;
 }
+function IsAdminAuthorized(){
+    return true;
+}
 function IsCsrfGood(){
     $goodCsrf = false;
     

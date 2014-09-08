@@ -113,7 +113,7 @@ def makeControllers():
         outputFile.write ('\t\t\t\texit();\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\n\t\t\t$repo = Repositories::get' + cap(modelName) + 'Repository();\n')
-        outputFile.write ('\t\t\tif (IsAuthorized() && IsCsrfGood()){\n')
+        outputFile.write ('\t\t\tif (IsAuthorized()){\n')
         outputFile.write ('\t\t\t\t$' + modelName + ' = $repo->get' + cap(modelName) + 'ById($args[0]);\n')
         outputFile.write ('\t\t\t\tprint ($' + modelName + '->toJson());\n')
         outputFile.write ('\t\t\t}\n')
@@ -122,6 +122,26 @@ def makeControllers():
         outputFile.write ('\t\t\t\tprint (json_encode($errorObject));\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\t\t}\n')
+        
+        outputFile.write ('\n\t\tpublic function create ($args){\n')
+        nonPrimaryPropCount = 0
+        for prop in properties:
+            #print (prop.getAttribute ('type'))
+            if (prop.getAttribute ('type') != 'primary key'):
+                nonPrimaryPropCount += 1
+        outputFile.write ('\t\t\tif (array_count_values ($args) < ' + str (nonPrimaryPropCount) + '){\n')
+        outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
+        outputFile.write ('\t\t\t\tprint (json_encode ($errorObject));\n')
+        outputFile.write ('\t\t\t\texit();\n')
+        outputFile.write ('\t\t\t}\n')
+        
+        outputFile.write ('\t\t\tif (IsAdminAuthorized() && IsCsrfTokenGood()){\n')
+        outputFile.write ('\t\t\t\t$' + modelName + ' = $repo->get' + cap(modelName) + 'ById($args[0]);\n')
+        outputFile.write ('\t\t\t\tprint ($' + modelName + '->toJson());\n')
+        outputFile.write ('\t\t\t}\n')
+        
+        outputFile.write ('\t\t}\n')
+
         outputFile.write ('\t}\n')
         outputFile.write ('\n?>\n')
     outputFile.close()

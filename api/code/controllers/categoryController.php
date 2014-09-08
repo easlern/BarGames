@@ -14,13 +14,25 @@
 			}
 
 			$repo = Repositories::getCategoryRepository();
-			if (IsAuthorized() && IsCsrfGood()){
+			if (IsAuthorized()){
 				$category = $repo->getCategoryById($args[0]);
 				print ($category->toJson());
 			}
 			else{
 				$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");
 				print (json_encode($errorObject));
+			}
+		}
+
+		public function create ($args){
+			if (array_count_values ($args) < 1){
+				$errorObject = new ApiErrorResponse ("Missing required parameters.");
+				print (json_encode ($errorObject));
+				exit();
+			}
+			if (IsAdminAuthorized() && IsCsrfTokenGood()){
+				$category = $repo->getCategoryById($args[0]);
+				print ($category->toJson());
 			}
 		}
 	}
