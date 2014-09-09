@@ -7,7 +7,7 @@
 
 	class UserController{
 		public function get ($args){
-			if (array_count_values ($args) < 1){
+			if (count ($args) < 1){
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
 				exit();
@@ -25,14 +25,14 @@
 		}
 
 		public function create ($args){
-			if (array_count_values ($args) < 2){
+			if (count ($args) < 2){
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
 				exit();
 			}
-			if (IsAdminAuthorized() && IsCsrfTokenGood()){
-				$user = $repo->getUserById($args[0]);
-				print ($user->toJson());
+			if (IsAdminAuthorized() && IsCsrfGood()){
+				header ("HTTP/1.1 303 See Other");
+				header ("Location: /BarGames/api/user/1");
 			}
 		}
 	}

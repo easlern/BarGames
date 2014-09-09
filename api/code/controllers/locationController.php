@@ -7,7 +7,7 @@
 
 	class LocationController{
 		public function get ($args){
-			if (array_count_values ($args) < 1){
+			if (count ($args) < 1){
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
 				exit();
@@ -25,14 +25,14 @@
 		}
 
 		public function create ($args){
-			if (array_count_values ($args) < 5){
+			if (count ($args) < 5){
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
 				exit();
 			}
-			if (IsAdminAuthorized() && IsCsrfTokenGood()){
-				$location = $repo->getLocationById($args[0]);
-				print ($location->toJson());
+			if (IsAdminAuthorized() && IsCsrfGood()){
+				header ("HTTP/1.1 303 See Other");
+				header ("Location: /BarGames/api/location/1");
 			}
 		}
 	}

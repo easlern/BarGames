@@ -18,12 +18,6 @@
     require_once("log.php");
     require_once("Authorization.php");
     
-    if ($_SERVER['REMOTE_ADDR'] === $_SERVER['SERVER_ADDR']){
-        header('Access-Control-Allow-Origin: https://www.indiegamesurf.com');
-    }
-    else{
-        header('Access-Control-Allow-Origin: http://localhost:8383');
-    }
     header('Access-Control-Allow-Credentials: true');
     
 ?>

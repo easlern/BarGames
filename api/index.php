@@ -47,6 +47,10 @@
 			case "GET":
 				$controllerInstance->get($args);
 				break;
+			case "POST":
+				$args = GetSanitizedPostVars();
+				$controllerInstance->create($args);
+				break;
 		}
 	}
 	else{
