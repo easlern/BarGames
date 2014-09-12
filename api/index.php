@@ -51,6 +51,18 @@
 				$args = GetSanitizedPostVars();
 				$controllerInstance->create($args);
 				break;
+			case "PUT":
+				$id = $args[0]; // Pull the index to be updated.
+				$args = GetSanitizedPutVars();
+				array_unshift ($args, $id);
+				$controllerInstance->update($args);
+				break;
+			case "DELETE":
+				$id = $args[0]; // Pull the index to be deleted.
+				$args = GetSanitizedDeleteVars();
+				array_unshift ($args, $id);
+				$controllerInstance->create($args);
+				break;
 		}
 	}
 	else{

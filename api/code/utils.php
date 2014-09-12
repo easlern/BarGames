@@ -31,6 +31,11 @@ function GetSanitizedPutVars(){
     
     return SanitizeStringArray($putVars);
 }
+function GetSanitizedDeleteVars(){
+    parse_str (file_get_contents ("php://input"), $deleteVars);
+    
+    return SanitizeStringArray($deleteVars);
+}
 
 function SanitizePlainText($text){
     $safeChars = "0123456789 +=_@.,'?!_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/()\r\n";

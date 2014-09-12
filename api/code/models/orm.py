@@ -92,6 +92,18 @@ def makeWebAccessors():
     outputFile.write ('\t\t\t\t$args = GetSanitizedPostVars();\n')
     outputFile.write ('\t\t\t\t$controllerInstance->create($args);\n')
     outputFile.write ('\t\t\t\tbreak;\n')
+    outputFile.write ('\t\t\tcase "PUT":\n')
+    outputFile.write ('\t\t\t\t$id = $args[0]; // Pull the index to be updated.\n')
+    outputFile.write ('\t\t\t\t$args = GetSanitizedPutVars();\n')
+    outputFile.write ('\t\t\t\tarray_unshift ($args, $id);\n')
+    outputFile.write ('\t\t\t\t$controllerInstance->update($args);\n')
+    outputFile.write ('\t\t\t\tbreak;\n')
+    outputFile.write ('\t\t\tcase "DELETE":\n')
+    outputFile.write ('\t\t\t\t$id = $args[0]; // Pull the index to be deleted.\n')
+    outputFile.write ('\t\t\t\t$args = GetSanitizedDeleteVars();\n')
+    outputFile.write ('\t\t\t\tarray_unshift ($args, $id);\n')
+    outputFile.write ('\t\t\t\t$controllerInstance->create($args);\n')
+    outputFile.write ('\t\t\t\tbreak;\n')
     outputFile.write ('\t\t}\n')
     outputFile.write ('\t}\n')
     outputFile.write ('\telse{\n')
@@ -110,23 +122,29 @@ def makeControllers():
         outputFile.write ('\trequire_once (\'restfulSetup.php\');\n')
         outputFile.write ('\trequire_once (\'repositories.php\');\n')
         outputFile.write ('\n\tclass ' + cap (modelName) + 'Controller{\n')
+
+        # GET
         outputFile.write ('\t\tpublic function get ($args){\n')
         outputFile.write ('\t\t\tif (count ($args) < 1){\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode ($errorObject));\n')
         outputFile.write ('\t\t\t\texit();\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\n\t\t\t$repo = Repositories::get' + cap(modelName) + 'Repository();\n')
         outputFile.write ('\t\t\tif (IsAuthorized()){\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 200 OK");\n')
         outputFile.write ('\t\t\t\t$' + modelName + ' = $repo->get' + cap(modelName) + 'ById($args[0]);\n')
         outputFile.write ('\t\t\t\tprint ($' + modelName + '->toJson());\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\t\t\telse{\n')
-        outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse("Not authenticated.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode($errorObject));\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\t\t}\n')
-        
+
+        # CREATE
         outputFile.write ('\n\t\tpublic function create ($args){\n')
         nonPrimaryPropCount = 0
         for prop in properties:
@@ -134,14 +152,69 @@ def makeControllers():
             if (prop.getAttribute ('type') != 'primary key'):
                 nonPrimaryPropCount += 1
         outputFile.write ('\t\t\tif (count ($args) < ' + str (nonPrimaryPropCount) + '){\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
+        outputFile.write ('\t\t\t\tprint (json_encode ($errorObject));\n')
+        outputFile.write ('\t\t\t\texit();\n')
+        outputFile.write ('\t\t\t}\n')
+
+        outputFile.write ('\t\t\tif (IsAdminAuthorized() && IsCsrfGood()){\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 303 See Other");\n')
+        outputFile.write ('\t\t\t\theader ("Location: /BarGames/api/' + modelName + '/1");\n')
+        outputFile.write ('\t\t\t}\n')
+        outputFile.write ('\t\t\telse{\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");\n')
+        outputFile.write ('\t\t\t\tprint (json_encode($errorObject));\n')
+        outputFile.write ('\t\t\t}\n')
+        outputFile.write ('\t\t}\n')
+
+        # UPDATE
+        outputFile.write ('\n\t\tpublic function update ($args){\n')
+        nonPrimaryPropCount = 0
+        for prop in properties:
+            #print (prop.getAttribute ('type'))
+            if (prop.getAttribute ('type') != 'primary key'):
+                nonPrimaryPropCount += 1
+        outputFile.write ('\t\t\tif (count ($args) < ' + str (nonPrimaryPropCount) + '){\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode ($errorObject));\n')
         outputFile.write ('\t\t\t\texit();\n')
         outputFile.write ('\t\t\t}\n')
         
         outputFile.write ('\t\t\tif (IsAdminAuthorized() && IsCsrfGood()){\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 303 See Other");\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 200 OK");\n')
+        outputFile.write ('\t\t\t}\n')
+        outputFile.write ('\t\t\telse{\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");\n')
+        outputFile.write ('\t\t\t\tprint (json_encode($errorObject));\n')
+        outputFile.write ('\t\t\t}\n')
+        outputFile.write ('\t\t}\n')
+
+        # DELETE
+        outputFile.write ('\n\t\tpublic function delete ($args){\n')
+        primaryPropCount = 0
+        for prop in properties:
+            #print (prop.getAttribute ('type'))
+            if (prop.getAttribute ('type') == 'primary key'):
+                primaryPropCount += 1
+        outputFile.write ('\t\t\tif (count ($args) < ' + str (primaryPropCount) + '){\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
+        outputFile.write ('\t\t\t\tprint (json_encode ($errorObject));\n')
+        outputFile.write ('\t\t\t\texit();\n')
+        outputFile.write ('\t\t\t}\n')
+        
+        outputFile.write ('\t\t\tif (IsAdminAuthorized() && IsCsrfGood()){\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 204 No Content");\n')
         outputFile.write ('\t\t\t\theader ("Location: /BarGames/api/' + modelName + '/1");\n')
+        outputFile.write ('\t\t\t}\n')
+        outputFile.write ('\t\t\telse{\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");\n')
+        outputFile.write ('\t\t\t\tprint (json_encode($errorObject));\n')
         outputFile.write ('\t\t\t}\n')
         
         outputFile.write ('\t\t}\n')
