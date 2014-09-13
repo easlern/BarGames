@@ -63,6 +63,7 @@
 		}
 
 		public function delete ($args){
+			LogInfo ("Deleting category with args " . print_r ($args, true));
 			if (count ($args) < 1){
 				header ("HTTP/1.1 500 Internal Server Error");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
@@ -71,7 +72,6 @@
 			}
 			if (IsAdminAuthorized() && IsCsrfGood()){
 				header ("HTTP/1.1 204 No Content");
-				header ("Location: /BarGames/api/category/1");
 			}
 			else{
 				header ("HTTP/1.1 500 Internal Server Error");

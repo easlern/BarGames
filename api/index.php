@@ -54,15 +54,18 @@
 			case "PUT":
 				$id = $args[0]; // Pull the index to be updated.
 				$args = GetSanitizedPutVars();
-				array_unshift ($args, $id);
+				if (is_numeric ($id)) array_unshift ($args, $id);
 				$controllerInstance->update($args);
 				break;
 			case "DELETE":
 				$id = $args[0]; // Pull the index to be deleted.
 				$args = GetSanitizedDeleteVars();
-				array_unshift ($args, $id);
-				$controllerInstance->create($args);
+				if (is_numeric ($id)) array_unshift ($args, $id);
+				$controllerInstance->delete($args);
 				break;
+			default:
+				LogInfo ($_SERVER["REQUEST_METHOD"] . " method not allowed.");
+				header ("HTTP/1.1 405 Method Not Allowed");
 		}
 	}
 	else{
