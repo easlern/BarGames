@@ -8,7 +8,7 @@ and open the template in the editor.
 <root>
     <model name="game">
         <property name="id" type="primary key" data="integer"/>
-        <property name="locationId" type="foreign key" data="integer"/>
+        <property name="locationId" data="integer"/>
         <property name="name" data="string" length="100"/>
         <property name="categoryIds" data="integer array"/>
     </model>
@@ -29,4 +29,6 @@ and open the template in the editor.
         <property name="type" data="integer"/>
         <property name="method" data="integer"/>
     </model>
+    
+    <relationship type="manyToOne" from="game" to="location"/>
 </root>

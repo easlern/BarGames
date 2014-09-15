@@ -1,10 +1,15 @@
 <?php
 
 function connectAsAdmin(){
-    if (isset($_GET["198237569801798432579723401209375091"])){
-        //$con = new mysqli("localhost", "root", "\$umm3rt1m3");
-        $con = new mysqli("localhost", "easlern_campyadm", "\$umm3rt1m3");
-        $con->query("use easlern_campy;");
+    if (isset($_GET["18973489710982739847981723473219487"])){
+        if (Utils::GetMode() == Utils::MODE_DEV){
+            $con = new mysqli("localhost", "indiegam_bgadmin", "tohnsetadoedu19832740987");
+            $con->query("use indiegam_bargames;");
+        }
+        else{
+            $con = new mysqli("localhost", "easlern_bgadmin", "bg4dm1n");
+            $con->query("use easlern_bargames;");
+        }
         return $con;
     }
 }
@@ -12,13 +17,13 @@ function connectAsWebUser(){
     $con = NULL;
     
     if (Utils::GetMode() == Utils::MODE_DEV){
-        $con = new mysqli("localhost", "indiegam_cmpyusr", "\$umm3rt1m3");
-        $con->query("use indiegam_campy;");
+        $con = new mysqli("localhost", "indiegam_bguser", "ntahoeu78917234");
+        $con->query("use indiegam_bargames;");
     }
     else{
         //$con = new mysqli("localhost", "root", "\$umm3rt1m3");
-        $con = new mysqli("localhost", "easlern_campyusr", "\$umm3rt1m3"); 
-        $con->query("use easlern_campy;");
+        $con = new mysqli("localhost", "easlern_bguser", "bgus3r"); 
+        $con->query("use easlern_bargames;");
     }
     return $con;
 }

@@ -1,6 +1,7 @@
 from xml.dom import minidom
-xmldoc = minidom.parse('models.xml')
-models = xmldoc.getElementsByTagName('model')
+xmldoc = minidom.parse ('models.xml')
+models = xmldoc.getElementsByTagName ('model')
+relationships = xmldoc.getElementsByTagName ('relationship')
 
 def cap (what):
     return what[0].capitalize() + what[1:]
@@ -260,10 +261,32 @@ def makeRepositories():
     outputFile.write ('\n?>\n')
     outputFile.close()
 
+def makeDatabase():
+    outputFile = open ('database.php', 'w')
+    outputFile.write ('<?php\n\n')
+    outputFile.write ('\tclass Database{\n')
+    outputFile.write ('\t\tpublic function initialize(){\n')
+    outputFile.write ('\t\t\t$con = connectAsAdmin();\n')
+    for model in models:
+        modelName = model.getAttribute('name')
+        properties = model.getElementsByTagName('property')
+        outputFile.write ('\t\t\t$con->query ("drop table ' + modelName + '");\n')
+    for relationship in relationships:
+        relType = relationship.getAttribute ('type')
+        relFromModel = relationship.getAttribute ('from')
+        relToModel = relationship.getAttribute ('to')
+        crossName = relType + "_" + relFromModel + "_" + relToModel
+        outputFile.write ('\t\t\t$con->query ("drop table ' + crossName + '");\n')
+    outputFile.write ('\t\t}\n')
+    outputFile.write ('\t}\n')
+    outputFile.write ('?>\n')
+    outputFile.close()
+
 
 makeObjects()
 makeWebAccessors()
 makeRepositories()
 makeControllers()
+makeDatabase()
         
     
