@@ -3,6 +3,8 @@ xmldoc = minidom.parse ('models.xml')
 models = xmldoc.getElementsByTagName ('model')
 relationships = xmldoc.getElementsByTagName ('relationship')
 
+
+
 def cap (what):
     return what[0].capitalize() + what[1:]
 
@@ -261,22 +263,80 @@ def makeRepositories():
     outputFile.write ('\n?>\n')
     outputFile.close()
 
+def propDataToDbType (propData):
+    dbMap = {'integer':'int', 'string':'varchar', 'integer array':'int', 'float':'float', 'decimal':'decimal'}
+    if (not propData in dbMap):
+        return ''
+    return dbMap[propData]
+
 def makeDatabase():
     outputFile = open ('database.php', 'w')
     outputFile.write ('<?php\n\n')
+    outputFile.write ('\trequire_once ("initializeDb.php");\n\n')
     outputFile.write ('\tclass Database{\n')
     outputFile.write ('\t\tpublic function initialize(){\n')
     outputFile.write ('\t\t\t$con = connectAsAdmin();\n')
     for model in models:
-        modelName = model.getAttribute('name')
-        properties = model.getElementsByTagName('property')
+        modelName = model.getAttribute ('name')
+        properties = model.getElementsByTagName ('property')
         outputFile.write ('\t\t\t$con->query ("drop table ' + modelName + '");\n')
+        outputFile.write ('\t\t\t$con->query ("create table ' + modelName + ' (')
+        firstProp = True
+        for prop in properties:
+            propName = prop.getAttribute ('name')
+            propType = prop.getAttribute ('type')
+            propData = prop.getAttribute ('data')
+            propLength = prop.getAttribute ('length')
+            if (propLength == ''):
+                propLength = '0'
+            dbType = propDataToDbType (propData)
+            if (dbType == 'varchar'):
+                dbType = dbType + '(' + propLength + ')'
+            if (not firstProp):
+                outputFile.write (', ')
+            outputFile.write (propName)
+            outputFile.write (' ' + dbType)
+            if (prop.getAttribute ('type') == 'primary key' or prop.getAttribute ('required') == 'always'):
+                outputFile.write (' not null')
+            if (prop.getAttribute ('type') == 'primary key'):
+                outputFile.write (' auto_increment')
+            firstProp = False
+        for prop in properties:
+            propName = prop.getAttribute ('name')
+            propType = prop.getAttribute ('type')
+            if (propType == 'primary key'):
+                outputFile.write (', primary key(' + propName + ')')
+        outputFile.write (')");\n')
     for relationship in relationships:
         relType = relationship.getAttribute ('type')
-        relFromModel = relationship.getAttribute ('from')
-        relToModel = relationship.getAttribute ('to')
-        crossName = relType + "_" + relFromModel + "_" + relToModel
-        outputFile.write ('\t\t\t$con->query ("drop table ' + crossName + '");\n')
+        relName = relType
+        if (relType == 'manyToMany'):
+            relName = 'mtm';
+            relFromModel = relationship.getAttribute ('from')
+            relToModel = relationship.getAttribute ('to')
+            crossName = relName + "_" + relFromModel + "_" + relToModel
+            outputFile.write ('\t\t\t$con->query ("drop table ' + crossName + '");\n')
+            outputFile.write ('\t\t\t$con->query ("create table ' + crossName + ' (')
+            fromName = ''
+            toName = ''
+            for model in models:
+                modelName = model.getAttribute ('name')
+                for prop in model.getElementsByTagName ('property'):
+                    propType = prop.getAttribute ('type')
+                    propName = prop.getAttribute ('name')
+                    propData = prop.getAttribute ('data')
+                    propLength = prop.getAttribute ('length')
+                    if (propLength == ''):
+                        propLength = '0'
+                    dbType = propDataToDbType (propData)
+                    if (dbType == 'varchar'):
+                        dbType = dbType + '(' + propLength + ')'
+                    if (modelName == relFromModel and propType == 'primary key'):
+                        fromName = modelName + cap (propName) + ' ' + propDataToDbType (propData) + ' not null'
+                    if (modelName == relToModel and propType == 'primary key'):
+                        toName = modelName + cap (propName) + ' ' + propDataToDbType (propData) + ' not null'
+            outputFile.write (fromName + ', ' + toName)
+            outputFile.write (')");\n')
     outputFile.write ('\t\t}\n')
     outputFile.write ('\t}\n')
     outputFile.write ('?>\n')

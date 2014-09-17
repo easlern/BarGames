@@ -88,20 +88,6 @@ function SafeRandomNumberString($length){
     return $numberString;
 }
 
-function connectAsWebUser(){
-    $con = NULL;
-
-    if (Utils::GetMode() == Utils::MODE_DEV){
-        $con = new mysqli("localhost", "indiegam_echo", "");
-        $con->query("use indiegam_echo;");
-    }
-    else{
-        $con = new mysqli("localhost", "easlern_echo", ""); 
-        $con->query("use easlern_echo;");
-    }
-    return $con;
-}
-
 class Utils{
     const MODE_DEV = "dev";
     const MODE_PROD = "prod";

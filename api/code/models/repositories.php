@@ -20,6 +20,11 @@
 			return new User($id, 0, 0);
 		}
 	}
+	class TestCityRepository{
+		public function getCityById ($id){
+			return new City($id, "test_name", "test_state", "test_country", , );
+		}
+	}
 
 	class Repositories{
 		public static function getGameRepository(){
@@ -33,6 +38,9 @@
 		}
 		public static function getUserRepository(){
 			return new TestUserRepository();
+		}
+		public static function getCityRepository(){
+			return new TestCityRepository();
 		}
 	}
 

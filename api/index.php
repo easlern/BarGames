@@ -4,6 +4,7 @@
 	require_once ("locationController.php");
 	require_once ("categoryController.php");
 	require_once ("userController.php");
+	require_once ("cityController.php");
 
 	if (strlen($_SERVER['REQUEST_URI']) > 1024) exit();
 
@@ -39,6 +40,9 @@
 			break;
 		case "user":
 			$controllerInstance = new UserController();
+			break;
+		case "city":
+			$controllerInstance = new CityController();
 			break;
 	}
 

@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-
 
 <root>
     <model name="game">
         <property name="id" type="primary key" data="integer"/>
-        <property name="locationId" data="integer"/>
-        <property name="name" data="string" length="100"/>
+        <property name="locationId" data="integer" required="always"/>
+        <property name="name" data="string" length="100" required="always"/>
         <property name="categoryIds" data="integer array"/>
     </model>
     <model name="location">
         <property name="id" type="primary key" data="integer"/>
-        <property name="name" data="string" length = "100"/>
+        <property name="name" data="string" length = "100" required="always"/>
         <property name="street" data="string" length = "100"/>
         <property name="city" data="string" length="20"/>
         <property name="state" data="string" length="20"/>
@@ -22,13 +17,22 @@ and open the template in the editor.
     </model>
     <model name="category">
         <property name="id" type="primary key" data="integer"/>
-        <property name="name" data="string" length="100"/>
+        <property name="name" data="string" length="100" required="always"/>
     </model>
     <model name="user">
         <property name="login" type="primary key" data="string" length="30"/>
-        <property name="type" data="integer"/>
-        <property name="method" data="integer"/>
+        <property name="type" data="integer" required="always"/>
+        <property name="method" data="integer" required="always"/>
+    </model>
+    <model name="city">
+        <property name="id" type="primary key" data="integer"/>
+        <property name="name" data="string" length="100" required="always"/>
+        <property name="state" data="string" length="100" required="always"/>
+        <property name="country" data="string" length="100"/>
+        <property name="longitude" data="float" required="always"/>
+        <property name="latitude" data="float" required="always"/>
     </model>
     
     <relationship type="manyToOne" from="game" to="location"/>
+    <relationship type="manyToMany" from="game" to="category"/>
 </root>
