@@ -22,7 +22,7 @@
 	}
 	class TestCityRepository{
 		public function getCityById ($id){
-			return new City($id, "test_name", "test_state", "test_country", , );
+			return new City($id, "test_name", "test_state", "test_country", 0, 0);
 		}
 	}
 

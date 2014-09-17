@@ -245,7 +245,7 @@ def makeRepositories():
             data = prop.getAttribute ('data')
             if (data == 'string'):
                 outputFile.write ('"test_' + prop.getAttribute ('name') + '"')
-            if (data == 'integer'):
+            if (data in ('integer', 'float', 'decimal')):
                 outputFile.write ('0')
             if (data == 'integer array'):
                 outputFile.write ('array(0,1,2)')
