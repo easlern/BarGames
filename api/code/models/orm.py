@@ -310,6 +310,10 @@ def makeDatabase():
     for relationship in relationships:
         relType = relationship.getAttribute ('type')
         relName = relType
+        if (relType == 'manyToOne'):
+            relFromModel = relationship.getAttribute ('from')
+            relToModel = relationship.getAttribute ('to')
+            outputFile.write ('\t\t\t$con->query ("alter table ' + relFromModel + ' add constraint fk_' + relFromModel + '_' + relToModel + ' foreign key (' + relToModel + 'Id) references ' + relToModel + '(id)");\n')
         if (relType == 'manyToMany'):
             relName = 'mtm';
             relFromModel = relationship.getAttribute ('from')

@@ -74,4 +74,5 @@
     <relationship type="manyToOne" from="game" to="sport"/>
     <relationship type="manyToMany" from="location" to="locationType"/>
     <relationship type="manyToMany" from="location" to="sport"/>
+    <relationship type="manyToOne" from="location" to="city"/>
 </root>

@@ -27,14 +27,19 @@
 			$con->query ("create table setting (id int not null auto_increment, name varchar(32), defaultValue varchar(100), primary key(id))");
 			$con->query ("drop table if exists userSetting");
 			$con->query ("create table userSetting (userId int not null, settingId int not null, value varchar(0) not null)");
+			$con->query ("alter table game add constraint fk_game_location foreign key (locationId) references location(id)");
+			$con->query ("alter table user add constraint fk_user_securityLevel foreign key (securityLevelId) references securityLevel(id)");
+			$con->query ("alter table userSetting add constraint fk_userSetting_setting foreign key (settingId) references setting(id)");
 			$con->query ("drop table if exists mtm_game_tag");
 			$con->query ("create table mtm_game_tag (gameId int not null, tagId int not null)");
 			$con->query ("drop table if exists mtm_game_team");
 			$con->query ("create table mtm_game_team (gameId int not null, teamId int not null)");
+			$con->query ("alter table game add constraint fk_game_sport foreign key (sportId) references sport(id)");
 			$con->query ("drop table if exists mtm_location_locationType");
 			$con->query ("create table mtm_location_locationType (locationId int not null, locationTypeId int not null)");
 			$con->query ("drop table if exists mtm_location_sport");
 			$con->query ("create table mtm_location_sport (locationId int not null, sportId int not null)");
+			$con->query ("alter table location add constraint fk_location_city foreign key (cityId) references city(id)");
 		}
 	}
 ?>
