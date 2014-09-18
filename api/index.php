@@ -1,10 +1,16 @@
 <?php
 	require_once ('code/startup.php');
 	require_once ("gameController.php");
+	require_once ("sportController.php");
+	require_once ("teamController.php");
 	require_once ("locationController.php");
-	require_once ("categoryController.php");
+	require_once ("locationTypeController.php");
+	require_once ("tagController.php");
 	require_once ("userController.php");
+	require_once ("securityLevelController.php");
 	require_once ("cityController.php");
+	require_once ("settingController.php");
+	require_once ("userSettingController.php");
 
 	if (strlen($_SERVER['REQUEST_URI']) > 1024) exit();
 
@@ -32,17 +38,35 @@
 		case "game":
 			$controllerInstance = new GameController();
 			break;
+		case "sport":
+			$controllerInstance = new SportController();
+			break;
+		case "team":
+			$controllerInstance = new TeamController();
+			break;
 		case "location":
 			$controllerInstance = new LocationController();
 			break;
-		case "category":
-			$controllerInstance = new CategoryController();
+		case "locationType":
+			$controllerInstance = new LocationTypeController();
+			break;
+		case "tag":
+			$controllerInstance = new TagController();
 			break;
 		case "user":
 			$controllerInstance = new UserController();
 			break;
+		case "securityLevel":
+			$controllerInstance = new SecurityLevelController();
+			break;
 		case "city":
 			$controllerInstance = new CityController();
+			break;
+		case "setting":
+			$controllerInstance = new SettingController();
+			break;
+		case "userSetting":
+			$controllerInstance = new UserSettingController();
 			break;
 	}
 

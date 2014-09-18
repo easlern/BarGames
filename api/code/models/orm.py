@@ -279,7 +279,7 @@ def makeDatabase():
     for model in models:
         modelName = model.getAttribute ('name')
         properties = model.getElementsByTagName ('property')
-        outputFile.write ('\t\t\t$con->query ("drop table ' + modelName + '");\n')
+        outputFile.write ('\t\t\t$con->query ("drop table if exists ' + modelName + '");\n')
         outputFile.write ('\t\t\t$con->query ("create table ' + modelName + ' (')
         firstProp = True
         for prop in properties:
@@ -298,7 +298,7 @@ def makeDatabase():
             outputFile.write (' ' + dbType)
             if (prop.getAttribute ('type') == 'primary key' or prop.getAttribute ('required') == 'always'):
                 outputFile.write (' not null')
-            if (prop.getAttribute ('type') == 'primary key'):
+            if (prop.getAttribute ('type') == 'primary key' and propData == 'integer'):
                 outputFile.write (' auto_increment')
             firstProp = False
         for prop in properties:
@@ -315,7 +315,7 @@ def makeDatabase():
             relFromModel = relationship.getAttribute ('from')
             relToModel = relationship.getAttribute ('to')
             crossName = relName + "_" + relFromModel + "_" + relToModel
-            outputFile.write ('\t\t\t$con->query ("drop table ' + crossName + '");\n')
+            outputFile.write ('\t\t\t$con->query ("drop table if exists ' + crossName + '");\n')
             outputFile.write ('\t\t\t$con->query ("create table ' + crossName + ' (')
             fromName = ''
             toName = ''

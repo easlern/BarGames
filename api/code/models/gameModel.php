@@ -3,13 +3,17 @@
 		private $id;
 		private $locationId;
 		private $name;
-		private $categoryIds;
+		private $tagIds;
+		private $sportId;
+		private $teamIds;
 
-		function __construct ($id, $locationId, $name, $categoryIds){
+		function __construct ($id, $locationId, $name, $tagIds, $sportId, $teamIds){
 			$this->id = $id;
 			$this->locationId = $locationId;
 			$this->name = $name;
-			$this->categoryIds = $categoryIds;
+			$this->tagIds = $tagIds;
+			$this->sportId = $sportId;
+			$this->teamIds = $teamIds;
 		}
 
 		public function getId(){
@@ -21,8 +25,14 @@
 		public function getName(){
 			return $this->name;
 		}
-		public function getCategoryIds(){
-			return $this->categoryIds;
+		public function getTagIds(){
+			return $this->tagIds;
+		}
+		public function getSportId(){
+			return $this->sportId;
+		}
+		public function getTeamIds(){
+			return $this->teamIds;
 		}
 
 		public function setLocationId($value){
@@ -31,8 +41,14 @@
 		public function setName($value){
 			$this->name = $value;
 		}
-		public function setCategoryIds($value){
-			$this->categoryIds = $value;
+		public function setTagIds($value){
+			$this->tagIds = $value;
+		}
+		public function setSportId($value){
+			$this->sportId = $value;
+		}
+		public function setTeamIds($value){
+			$this->teamIds = $value;
 		}
 
 		public function toJson(){
@@ -40,7 +56,9 @@
 			$json->id = $this->getId();
 			$json->locationId = $this->getLocationId();
 			$json->name = $this->getName();
-			$json->categoryIds = $this->getCategoryIds();
+			$json->tagIds = $this->getTagIds();
+			$json->sportId = $this->getSportId();
+			$json->teamIds = $this->getTeamIds();
 			return json_encode ($json);
 		}
 	}

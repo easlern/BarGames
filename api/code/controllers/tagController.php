@@ -1,11 +1,11 @@
 <?php
 
 	require_once ('code/startup.php');
-	require_once ('gameModel.php');
+	require_once ('tagModel.php');
 	require_once ('restfulSetup.php');
 	require_once ('repositories.php');
 
-	class GameController{
+	class TagController{
 		public function get ($args){
 			if (count ($args) < 1){
 				header ("HTTP/1.1 500 Internal Server Error");
@@ -14,11 +14,11 @@
 				exit();
 			}
 
-			$repo = Repositories::getGameRepository();
+			$repo = Repositories::getTagRepository();
 			if (IsAuthorized()){
 				header ("HTTP/1.1 200 OK");
-				$game = $repo->getGameById($args[0]);
-				print ($game->toJson());
+				$tag = $repo->getTagById($args[0]);
+				print ($tag->toJson());
 			}
 			else{
 				header ("HTTP/1.1 500 Internal Server Error");
@@ -28,7 +28,7 @@
 		}
 
 		public function create ($args){
-			if (count ($args) < 5){
+			if (count ($args) < 1){
 				header ("HTTP/1.1 500 Internal Server Error");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
@@ -36,7 +36,7 @@
 			}
 			if (IsAdminAuthorized() && IsCsrfGood()){
 				header ("HTTP/1.1 303 See Other");
-				header ("Location: /BarGames/api/game/1");
+				header ("Location: /BarGames/api/tag/1");
 			}
 			else{
 				header ("HTTP/1.1 500 Internal Server Error");
@@ -46,7 +46,7 @@
 		}
 
 		public function update ($args){
-			if (count ($args) < 5){
+			if (count ($args) < 1){
 				header ("HTTP/1.1 500 Internal Server Error");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
@@ -63,7 +63,7 @@
 		}
 
 		public function delete ($args){
-			LogInfo ("Deleting game with args " . print_r ($args, true));
+			LogInfo ("Deleting tag with args " . print_r ($args, true));
 			if (count ($args) < 1){
 				header ("HTTP/1.1 500 Internal Server Error");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");

@@ -1,11 +1,11 @@
 <?php
 
 	require_once ('code/startup.php');
-	require_once ('categoryModel.php');
+	require_once ('locationTypeModel.php');
 	require_once ('restfulSetup.php');
 	require_once ('repositories.php');
 
-	class CategoryController{
+	class LocationTypeController{
 		public function get ($args){
 			if (count ($args) < 1){
 				header ("HTTP/1.1 500 Internal Server Error");
@@ -14,11 +14,11 @@
 				exit();
 			}
 
-			$repo = Repositories::getCategoryRepository();
+			$repo = Repositories::getLocationTypeRepository();
 			if (IsAuthorized()){
 				header ("HTTP/1.1 200 OK");
-				$category = $repo->getCategoryById($args[0]);
-				print ($category->toJson());
+				$locationType = $repo->getLocationTypeById($args[0]);
+				print ($locationType->toJson());
 			}
 			else{
 				header ("HTTP/1.1 500 Internal Server Error");
@@ -36,7 +36,7 @@
 			}
 			if (IsAdminAuthorized() && IsCsrfGood()){
 				header ("HTTP/1.1 303 See Other");
-				header ("Location: /BarGames/api/category/1");
+				header ("Location: /BarGames/api/locationType/1");
 			}
 			else{
 				header ("HTTP/1.1 500 Internal Server Error");
@@ -63,7 +63,7 @@
 		}
 
 		public function delete ($args){
-			LogInfo ("Deleting category with args " . print_r ($args, true));
+			LogInfo ("Deleting locationType with args " . print_r ($args, true));
 			if (count ($args) < 1){
 				header ("HTTP/1.1 500 Internal Server Error");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");

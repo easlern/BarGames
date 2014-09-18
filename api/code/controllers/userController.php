@@ -28,7 +28,7 @@
 		}
 
 		public function create ($args){
-			if (count ($args) < 2){
+			if (count ($args) < 6){
 				header ("HTTP/1.1 500 Internal Server Error");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
@@ -46,7 +46,7 @@
 		}
 
 		public function update ($args){
-			if (count ($args) < 2){
+			if (count ($args) < 6){
 				header ("HTTP/1.1 500 Internal Server Error");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));

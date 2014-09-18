@@ -5,24 +5,47 @@
         <property name="id" type="primary key" data="integer"/>
         <property name="locationId" data="integer" required="always"/>
         <property name="name" data="string" length="100" required="always"/>
-        <property name="categoryIds" data="integer array"/>
+        <property name="tagIds" data="integer array"/>
+        <property name="sportId" data="integer" required="always"/>
+        <property name="teamIds" data="integer array"/>
+    </model>
+    <model name="sport">
+        <property name="id" type="primary key" data="integer"/>
+        <property name="name" data="string" length="32"/>
+    </model>
+    <model name="team">
+        <property name="id" type="primary key" data="integer"/>
+        <property name="name" data="string" length="100"/>
     </model>
     <model name="location">
         <property name="id" type="primary key" data="integer"/>
         <property name="name" data="string" length = "100" required="always"/>
         <property name="street" data="string" length = "100"/>
-        <property name="city" data="string" length="20"/>
+        <property name="cityId" data="integer"/>
         <property name="state" data="string" length="20"/>
         <property name="phone" data="string" length="20"/>
+        <property name="locationTypeIds" data="integer array" required="always"/>
     </model>
-    <model name="category">
+    <model name="locationType">
+        <property name="id" type="primary key" data="integer"/>
+        <property name="name" data="string" length="32"/>
+    </model>
+    <model name="tag">
         <property name="id" type="primary key" data="integer"/>
         <property name="name" data="string" length="100" required="always"/>
     </model>
     <model name="user">
-        <property name="login" type="primary key" data="string" length="30"/>
+        <property name="email" type="primary key" data="string" length="100"/>
         <property name="type" data="integer" required="always"/>
         <property name="method" data="integer" required="always"/>
+        <property name="passHash" data="string" length="256" required="always"/>
+        <property name="nameFirst" data="string" length="256" required="always"/>
+        <property name="nameLast" data="string" length="256" required="always"/>
+        <property name="securityLevelId" data="integer" required="always"/>
+    </model>
+    <model name="securityLevel">
+        <property name="id" type="primary key" data="integer"/>
+        <property name="name" data="string" length="32" required="always"/>
     </model>
     <model name="city">
         <property name="id" type="primary key" data="integer"/>
@@ -32,7 +55,23 @@
         <property name="longitude" data="float" required="always"/>
         <property name="latitude" data="float" required="always"/>
     </model>
+    <model name="setting">
+        <property name="id" type="primary key" data="integer"/>
+        <property name="name" data="string" length="32"/>
+        <property name="defaultValue" data="string" length="100"/>
+    </model>
+    <model name="userSetting">
+        <property name="userId" data="integer" required="always"/>
+        <property name="settingId" data="integer" required="always"/>
+        <property name="value" data="string" required="always"/>
+    </model>
     
     <relationship type="manyToOne" from="game" to="location"/>
-    <relationship type="manyToMany" from="game" to="category"/>
+    <relationship type="manyToOne" from="user" to="securityLevel"/>
+    <relationship type="manyToOne" from="userSetting" to="setting"/>
+    <relationship type="manyToMany" from="game" to="tag"/>
+    <relationship type="manyToMany" from="game" to="team"/>
+    <relationship type="manyToOne" from="game" to="sport"/>
+    <relationship type="manyToMany" from="location" to="locationType"/>
+    <relationship type="manyToMany" from="location" to="sport"/>
 </root>
