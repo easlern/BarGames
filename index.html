@@ -11,6 +11,7 @@
 		<link href="css/styles.css" rel="stylesheet" type="text/css" />
 		<script src="scripts/jquery.js"></script>
 		<script src="scripts/jquery.placeholder.js"></script>
+		<script src="scripts/typed.js"></script>
 		<script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
 		<title>BarGames</title>
 	</head>
@@ -45,36 +46,30 @@
 				<div class="mainContent">
 					<div class="container">
 						<h1 class="mainHeader">Find Your Game</h1>
-						<p class="mainDescription">The sports bar community that helps you find games where you are.</p>
+						<p class="mainDescription">The sports bar community that helps you find games wherever you are.</p>
 						<div class="starSeparation">
 							<div class="starLine"></div>
 							<i class="fa fa-star"></i>
 							<div class="starLine"></div>
 						</div>
 						<div class="row searchSection">
-							<div class="col-md-4 col-sm-4">
-								<div class="game-search">
-									<input autocomplete="off" id="game_location" placeholder="your location..." tabindex="2" type="text" value="">
-									<i class="fa fa-compass compassIcon inputIcon"></i>   
-								</div>
-							</div>
-							<div class="col-md-4 col-sm-4">
-								<div class="game-search">
-									<input autocomplete="off" placeholder="the game..." tabindex="2" type="text" value="">
-									<i class="fa fa-soccer-ball-o inputIcon"></i>   
-								</div>
-							</div>
-							<div class="col-md-4 col-sm-4">
-								<div class="game-search travelInput">
-									<input autocomplete="off" placeholder="distance..." tabindex="2" type="text" value="">
-									<i class="fa fa-car inputIcon"></i>  
-									<button type="submit" class="btn btn-primary searchSubmit">
+							<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+								<form class="form-wrapper cf">
+									<input type="text" id="searchField" placeholder="Find a game..." required>
+									<button class="mainSearchButton" type="submit">Search</button>
+									<button class="miniSearchButton" type="submit">
 										<i class="fa fa-search"></i>
-									</button>									
-								</div>
+									</button>
+								</form>  
 							</div>
 						</div>
-
+						<div class="row">
+							<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+								<div class="searchSuggestion">
+									<span class="searchQuery"></span>
+								</div>
+							</div>					
+						</div>
 					</div>
 				</div>
 			</div>
@@ -126,18 +121,21 @@
 			</div>
 		</section>
 		<footer class="footer">
-			<div class="container">
-			
+			<div class="container">	
 			</div>
 		</footer>
-		<script>
+		<script>	
 			$(function() {
 			 $('input, textarea').placeholder();
 			});
-		</script>
-		<script type="text/javascript">
-			jQuery(document).ready(function($) {
-				$('#game_location').val(geoplugin_city());
+			
+			$(function(){
+				  $(".searchQuery").typed({
+					strings: ["Detroit Lions @ Grand Rapids, MI", "Dallas Cowboys Austin, TX", "Miami Heat in Tuscaloosa", "Atlanta Braves Kansas City"],
+					typeSpeed: 50,
+					backDelay: 1000,
+					loop: true
+				  });
 			});
 		</script>
 	</body>
