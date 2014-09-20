@@ -286,6 +286,59 @@ media="all"
 	text-align: center;
 }
 
+.filterCheckbox
+{
+	position: relative;
+	display: block;
+	min-height: 20px;
+	margin-bottom: 5px;
+}
+
+.filterCheckbox label 
+{
+	padding-left: 20px;
+	margin-bottom: 0;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.filterCheckbox input[type="checkbox"]
+ {
+	position: absolute;
+	margin-left: -20px;
+	margin-top: 4px \9;
+}
+
+.filterGroup
+{
+	margin: 0 0 20px 10px;
+}
+
+.filterHeader
+{
+	color: #303030;
+	font-weight: bold;
+	font-family: 'FuturaLTRegular';
+	font-size: 20px;
+	margin-top: 0;
+}
+
+.filterSubHeader
+{
+	color: #ED2625;
+	font-family: 'FuturaLTRegular';
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0 0 10px 0;
+}
+
+.filterList
+{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
 .firstFeatureRow
 {
 	margin-bottom: 40px;
