@@ -376,19 +376,20 @@ media="all"
 {
 	background: #eee;
 	font: 17px 'FuturaLTRegular';
+	padding: 10px 110px 10px 5px;
 }
 
 .formSearch input
 {
 	background: #FFFFFF;
 	font: 14px 'FuturaLTRegular';
+	padding: 10px 50px 10px 5px;
 	height: 31px;
 }
 
 .form-wrapper input,
 .formSearch input{
-	width: 100%;
-    padding: 10px 130px 10px 5px;
+	width: 100%; 
     float: left;    
     border: 0;
     border-radius: 3px;     
@@ -421,6 +422,11 @@ media="all"
     font-weight: normal;
     font-style: italic;
 }    
+
+.form-wrapper button.mainSearchButton
+{
+	width: 100px;
+}
  
 /* Form submit button */
 .form-wrapper button.mainSearchButton ,
@@ -466,6 +472,7 @@ media="all"
 
 .form-wrapper button.miniSearchButton 
 {
+	display: none;
     font-size: 20px;
     width: 42px;
 }  

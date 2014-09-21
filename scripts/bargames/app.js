@@ -2,9 +2,8 @@
 
 var app = angular.module('bargamesApp', [
     'ui.bootstrap',
-    'bargames-notifications',
-    'bargames-services',
-    'bargames-controllers'
+    'bargames-controllers',
+	'bargames-services'
 ]);
 
 /* declare rootscope variables */
@@ -71,7 +70,9 @@ app.loadJS = function (fileName) {
         dataType: 'text',
         success: function (js) {
             /** write the source file to the body and add sourceURL for debugging purposes */
-            $('body').append('<script type="text/javascript" data-filename="' + fileName + '">' + js + '\n\n//@ sourceURL=' + location.protocol + '//' + location.hostname + fileName + '</script>');
+			var appendText = '<script type="text/javascript">' + js + '</script>';
+			$(appendText).appendTo('body');
+			
         }
     });
 };
@@ -99,6 +100,4 @@ app.uniqueID = function () {
     return Date.now().toString(36) + r;
 };
 
-app.load('/scripts/bargames/notifications/main.js');
-app.load('/scripts/bargames/services/main.js');
-app.load('/scripts/bargames/controllers/main.js');
+//app.load('scripts/bargames/controllers/main.js');

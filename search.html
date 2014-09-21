@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="bargamesApp">
 	<head>
 		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,9 +10,14 @@
 		<link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
 		<link href="css/styles.css" rel="stylesheet" type="text/css" />
 		<script src="scripts/jquery.js"></script>
+		<script src="scripts/angular.js"></script>
+		<script src="scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+		<script src="scripts/bargames/services/searchSvc.js"></script>
+		<script src="scripts/bargames/controllers/searchCtrl.js"></script>
+		<script src="scripts/bargames/app.js"></script>
 		<title>BarGames</title>
 	</head>
-	<body>
+	<body ng-controller="searchCtrl">
 		<div class="row navbar-bargames">
 			<div class="col-md-12">
 				<nav class="navbar navbar-default" role="navigation">
@@ -142,166 +147,22 @@
 					</div>					
 				</div>
 				<div class="col-lg-9 col-md-9 paddingRemove">
-					<div class="row businessRow">
+					<div class="row businessRow" ng-repeat="business in businesses">
 						<div class="col-sm-7">
-							<img class="biz-img" src="images/vitale.jpg" />
+							<img class="biz-img" src="" />
 							<div class="businessMainInfo">
 								<h4 class="businessName">
-									<a href="#">1. Vitale's of Comstock Park</a>
+									<a href="#">{{$index + 1}}. {{business.name}}</a>
 								</h4>
-								<h5 class="distanceIndication">0.3 Miles Away</h5>
+								<h5 class="distanceIndication">{{business.distance}} Miles Away</h5>
 							</div>
 						</div>
 						<div class="col-sm-5 contactInfo">
-							<h5 class="contactLine">834 Leonard St. NE</h5>
-							<h5 class="contactLine">Grand Rapids, MI 49503</h5>
-							<h5 class="contactLine">(616) 458-2090</h5>
+							<h5 class="contactLine">{{business.street}}</h5>
+							<h5 class="contactLine">{{business.city}}, {{business.state}} {{business.zip}}</h5>
+							<h5 class="contactLine">{{business.phone}}</h5>
 						</div>
-					</div>					
-					<div class="row businessRow">
-						<div class="col-sm-7">
-							<img class="biz-img" src="images/buffalo.jpg" />
-							<div class="businessMainInfo">
-								<h4 class="businessName">
-									<a href="#">2. Buffalo Wild Wings</a>
-								</h4>
-								<h5 class="distanceIndication">0.5 Miles Away</h5>
-							</div>
-						</div>
-						<div class="col-sm-5 contactInfo">
-							<h5 class="contactLine">2035 28th Street South East</h5>
-							<h5 class="contactLine">Grand Rapids, MI 49508</h5>
-							<h5 class="contactLine">(616) 241-2999</h5>
-						</div>
-					</div>					
-					<div class="row businessRow">
-						<div class="col-sm-7">
-							<img class="biz-img" src="images/peppino.jpg" />
-							<div class="businessMainInfo">
-								<h4 class="businessName">
-									<a href="#">3. Peppino's Pizza</a>
-								</h4>
-								<h5 class="distanceIndication">1.1 Miles Away</h5>
-							</div>
-						</div>
-						<div class="col-sm-5 contactInfo">
-							<h5 class="contactLine">130 Ionia Ave SW</h5>
-							<h5 class="contactLine">Grand Rapids, MI 49503</h5>
-							<h5 class="contactLine">(616) 456-8444</h5>
-						</div>
-					</div>					
-					<div class="row businessRow">
-						<div class="col-sm-7">
-							<img class="biz-img" src="images/gpsports.jpg" />
-							<div class="businessMainInfo">
-								<h4 class="businessName">
-									<a href="#">4. GP Sports</a>
-								</h4>
-								<h5 class="distanceIndication">1.2 Miles Away</h5>
-							</div>
-						</div>
-						<div class="col-sm-5 contactInfo">
-							<h5 class="contactLine">187 Monroe Ave NW</h5>
-							<h5 class="contactLine">Grand Rapids, MI 49503</h5>
-							<h5 class="contactLine">(616) 776-6495</h5>
-						</div>
-					</div>					
-					<div class="row businessRow">
-						<div class="col-sm-7">
-							<img class="biz-img" src="images/gipper.jpg" />
-							<div class="businessMainInfo">
-								<h4 class="businessName">
-									<a href="#">5. Gipper's Bar & Grill</a>
-								</h4>
-								<h5 class="distanceIndication">2.3 Miles Away</h5>
-							</div>
-						</div>
-						<div class="col-sm-5 contactInfo">
-							<h5 class="contactLine">2929 Kraft Ave SE</h5>
-							<h5 class="contactLine">Grand Rapids, MI 49512</h5>
-							<h5 class="contactLine">(616) 551-0841</h5>
-						</div>
-					</div>					
-					<div class="row businessRow">
-						<div class="col-sm-7">
-							<img class="biz-img" src="images/score.jpg" />
-							<div class="businessMainInfo">
-								<h4 class="businessName">
-									<a href="#">6. The Score</a>
-								</h4>
-								<h5 class="distanceIndication">2.3 Miles Away</h5>
-							</div>
-						</div>
-						<div class="col-sm-5 contactInfo">
-							<h5 class="contactLine">5301 Northland Dr NE</h5>
-							<h5 class="contactLine">Grand Rapids, MI 49525</h5>
-							<h5 class="contactLine">(616) 301-0060</h5>
-						</div>
-					</div>					
-					<div class="row businessRow">
-						<div class="col-sm-7">
-							<img class="biz-img" src="images/brann.jpg" />
-							<div class="businessMainInfo">
-								<h4 class="businessName">
-									<a href="#">7. Brann's Steakhouse & Sports Grille</a>
-								</h4>
-								<h5 class="distanceIndication">2.4 Miles Away</h5>
-							</div>
-						</div>
-						<div class="col-sm-5 contactInfo">
-							<h5 class="contactLine">5510 28th St SE</h5>
-							<h5 class="contactLine">Grand Rapids, MI 49512</h5>
-							<h5 class="contactLine">(616) 285-7800</h5>
-						</div>
-					</div>					
-					<div class="row businessRow">
-						<div class="col-sm-7">
-							<img class="biz-img" src="images/uccello.jpg" />
-							<div class="businessMainInfo">
-								<h4 class="businessName">
-									<a href="#">8. Uccello's Ristorante</a>
-								</h4>
-								<h5 class="distanceIndication">4.6 Miles Away</h5>
-							</div>
-						</div>
-						<div class="col-sm-5 contactInfo">
-							<h5 class="contactLine">2630 E Beltline SE</h5>
-							<h5 class="contactLine">Grand Rapids, MI 49546</h5>
-							<h5 class="contactLine">(616) 954-2002</h5>
-						</div>
-					</div>					
-					<div class="row businessRow">
-						<div class="col-sm-7">
-							<img class="biz-img" src="images/louie.jpg" />
-							<div class="businessMainInfo">
-								<h4 class="businessName">
-									<a href="#">9. Louie's Bar And Rocket Lounge BBQ</a>
-								</h4>
-								<h5 class="distanceIndication">4.8 Miles Away</h5>
-							</div>
-						</div>
-						<div class="col-sm-5 contactInfo">
-							<h5 class="contactLine">608 Bridge St</h5>
-							<h5 class="contactLine">Grand Rapids, MI 49504</h5>
-							<h5 class="contactLine">(616) 284-2610</h5>
-						</div>
-					</div>					
-					<div class="row businessRow">
-						<div class="col-sm-7">
-							<img class="biz-img" src="images/z.jpg" />
-							<div class="businessMainInfo">
-								<h4 class="businessName">
-									<a href="#">10. Z's Bar & Restaurant</a>
-								</h4>
-								<h5 class="distanceIndication">5.9 Miles Away</h5>
-							</div>
-						</div>
-						<div class="col-sm-5 contactInfo">
-							<h5 class="contactLine">168 Louis Campau NW</h5>
-							<h5 class="contactLine">Grand Rapids, MI 49503</h5>
-							<h5 class="contactLine">(616) 454-3141</h5>
-						</div>
-					</div>			
+					</div>							
 				</div>
 			</div>
 		</div>

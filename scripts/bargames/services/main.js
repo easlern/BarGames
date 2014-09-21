@@ -1,3 +1,3 @@
 ﻿'use strict';
 
-angular.module('bargames-controllers', []);
+angular.module('bargames-services', []);
