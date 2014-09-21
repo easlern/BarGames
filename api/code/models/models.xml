@@ -22,9 +22,8 @@
         <property name="name" data="string" length = "100" required="always"/>
         <property name="street" data="string" length = "100"/>
         <property name="cityId" data="integer"/>
-        <property name="state" data="string" length="20"/>
         <property name="phone" data="string" length="20"/>
-        <property name="locationTypeIds" data="integer array" required="always"/>
+        <property name="locationTypeIds" data="integer array"/>
     </model>
     <model name="locationType">
         <property name="id" type="primary key" data="integer"/>

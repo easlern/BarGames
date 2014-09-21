@@ -287,6 +287,8 @@ def makeDatabase():
             propType = prop.getAttribute ('type')
             propData = prop.getAttribute ('data')
             propLength = prop.getAttribute ('length')
+            if ('array' in propData):
+                continue
             if (propLength == ''):
                 propLength = '0'
             dbType = propDataToDbType (propData)
@@ -345,6 +347,7 @@ def makeDatabase():
     outputFile.write ('\t}\n')
     outputFile.write ('?>\n')
     outputFile.close()
+
 
 
 makeObjects()

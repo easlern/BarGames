@@ -6,13 +6,13 @@
 		public function initialize(){
 			$con = connectAsAdmin();
 			$con->query ("drop table if exists game");
-			$con->query ("create table game (id int not null auto_increment, locationId int not null, name varchar(100) not null, tagIds int, sportId int not null, teamIds int, primary key(id))");
+			$con->query ("create table game (id int not null auto_increment, locationId int not null, name varchar(100) not null, sportId int not null, primary key(id))");
 			$con->query ("drop table if exists sport");
 			$con->query ("create table sport (id int not null auto_increment, name varchar(32), primary key(id))");
 			$con->query ("drop table if exists team");
 			$con->query ("create table team (id int not null auto_increment, name varchar(100), primary key(id))");
 			$con->query ("drop table if exists location");
-			$con->query ("create table location (id int not null auto_increment, name varchar(100) not null, street varchar(100), cityId int, state varchar(20), phone varchar(20), locationTypeIds int not null, primary key(id))");
+			$con->query ("create table location (id int not null auto_increment, name varchar(100) not null, street varchar(100), cityId int, phone varchar(20), primary key(id))");
 			$con->query ("drop table if exists locationType");
 			$con->query ("create table locationType (id int not null auto_increment, name varchar(32), primary key(id))");
 			$con->query ("drop table if exists tag");

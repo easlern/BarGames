@@ -17,7 +17,7 @@
 	}
 	class TestLocationRepository{
 		public function getLocationById ($id){
-			return new Location($id, "test_name", "test_street", 0, "test_state", "test_phone", array(0,1,2));
+			return new Location($id, "test_name", "test_street", 0, "test_phone", array(0,1,2));
 		}
 	}
 	class TestLocationTypeRepository{
