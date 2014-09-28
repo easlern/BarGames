@@ -1,170 +1,176 @@
 <!DOCTYPE HTML>
 <html ng-app="bargamesApp">
-	<head>
-		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="content-language" content="en-us" />
-		<meta http-equiv="cache-control" content="no-cache" />
-		<meta http-equiv="pragma" content="no-cache" />
-		<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-		<link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
-		<link href="css/styles.css" rel="stylesheet" type="text/css" />
-		<script src="scripts/jquery.js"></script>
-		<script src="scripts/angular.js"></script>
-		<script src="scripts/angular-ui/ui-bootstrap-tpls.js"></script>
-		<script src="scripts/bargames/services/searchSvc.js"></script>
-		<script src="scripts/bargames/controllers/searchCtrl.js"></script>
-		<script src="scripts/bargames/app.js"></script>
-		<title>BarGames</title>
-	</head>
-	<body ng-controller="searchCtrl">
-		<div class="row navbar-bargames">
-			<div class="col-md-12">
-				<nav class="navbar navbar-default" role="navigation">
-				  <div class="container-fluid">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header">
-					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					  </button>
-					  <div class="navbar-headerElements">
-						  <a class="navbar-brand" href="#"><span>business</span>Name</a>
-						  <img class="dividerHeader" src="images/header-divider.gif" />
-					  </div>
-					</div>
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-						<div class="col-md-5 col-sm-5">
-							<form class="formSearch">
-								<input type="text" id="searchField" placeholder="Find a game..." required>
-								<button class="miniSearchButton" type="submit">
-									<i class="fa fa-search"></i>
-								</button>
-							</form>  
-						</div>
-					  <ul class="nav navbar-nav navbar-right">
-						<li><a href="#" class="borderLinkNav">Login</a></li>
-						<li><a href="#" class="borderLinkNav"><i class="fa fa-bolt"></i>Sign Up Free</a></li>
-					  </ul>
-					</div><!-- /.navbar-collapse -->
-				  </div><!-- /.container-fluid -->
-				</nav>
-			</div>
-		</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-9">
-					<h1 class="searchQuery">Detroit Lions vs. Falcons<span> @ Grand Rapids, MI</span></h1>
-				</div>
-				<div class="col-sm-3">
-					<h4 class="paginationNumber">Showing 1-10 of 50</h4>
-				</div>
-			</div>
-			<div class="row mainSearchContent">
-				<div class="col-lg-3 col-md-3">
-					<h3 class="filterHeader">Filters</h3>
-					<div class="filterGroup">
-						<h5 class="filterSubHeader">Sort By</h5>
-						<ul class="filterList">
-							<li>
-								<a href="#">Distance</a>
-							</li>
-							<li>
-								<a href="#">Name</a>
-							</li>
-						</ul>
-					</div>
-					<div class="filterGroup">
-						<h5 class="filterSubHeader">Distance</h5>
-						<ul class="filterList">
-							<li>
-								<a href="#">More than 5 Miles</a>
-							</li>
-							<li>
-								<a href="#">5 Miles</a>
-							</li>
-							<li>
-								<a href="#">2 Miles</a>
-							</li>
-							<li>
-								<a href="#">1 Mile</a>
-							</li>
-							<li>
-								<a href="#">Less than 1 Mile</a>
-							</li>
-						</ul>
-					</div>			
-					<div class="filterGroup">
-						<h5 class="filterSubHeader">Cities</h5>
-						<div class="filterCheckbox">
-							<label>
-							  <input type="checkbox"> Grand Rapids
-							</label>
-						</div>						
-						<div class="filterCheckbox">
-							<label>
-							  <input type="checkbox"> Wyoming
-							</label>
-						</div>						
-						<div class="filterCheckbox">
-							<label>
-							  <input type="checkbox"> Muskegon
-							</label>
-						</div>						
-						<div class="filterCheckbox">
-							<label>
-							  <input type="checkbox"> Holland
-							</label>
-						</div>
-						<a href="#">More Cities</a>
-					</div>
-					<div class="filterGroup">
-						<h5 class="filterSubHeader">Category</h5>
-						<div class="filterCheckbox">
-							<label>
-							  <input type="checkbox"> Sports Bars
-							</label>
-						</div>						
-						<div class="filterCheckbox">
-							<label>
-							  <input type="checkbox"> Restaurants
-							</label>
-						</div>						
-						<div class="filterCheckbox">
-							<label>
-							  <input type="checkbox"> Bars
-							</label>
-						</div>						
-						<div class="filterCheckbox">
-							<label>
-							  <input type="checkbox"> Pubs
-							</label>
-						</div>
-						<a href="#">More Categories</a>
-					</div>					
-				</div>
-				<div class="col-lg-9 col-md-9 paddingRemove">
-					<div class="row businessRow" ng-repeat="business in businesses">
-						<div class="col-sm-7">
-							<img class="biz-img" src="" />
-							<div class="businessMainInfo">
-								<h4 class="businessName">
-									<a href="#">{{$index + 1}}. {{business.name}}</a>
-								</h4>
-								<h5 class="distanceIndication">{{business.distance}} Miles Away</h5>
-							</div>
-						</div>
-						<div class="col-sm-5 contactInfo">
-							<h5 class="contactLine">{{business.street}}</h5>
-							<h5 class="contactLine">{{business.city}}, {{business.state}} {{business.zip}}</h5>
-							<h5 class="contactLine">{{business.phone}}</h5>
-						</div>
-					</div>							
-				</div>
-			</div>
-		</div>
-	</body>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-language" content="en-us"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="css/font-awesome.css" rel="stylesheet" type="text/css"/>
+    <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+    <script src="scripts/jquery.js"></script>
+    <script src="scripts/angular.js"></script>
+    <script src="scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    <script src="scripts/app.js"></script>
+    <title>BarGames</title>
+</head>
+<body ng-controller="searchCtrl">
+<div class="row navbar-bargames">
+    <div class="col-md-12">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="navbar-headerElements">
+                        <a class="navbar-brand" href="#"><span>business</span>Name</a>
+                        <img class="dividerHeader" src="images/header-divider.gif"/>
+                    </div>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div class="col-md-5 col-sm-5">
+                        <form class="formSearch">
+                            <input type="text" id="searchField" placeholder="Find a game..." required>
+                            <button class="miniSearchButton" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#" class="borderLinkNav">Login</a></li>
+                        <li><a href="#" class="borderLinkNav"><i class="fa fa-bolt"></i>Sign Up Free</a></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </div>
+</div>
+<div class="container">
+    <div class="row headerRow">
+        <div class="col-sm-9 col-xs-9">
+            <h1 class="searchQuery">Detroit Lions vs. Falcons<span> @ Grand Rapids, MI</span></h1>
+        </div>
+        <div class="col-sm-3 col-xs-3">
+            <h4 class="paginationNumber">Showing 1-10 of 50</h4>
+            <button class="btn btn-default btn-sm filterButton">Apply Filters</button>
+        </div>
+    </div>
+    <div class="row mainSearchContent">
+        <div class="col-lg-3 col-md-3 filterSection">
+            <h3 class="filterHeader">Filters</h3>
+
+            <div class="filterGroup">
+                <h5 class="filterSubHeader">Sort By</h5>
+                <ul class="filterList">
+                    <li>
+                        <a href="#">Distance</a>
+                    </li>
+                    <li>
+                        <a href="#">Name</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="filterGroup">
+                <h5 class="filterSubHeader">Distance</h5>
+                <ul class="filterList">
+                    <li>
+                        <a href="#">More than 5 Miles</a>
+                    </li>
+                    <li>
+                        <a href="#">5 Miles</a>
+                    </li>
+                    <li>
+                        <a href="#">2 Miles</a>
+                    </li>
+                    <li>
+                        <a href="#">1 Mile</a>
+                    </li>
+                    <li>
+                        <a href="#">Less than 1 Mile</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="filterGroup">
+                <h5 class="filterSubHeader">Cities</h5>
+
+                <div class="filterCheckbox">
+                    <label>
+                        <input type="checkbox"> Grand Rapids
+                    </label>
+                </div>
+                <div class="filterCheckbox">
+                    <label>
+                        <input type="checkbox"> Wyoming
+                    </label>
+                </div>
+                <div class="filterCheckbox">
+                    <label>
+                        <input type="checkbox"> Muskegon
+                    </label>
+                </div>
+                <div class="filterCheckbox">
+                    <label>
+                        <input type="checkbox"> Holland
+                    </label>
+                </div>
+                <a href="#">More Cities</a>
+            </div>
+            <div class="filterGroup">
+                <h5 class="filterSubHeader">Category</h5>
+
+                <div class="filterCheckbox">
+                    <label>
+                        <input type="checkbox"> Sports Bars
+                    </label>
+                </div>
+                <div class="filterCheckbox">
+                    <label>
+                        <input type="checkbox"> Restaurants
+                    </label>
+                </div>
+                <div class="filterCheckbox">
+                    <label>
+                        <input type="checkbox"> Bars
+                    </label>
+                </div>
+                <div class="filterCheckbox">
+                    <label>
+                        <input type="checkbox"> Pubs
+                    </label>
+                </div>
+                <a href="#">More Categories</a>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 paddingRemove">
+            <div class="row businessRow" ng-repeat="business in businesses">
+                <div class="col-sm-7">
+                    <img class="biz-img" src=""/>
+
+                    <div class="businessMainInfo">
+                        <h4 class="businessName">
+                            <a href="#">{{$index + 1}}. {{business.name}}</a>
+                        </h4>
+                        <h5 class="distanceIndication">{{business.distance}} Miles Away</h5>
+                    </div>
+                </div>
+                <div class="col-sm-5 contactInfo">
+                    <h5 class="contactLine">{{business.street}}</h5>
+                    <h5 class="contactLine">{{business.city}}, {{business.state}} {{business.zip}}</h5>
+                    <h5 class="contactLine">{{business.phone}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 </html>
