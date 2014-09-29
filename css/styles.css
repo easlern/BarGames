@@ -546,7 +546,7 @@ media
     color: #FFFFFF;
     font-size: 85px;
     font-family: 'FuturaLTBold', sans-serif;
-    margin-top: 50px;
+    margin-top: 100px;
     text-transform: uppercase;
 }
 
@@ -664,6 +664,12 @@ media
 
 .navbar-right li:last-child a {
     margin-right: 0 !important;
+}
+
+.navigationView {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
 }
 
 .offsetCenter {

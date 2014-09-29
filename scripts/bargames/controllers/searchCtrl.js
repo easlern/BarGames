@@ -13,7 +13,5 @@ angular.module('bargamesApp').controller("searchCtrl", function ($scope, $rootSc
             phone: "(616) 334-3452"
         }
     ];
-
     /* instantiation methods */
-
 });
