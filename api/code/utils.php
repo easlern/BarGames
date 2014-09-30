@@ -93,7 +93,7 @@ class Utils{
     const MODE_PROD = "prod";
     
     static function GetMode(){
-        if (Utils::GetDomain() === "www.indiegamesurf.com") return Utils::MODE_DEV;
+        if (Utils::GetDomain() === "www.expirednews.net") return Utils::MODE_DEV;
 
         return Utils::MODE_PROD;
     }
@@ -102,7 +102,7 @@ class Utils{
         if (isset($_SERVER["HTTP_HOST"])){
             return $_SERVER["HTTP_HOST"];
         }
-        return "www.echosomething.com";
+        return "HTTP_HOST not set";
     }
 }
 

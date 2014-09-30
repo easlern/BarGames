@@ -22,7 +22,7 @@
 			$con->query ("drop table if exists securityLevel");
 			$con->query ("create table securityLevel (id int not null auto_increment, name varchar(32) not null, primary key(id))");
 			$con->query ("drop table if exists city");
-			$con->query ("create table city (id int not null auto_increment, name varchar(100) not null, state varchar(100) not null, country varchar(100), longitude float not null, latitude float not null, primary key(id))");
+			$con->query ("create table city (id int not null auto_increment, name varchar(100) not null, state varchar(2) not null, country varchar(100), longitude float not null, latitude float not null, primary key(id))");
 			$con->query ("drop table if exists setting");
 			$con->query ("create table setting (id int not null auto_increment, name varchar(32), defaultValue varchar(100), primary key(id))");
 			$con->query ("drop table if exists userSetting");

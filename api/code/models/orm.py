@@ -235,7 +235,9 @@ def makeRepositories():
     for model in models:
         modelName = model.getAttribute ('name')
         properties = model.getElementsByTagName ('property')
-        outputFile.write ('\tclass Test' + cap(modelName) + 'Repository{\n')
+        outputFile.write ('\n\tclass MySql' + cap(modelName) + 'Repository{\n')
+        outputFile.write ('\t}\n')
+        outputFile.write ('\n\tclass Test' + cap(modelName) + 'Repository{\n')
         outputFile.write ('\t\tpublic function get' + cap(modelName) + 'ById ($id){\n')
         outputFile.write ('\t\t\treturn new ' + cap(modelName) + '($id')
         for prop in properties:
@@ -257,7 +259,7 @@ def makeRepositories():
         modelName = model.getAttribute('name')
         properties = model.getElementsByTagName('property')
         outputFile.write ('\t\tpublic static function get' + cap(modelName) + 'Repository(){\n')
-        outputFile.write ('\t\t\treturn new Test' + cap(modelName) + 'Repository();\n')
+        outputFile.write ('\t\t\treturn new MySql' + cap(modelName) + 'Repository();\n')
         outputFile.write ('\t\t}\n')
     outputFile.write ('\t}\n')
     outputFile.write ('\n?>\n')

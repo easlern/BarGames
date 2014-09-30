@@ -49,7 +49,7 @@
     <model name="city">
         <property name="id" type="primary key" data="integer"/>
         <property name="name" data="string" length="100" required="always"/>
-        <property name="state" data="string" length="100" required="always"/>
+        <property name="state" data="string" length="2" required="always"/>
         <property name="country" data="string" length="100"/>
         <property name="longitude" data="float" required="always"/>
         <property name="latitude" data="float" required="always"/>
