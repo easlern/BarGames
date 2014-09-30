@@ -13,10 +13,10 @@ angular.module('bargamesApp').config(function ($stateProvider, $urlRouterProvide
             url: "/home",
             views: {
                 'navigation': {
-                    templateUrl: "scripts/bargames/partials/homeNav.html"
+                    templateUrl: "scripts/bargames/partials/home/homeNav.html"
                 },
                 'mainContent': {
-                    templateUrl: "scripts/bargames/partials/homeContent.html"
+                    templateUrl: "scripts/bargames/partials/home/homeContent.html"
                 }
             }
         })
@@ -27,7 +27,7 @@ angular.module('bargamesApp').config(function ($stateProvider, $urlRouterProvide
                     templateUrl: "scripts/bargames/partials/mainNav.html"
                 },
                 'mainContent': {
-                    templateUrl: "scripts/bargames/partials/searchContent.html",
+                    templateUrl: "scripts/bargames/partials/search/searchContent.html",
                     controller: "searchCtrl"
                 }
             }
@@ -39,10 +39,30 @@ angular.module('bargamesApp').config(function ($stateProvider, $urlRouterProvide
                     templateUrl: "scripts/bargames/partials/mainNav.html"
                 },
                 'mainContent': {
-                    templateUrl: "scripts/bargames/partials/userProfile.html",
+                    templateUrl: "scripts/bargames/partials/userProfile/userProfile.html",
                     controller: "userProfileCtrl"
                 }
             }
+        })
+        .state('userProfile.profile', {
+            url: "/userProfile",
+            templateUrl: "scripts/bargames/partials/userProfile/userProfile-profile.html",
+            controller: "userProfileProfileCtrl"
+        })
+        .state('userProfile.following', {
+            url: "/userFollowing",
+            templateUrl: "scripts/bargames/partials/userProfile/userProfile-following.html",
+            controller: "userProfileFollowingCtrl"
+        })
+        .state('userProfile.followers', {
+            url: "/userFollowers",
+            templateUrl: "scripts/bargames/partials/userProfile/userProfile-followers.html",
+            controller: "userProfileFollowersCtrl"
+        })
+        .state('userProfile.friends', {
+            url: "/userFriends",
+            templateUrl: "scripts/bargames/partials/userProfile/userProfile-friends.html",
+            controller: "userProfileFriendsCtrl"
         })
         .state('businessProfile', {
             url: "/business",
@@ -51,7 +71,7 @@ angular.module('bargamesApp').config(function ($stateProvider, $urlRouterProvide
                     templateUrl: "scripts/bargames/partials/mainNav.html"
                 },
                 'mainContent': {
-                    templateUrl: "scripts/bargames/partials/businessProfile.html",
+                    templateUrl: "scripts/bargames/partials/businessProfile/businessProfile.html",
                     controller: "businessProfileCtrl"
                 }
             }
@@ -63,7 +83,7 @@ angular.module('bargamesApp').config(function ($stateProvider, $urlRouterProvide
                     templateUrl: "scripts/bargames/partials/mainNav.html"
                 },
                 'mainContent': {
-                    templateUrl: "scripts/bargames/partials/groupPage.html",
+                    templateUrl: "scripts/bargames/partials/groupPage/groupPage.html",
                     controller: "groupPageCtrl"
                 }
             }
