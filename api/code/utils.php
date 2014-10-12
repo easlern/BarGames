@@ -93,7 +93,7 @@ class Utils{
     const MODE_PROD = "prod";
     
     static function GetMode(){
-        if (Utils::GetDomain() === "www.expirednews.net") return Utils::MODE_DEV;
+        if (Utils::GetDomain() === "expirednews.net" || Utils::GetDomain() == "www.expirednews.net") return Utils::MODE_DEV;
 
         return Utils::MODE_PROD;
     }
