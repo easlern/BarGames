@@ -231,12 +231,53 @@ def makeControllers():
 
 def makeRepositories():
     outputFile = open ('repositories.php', 'w')
-    outputFile.write ('<?php\n\n')
+    outputFile.write ('<?php\n')
+    outputFile.write ('\n\trequire_once ("../startup.php");')
+    outputFile.write ('\n\trequire_once ("initializeDb.php");\n\n')
     for model in models:
         modelName = model.getAttribute ('name')
         properties = model.getElementsByTagName ('property')
         outputFile.write ('\n\tclass MySql' + cap(modelName) + 'Repository{\n')
-        outputFile.write ('\t}\n')
+        outputFile.write ('\t\tpublic function get' + cap(modelName) + 'ById ($id){')
+        outputFile.write ('\n\t\t\t$conn = connectAsWebUser();')
+        outputFile.write ('\n\t\t\tif (!$conn) return NULL;')
+        outputFile.write ('\n\t\t\t$result = $conn->prepare ("select id')
+        for prop in properties:
+            if (prop.getAttribute ('name').lower() != 'id' and 'array' not in prop.getAttribute ('data').lower()):
+                outputFile.write (', ' + prop.getAttribute ('name'))
+        outputFile.write (' from ' + cap(modelName) + ' where id = ?");')
+        outputFile.write ('\n\t\t\t$result->bind_param ("i", $id);')
+        outputFile.write ('\n\t\t\t$result->execute();\n')
+        for prop in properties:
+            if ('array' not in prop.getAttribute ('data').lower()):
+                outputFile.write ('\n\t\t\t$' + prop.getAttribute ('name') + ' = ')
+                if (propDataToDbType (prop.getAttribute ('data').lower()) == 'varchar'):
+                    outputFile.write ('"";')
+                else:
+                    outputFile.write ('0;')
+        outputFile.write ('\n\t\t\t$result->bind_result (');
+        first = True
+        for prop in properties:
+            if ('array' not in prop.getAttribute ('data').lower()):
+                if (not first):
+                    outputFile.write (', ')
+                first = False
+                outputFile.write ('$' + prop.getAttribute ('name'));
+        outputFile.write (');')
+        outputFile.write ('\n\t\t\tif ($result->fetch()){')
+        outputFile.write ('\n\t\t\t\treturn new ' + cap(modelName) + ' (');
+        first = True
+        for prop in properties:
+            if ('array' not in prop.getAttribute ('data').lower()):
+                if (not first):
+                    outputFile.write (', ')
+                first = False
+                outputFile.write ('$' + prop.getAttribute ('name'));
+        outputFile.write (');')
+        outputFile.write ('\n\t\t\t}')
+        outputFile.write ('\n\t\t\treturn NULL;')
+        outputFile.write ('\n\t\t}\n')
+        outputFile.write ('\n\t}\n')
         outputFile.write ('\n\tclass Test' + cap(modelName) + 'Repository{\n')
         outputFile.write ('\t\tpublic function get' + cap(modelName) + 'ById ($id){\n')
         outputFile.write ('\t\t\treturn new ' + cap(modelName) + '($id')
@@ -357,5 +398,6 @@ makeWebAccessors()
 makeRepositories()
 makeControllers()
 makeDatabase()
-        
+
+       
     
