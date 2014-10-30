@@ -1,3 +1,10 @@
+html, body
+{
+    background-color: #E9E9E9;
+    height: 100%;
+    width: 100%;
+}
+
 @font-face {
     font-family: 'FuturaLTBold';
     src: url('../fonts/futura_lt_bold.eot?') format('eot'),
@@ -504,6 +511,13 @@ media
     text-align: right;
 }
 
+.img-responsive-small
+{
+    border: 1px solid rgba(185, 185, 200, 0.69);
+    border-radius: 4px;
+    margin: 0 auto;
+}
+
 .landing {
     background: url(../images/background.jpg) no-repeat;
     background-size: cover;
@@ -563,6 +577,15 @@ media
 
 .mainSearchContent {
     margin-top: 15px;
+}
+
+.messageButton
+{
+    font-weight: bold;
+    font-family: 'FuturaLTMedium';
+    position: absolute;
+    top: 15px;
+    right: 15px;
 }
 
 .missionStatement {
@@ -672,6 +695,19 @@ media
     width: 100%;
 }
 
+.navNumber
+{
+    display: block;
+    width: 100%;
+    font-weight: bold;
+    font-family: 'FuturaLTRegular';
+}
+
+.noPaddingLeft
+{
+    padding-left: 0;
+}
+
 .offsetCenter {
     margin-left: 21.5%;
 }
@@ -711,6 +747,65 @@ media
 
 .placeholder {
     color: rgba(49, 49, 49, .6) !important;
+}
+
+.profileNavigation
+{
+    width: 100%;
+    display: inline-block;
+    background: #E1E3E9;
+    border-radius: 6px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profileNavigation li
+{
+    width: 105px;
+    float: left;
+    text-align: center;
+}
+
+.profileNavigation div
+{
+    display: block;
+    padding: 15px 0;
+}
+
+.profileNavigation a
+{
+    font-family: 'FuturaLTMedium';
+    display: block;
+    color: #333333;
+}
+
+.profileNavigation a:hover
+{
+    text-decoration: none;
+}
+
+.profileNavigation li:not(:last-child) a
+{
+    border-right: 1px solid #C0C0C0;
+}
+
+.profileSectionDescription
+{
+    margin: -1px 0 20px 0;
+    font-family: 'FuturaLTMedium';
+    font-weight: normal;
+}
+
+.profileSectionHeader
+{
+    border-bottom: 1px solid #C0C0C0;
+    color: #555555;
+    font-family: 'FuturaLTMedium';
+    font-weight: bold;
+    font-size: 15px;
+    margin: 0;
+    text-align: right;
 }
 
 .rocketShip {
@@ -812,6 +907,41 @@ media
     -webkit-animation: blink 0.7s infinite;
     -moz-animation: blink 0.7s infinite;
     animation: blink 0.7s infinite;
+}
+
+.userDisplayName
+{
+    display: inline-block;
+    font-family: 'FuturaLTMedium';
+    font-weight: bold;
+    margin: 0;
+}
+
+.userLocation
+{
+    color: #999999;
+    font-weight: bold;
+    font-family: 'FuturaLTLight';
+}
+
+.userLocation i
+{
+    font-size: 22px;
+}
+
+.userProfileContentSection,
+.userProfileHeaderSection,
+.userProfileImageSection
+{
+    background-color: #FFFFFF;
+    border-radius: 4px;
+    border: 1px solid rgba(185, 185, 200, 0.69);
+    padding: 15px 10px;
+}
+
+.userProfileHeaderSection
+{
+    margin-bottom: 20px;
 }
 
 @keyframes blink {

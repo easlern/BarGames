@@ -34,6 +34,8 @@ angular.module('bargamesApp').config(function ($stateProvider, $urlRouterProvide
         })
         .state('userProfile', {
             url: "/user",
+            abstract: true,
+            template: '<div ui-view></div>',
             views: {
                 'navigation': {
                     templateUrl: "scripts/bargames/partials/mainNav.html"
@@ -45,9 +47,14 @@ angular.module('bargamesApp').config(function ($stateProvider, $urlRouterProvide
             }
         })
         .state('userProfile.profile', {
-            url: "/userProfile",
+            url: "",
             templateUrl: "scripts/bargames/partials/userProfile/userProfile-profile.html",
             controller: "userProfileProfileCtrl"
+        })
+        .state('userProfile.friends', {
+            url: "/userFriends",
+            templateUrl: "scripts/bargames/partials/userProfile/userProfile-friends.html",
+            controller: "userProfileFriendsCtrl"
         })
         .state('userProfile.following', {
             url: "/userFollowing",
@@ -59,10 +66,10 @@ angular.module('bargamesApp').config(function ($stateProvider, $urlRouterProvide
             templateUrl: "scripts/bargames/partials/userProfile/userProfile-followers.html",
             controller: "userProfileFollowersCtrl"
         })
-        .state('userProfile.friends', {
-            url: "/userFriends",
-            templateUrl: "scripts/bargames/partials/userProfile/userProfile-friends.html",
-            controller: "userProfileFriendsCtrl"
+        .state('userProfile.groups', {
+            url: "/userGroups",
+            templateUrl: "scripts/bargames/partials/userProfile/userProfile-groups.html",
+            controller: "userProfileGroupsCtrl"
         })
         .state('businessProfile', {
             url: "/business",
