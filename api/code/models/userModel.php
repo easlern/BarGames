@@ -40,6 +40,9 @@
 			return $this->securityLevelId;
 		}
 
+		public function setEmail($value){
+			$this->email = $value;
+		}
 		public function setType($value){
 			$this->type = $value;
 		}

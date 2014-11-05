@@ -35,6 +35,9 @@
 			return $this->latitude;
 		}
 
+		public function setId($value){
+			$this->id = $value;
+		}
 		public function setName($value){
 			$this->name = $value;
 		}

@@ -35,6 +35,9 @@
 			return $this->teamIds;
 		}
 
+		public function setId($value){
+			$this->id = $value;
+		}
 		public function setLocationId($value){
 			$this->locationId = $value;
 		}

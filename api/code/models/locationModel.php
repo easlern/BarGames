@@ -35,6 +35,9 @@
 			return $this->locationTypeIds;
 		}
 
+		public function setId($value){
+			$this->id = $value;
+		}
 		public function setName($value){
 			$this->name = $value;
 		}

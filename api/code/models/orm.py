@@ -37,8 +37,6 @@ def makeObjects():
             outputFile.write ('\t\t}\n')
         outputFile.write('\n')
         for prop in properties:
-            if (prop.getAttribute ('type') == 'primary key'):
-                continue
             propertyName = prop.getAttribute('name')
             outputFile.write ('\t\tpublic function set' + cap(propertyName) + '($value){\n')
             outputFile.write ('\t\t\t$this->' + propertyName + ' = $value;\n')
@@ -92,7 +90,7 @@ def makeWebAccessors():
     outputFile.write ('\t\t\t\t$controllerInstance->get($args);\n')
     outputFile.write ('\t\t\t\tbreak;\n')
     outputFile.write ('\t\t\tcase "POST":\n')
-    outputFile.write ('\t\t\t\t$args = GetSanitizedPostVars();\n')
+    outputFile.write ('\t\t\t\t$args = array_values (GetSanitizedPostVars());\n')
     outputFile.write ('\t\t\t\t$controllerInstance->create($args);\n')
     outputFile.write ('\t\t\t\tbreak;\n')
     outputFile.write ('\t\t\tcase "PUT":\n')
@@ -132,19 +130,24 @@ def makeControllers():
         # GET
         outputFile.write ('\t\tpublic function get ($args){\n')
         outputFile.write ('\t\t\tif (count ($args) < 1){\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 400 Bad Request");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode ($errorObject));\n')
         outputFile.write ('\t\t\t\texit();\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\n\t\t\t$repo = Repositories::get' + cap(modelName) + 'Repository();\n')
         outputFile.write ('\t\t\tif (IsAuthorized()){\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 200 OK");\n')
-        outputFile.write ('\t\t\t\t$' + modelName + ' = $repo->get' + cap(modelName) + 'ById($args[0]);\n')
-        outputFile.write ('\t\t\t\tprint ($' + modelName + '->toJson());\n')
+        outputFile.write ('\t\t\t\t$' + modelName + ' = $repo->getById($args[0]);\n')
+        outputFile.write ('\t\t\t\tif ($' + modelName + ' != NULL){\n')
+        outputFile.write ('\t\t\t\t\theader ("HTTP/1.1 200 OK");\n')
+        outputFile.write ('\t\t\t\t\tprint ($' + modelName + '->toJson());\n')
+        outputFile.write ('\t\t\t\t}\n')
+        outputFile.write ('\t\t\t\telse{\n')
+        outputFile.write ('\t\t\t\t\theader ("HTTP/1.1 404 Not found");\n')
+        outputFile.write ('\t\t\t\t}\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\t\t\telse{\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 403 Forbidden");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse("Not authenticated.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode($errorObject));\n')
         outputFile.write ('\t\t\t}\n')
@@ -158,18 +161,27 @@ def makeControllers():
             if (prop.getAttribute ('type') != 'primary key'):
                 nonPrimaryPropCount += 1
         outputFile.write ('\t\t\tif (count ($args) < ' + str (nonPrimaryPropCount) + '){\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 400 Bad Request");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode ($errorObject));\n')
         outputFile.write ('\t\t\t\texit();\n')
         outputFile.write ('\t\t\t}\n')
 
         outputFile.write ('\t\t\tif (IsAdminAuthorized() && IsCsrfGood()){\n')
+        outputFile.write ('\t\t\t\t$repo = Repositories::get' + cap(modelName) + 'Repository();\n')
+        outputFile.write ('\t\t\t\t$model = new ' + cap(modelName) + '(-1')
+        count = 0
+        for prop in properties:
+            if ('array' not in prop.getAttribute ('data') and prop.getAttribute ('type') != 'primary key'):
+                outputFile.write (', $args[' + str(count) + ']')
+                count += 1
+        outputFile.write (');\n')
+        outputFile.write ('\t\t\t\t$repo->create($model);\n')
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 303 See Other");\n')
-        outputFile.write ('\t\t\t\theader ("Location: /BarGames/api/' + modelName + '/1");\n')
+        outputFile.write ('\t\t\t\theader ("Location: /api/' + modelName + '/" . $model->getId());\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\t\t\telse{\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 403 Forbidden");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode($errorObject));\n')
         outputFile.write ('\t\t\t}\n')
@@ -183,7 +195,7 @@ def makeControllers():
             if (prop.getAttribute ('type') != 'primary key'):
                 nonPrimaryPropCount += 1
         outputFile.write ('\t\t\tif (count ($args) < ' + str (nonPrimaryPropCount) + '){\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 400 Bad Request");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode ($errorObject));\n')
         outputFile.write ('\t\t\t\texit();\n')
@@ -193,7 +205,7 @@ def makeControllers():
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 200 OK");\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\t\t\telse{\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 403 Forbidden");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode($errorObject));\n')
         outputFile.write ('\t\t\t}\n')
@@ -208,7 +220,7 @@ def makeControllers():
                 primaryPropCount += 1
         outputFile.write ('\t\t\tLogInfo ("Deleting ' + modelName + ' with args " . print_r ($args, true));\n')
         outputFile.write ('\t\t\tif (count ($args) < ' + str (primaryPropCount) + '){\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 400 Bad Request");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode ($errorObject));\n')
         outputFile.write ('\t\t\t\texit();\n')
@@ -218,7 +230,7 @@ def makeControllers():
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 204 No Content");\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\t\t\telse{\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 403 Forbidden");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode($errorObject));\n')
         outputFile.write ('\t\t\t}\n')
@@ -232,20 +244,64 @@ def makeControllers():
 def makeRepositories():
     outputFile = open ('repositories.php', 'w')
     outputFile.write ('<?php\n')
-    outputFile.write ('\n\trequire_once ("../startup.php");')
+    outputFile.write ('\n\trequire_once ("startup.php");')
     outputFile.write ('\n\trequire_once ("initializeDb.php");\n\n')
     for model in models:
         modelName = model.getAttribute ('name')
         properties = model.getElementsByTagName ('property')
         outputFile.write ('\n\tclass MySql' + cap(modelName) + 'Repository{\n')
-        outputFile.write ('\t\tpublic function get' + cap(modelName) + 'ById ($id){')
+        outputFile.write ('\t\tpublic function create ($model){')
+        outputFile.write ('\n\t\t\t$conn = connectAsWebUser();')
+        outputFile.write ('\n\t\t\tif (!$conn) return NULL;')
+        outputFile.write ('\n\t\t\t$statement = $conn->prepare ("insert into ' + modelName + ' (')
+        first = True
+        nonPrimaryPropCount = 0
+        for prop in properties:
+            if (prop.getAttribute ('type') != 'primary key' and 'array' not in prop.getAttribute ('data').lower()):
+                if (not first):
+                    outputFile.write (', ')
+                first = False
+                nonPrimaryPropCount += 1
+                outputFile.write (prop.getAttribute ('name'))
+        outputFile.write (') values (')
+        for count in range (nonPrimaryPropCount):
+            if (count != 0):
+                outputFile.write (', ')
+            outputFile.write ('?')
+        outputFile.write (')");')
+        outputFile.write ('\n\t\t\t$statement->bind_param ("')
+        for prop in properties:
+            if ('array' not in prop.getAttribute ('data').lower() and 'primary key' != prop.getAttribute ('type')):
+                dbType = propDataToDbType (prop.getAttribute ('data').lower())
+                if (dbType == 'varchar'):
+                    outputFile.write ('s')
+                elif (dbType == 'int'):
+                    outputFile.write ('i')
+                elif (dbType == 'float'):
+                    outputFile.write ('f')
+                elif (dbType == 'decimal'):
+                    outputFile.write ('d')
+        outputFile.write ('", ')
+        first = True
+        for prop in properties:
+            if ('array' not in prop.getAttribute ('data').lower() and 'primary key' != prop.getAttribute ('type')):
+                if (not first):
+                    outputFile.write (', ')
+                first = False
+                outputFile.write ('$model->get' + cap (prop.getAttribute ('name')) + '()')
+        outputFile.write (');')
+        outputFile.write ('\n\t\t\t$statement->execute();')
+        outputFile.write ('\n\t\t\t$model->setId ($conn->insert_id);')
+        outputFile.write ('\n\t\t}')
+        outputFile.write ('\n')
+        outputFile.write ('\t\tpublic function getById ($id){')
         outputFile.write ('\n\t\t\t$conn = connectAsWebUser();')
         outputFile.write ('\n\t\t\tif (!$conn) return NULL;')
         outputFile.write ('\n\t\t\t$result = $conn->prepare ("select id')
         for prop in properties:
-            if (prop.getAttribute ('name').lower() != 'id' and 'array' not in prop.getAttribute ('data').lower()):
+            if (prop.getAttribute ('type').lower() != 'primary key' and 'array' not in prop.getAttribute ('data').lower()):
                 outputFile.write (', ' + prop.getAttribute ('name'))
-        outputFile.write (' from ' + cap(modelName) + ' where id = ?");')
+        outputFile.write (' from ' + modelName + ' where id = ?");')
         outputFile.write ('\n\t\t\t$result->bind_param ("i", $id);')
         outputFile.write ('\n\t\t\t$result->execute();\n')
         for prop in properties:
@@ -279,7 +335,7 @@ def makeRepositories():
         outputFile.write ('\n\t\t}\n')
         outputFile.write ('\n\t}\n')
         outputFile.write ('\n\tclass Test' + cap(modelName) + 'Repository{\n')
-        outputFile.write ('\t\tpublic function get' + cap(modelName) + 'ById ($id){\n')
+        outputFile.write ('\t\tpublic function getById ($id){\n')
         outputFile.write ('\t\t\treturn new ' + cap(modelName) + '($id')
         for prop in properties:
             if (prop.getAttribute ('type') == 'primary key'):

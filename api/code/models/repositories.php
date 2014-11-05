@@ -1,14 +1,22 @@
 <?php
 
-	require_once ("../startup.php");
+	require_once ("startup.php");
 	require_once ("initializeDb.php");
 
 
 	class MySqlGameRepository{
-		public function getGameById ($id){
+		public function create ($model){
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
-			$result = $conn->prepare ("select id, locationId, name, sportId from Game where id = ?");
+			$statement = $conn->prepare ("insert into game (locationId, name, sportId) values (?, ?, ?)");
+			$statement->bind_param ("isi", $model->getLocationId(), $model->getName(), $model->getSportId());
+			$statement->execute();
+			$model->setId ($conn->insert_id);
+		}
+		public function getById ($id){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$result = $conn->prepare ("select id, locationId, name, sportId from game where id = ?");
 			$result->bind_param ("i", $id);
 			$result->execute();
 
@@ -26,16 +34,24 @@
 	}
 
 	class TestGameRepository{
-		public function getGameById ($id){
+		public function getById ($id){
 			return new Game($id, 0, "test_name", array(0,1,2), 0, array(0,1,2));
 		}
 	}
 
 	class MySqlSportRepository{
-		public function getSportById ($id){
+		public function create ($model){
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
-			$result = $conn->prepare ("select id, name from Sport where id = ?");
+			$statement = $conn->prepare ("insert into sport (name) values (?)");
+			$statement->bind_param ("s", $model->getName());
+			$statement->execute();
+			$model->setId ($conn->insert_id);
+		}
+		public function getById ($id){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$result = $conn->prepare ("select id, name from sport where id = ?");
 			$result->bind_param ("i", $id);
 			$result->execute();
 
@@ -51,16 +67,24 @@
 	}
 
 	class TestSportRepository{
-		public function getSportById ($id){
+		public function getById ($id){
 			return new Sport($id, "test_name");
 		}
 	}
 
 	class MySqlTeamRepository{
-		public function getTeamById ($id){
+		public function create ($model){
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
-			$result = $conn->prepare ("select id, name from Team where id = ?");
+			$statement = $conn->prepare ("insert into team (name) values (?)");
+			$statement->bind_param ("s", $model->getName());
+			$statement->execute();
+			$model->setId ($conn->insert_id);
+		}
+		public function getById ($id){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$result = $conn->prepare ("select id, name from team where id = ?");
 			$result->bind_param ("i", $id);
 			$result->execute();
 
@@ -76,16 +100,24 @@
 	}
 
 	class TestTeamRepository{
-		public function getTeamById ($id){
+		public function getById ($id){
 			return new Team($id, "test_name");
 		}
 	}
 
 	class MySqlLocationRepository{
-		public function getLocationById ($id){
+		public function create ($model){
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
-			$result = $conn->prepare ("select id, name, street, cityId, phone from Location where id = ?");
+			$statement = $conn->prepare ("insert into location (name, street, cityId, phone) values (?, ?, ?, ?)");
+			$statement->bind_param ("ssis", $model->getName(), $model->getStreet(), $model->getCityId(), $model->getPhone());
+			$statement->execute();
+			$model->setId ($conn->insert_id);
+		}
+		public function getById ($id){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$result = $conn->prepare ("select id, name, street, cityId, phone from location where id = ?");
 			$result->bind_param ("i", $id);
 			$result->execute();
 
@@ -104,16 +136,24 @@
 	}
 
 	class TestLocationRepository{
-		public function getLocationById ($id){
+		public function getById ($id){
 			return new Location($id, "test_name", "test_street", 0, "test_phone", array(0,1,2));
 		}
 	}
 
 	class MySqlLocationTypeRepository{
-		public function getLocationTypeById ($id){
+		public function create ($model){
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
-			$result = $conn->prepare ("select id, name from LocationType where id = ?");
+			$statement = $conn->prepare ("insert into locationType (name) values (?)");
+			$statement->bind_param ("s", $model->getName());
+			$statement->execute();
+			$model->setId ($conn->insert_id);
+		}
+		public function getById ($id){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$result = $conn->prepare ("select id, name from locationType where id = ?");
 			$result->bind_param ("i", $id);
 			$result->execute();
 
@@ -129,16 +169,24 @@
 	}
 
 	class TestLocationTypeRepository{
-		public function getLocationTypeById ($id){
+		public function getById ($id){
 			return new LocationType($id, "test_name");
 		}
 	}
 
 	class MySqlTagRepository{
-		public function getTagById ($id){
+		public function create ($model){
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
-			$result = $conn->prepare ("select id, name from Tag where id = ?");
+			$statement = $conn->prepare ("insert into tag (name) values (?)");
+			$statement->bind_param ("s", $model->getName());
+			$statement->execute();
+			$model->setId ($conn->insert_id);
+		}
+		public function getById ($id){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$result = $conn->prepare ("select id, name from tag where id = ?");
 			$result->bind_param ("i", $id);
 			$result->execute();
 
@@ -154,16 +202,24 @@
 	}
 
 	class TestTagRepository{
-		public function getTagById ($id){
+		public function getById ($id){
 			return new Tag($id, "test_name");
 		}
 	}
 
 	class MySqlUserRepository{
-		public function getUserById ($id){
+		public function create ($model){
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
-			$result = $conn->prepare ("select id, email, type, method, passHash, nameFirst, nameLast, securityLevelId from User where id = ?");
+			$statement = $conn->prepare ("insert into user (type, method, passHash, nameFirst, nameLast, securityLevelId) values (?, ?, ?, ?, ?, ?)");
+			$statement->bind_param ("iisssi", $model->getType(), $model->getMethod(), $model->getPassHash(), $model->getNameFirst(), $model->getNameLast(), $model->getSecurityLevelId());
+			$statement->execute();
+			$model->setId ($conn->insert_id);
+		}
+		public function getById ($id){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$result = $conn->prepare ("select id, type, method, passHash, nameFirst, nameLast, securityLevelId from user where id = ?");
 			$result->bind_param ("i", $id);
 			$result->execute();
 
@@ -184,16 +240,24 @@
 	}
 
 	class TestUserRepository{
-		public function getUserById ($id){
+		public function getById ($id){
 			return new User($id, 0, 0, "test_passHash", "test_nameFirst", "test_nameLast", 0);
 		}
 	}
 
 	class MySqlSecurityLevelRepository{
-		public function getSecurityLevelById ($id){
+		public function create ($model){
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
-			$result = $conn->prepare ("select id, name from SecurityLevel where id = ?");
+			$statement = $conn->prepare ("insert into securityLevel (name) values (?)");
+			$statement->bind_param ("s", $model->getName());
+			$statement->execute();
+			$model->setId ($conn->insert_id);
+		}
+		public function getById ($id){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$result = $conn->prepare ("select id, name from securityLevel where id = ?");
 			$result->bind_param ("i", $id);
 			$result->execute();
 
@@ -209,16 +273,24 @@
 	}
 
 	class TestSecurityLevelRepository{
-		public function getSecurityLevelById ($id){
+		public function getById ($id){
 			return new SecurityLevel($id, "test_name");
 		}
 	}
 
 	class MySqlCityRepository{
-		public function getCityById ($id){
+		public function create ($model){
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
-			$result = $conn->prepare ("select id, name, state, country, longitude, latitude from City where id = ?");
+			$statement = $conn->prepare ("insert into city (name, state, country, longitude, latitude) values (?, ?, ?, ?, ?)");
+			$statement->bind_param ("sssff", $model->getName(), $model->getState(), $model->getCountry(), $model->getLongitude(), $model->getLatitude());
+			$statement->execute();
+			$model->setId ($conn->insert_id);
+		}
+		public function getById ($id){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$result = $conn->prepare ("select id, name, state, country, longitude, latitude from city where id = ?");
 			$result->bind_param ("i", $id);
 			$result->execute();
 
@@ -238,16 +310,24 @@
 	}
 
 	class TestCityRepository{
-		public function getCityById ($id){
+		public function getById ($id){
 			return new City($id, "test_name", "test_state", "test_country", 0, 0);
 		}
 	}
 
 	class MySqlSettingRepository{
-		public function getSettingById ($id){
+		public function create ($model){
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
-			$result = $conn->prepare ("select id, name, defaultValue from Setting where id = ?");
+			$statement = $conn->prepare ("insert into setting (name, defaultValue) values (?, ?)");
+			$statement->bind_param ("ss", $model->getName(), $model->getDefaultValue());
+			$statement->execute();
+			$model->setId ($conn->insert_id);
+		}
+		public function getById ($id){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$result = $conn->prepare ("select id, name, defaultValue from setting where id = ?");
 			$result->bind_param ("i", $id);
 			$result->execute();
 
@@ -264,16 +344,24 @@
 	}
 
 	class TestSettingRepository{
-		public function getSettingById ($id){
+		public function getById ($id){
 			return new Setting($id, "test_name", "test_defaultValue");
 		}
 	}
 
 	class MySqlUserSettingRepository{
-		public function getUserSettingById ($id){
+		public function create ($model){
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
-			$result = $conn->prepare ("select id, userId, settingId, value from UserSetting where id = ?");
+			$statement = $conn->prepare ("insert into userSetting (userId, settingId, value) values (?, ?, ?)");
+			$statement->bind_param ("iis", $model->getUserId(), $model->getSettingId(), $model->getValue());
+			$statement->execute();
+			$model->setId ($conn->insert_id);
+		}
+		public function getById ($id){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$result = $conn->prepare ("select id, userId, settingId, value from userSetting where id = ?");
 			$result->bind_param ("i", $id);
 			$result->execute();
 
@@ -290,7 +378,7 @@
 	}
 
 	class TestUserSettingRepository{
-		public function getUserSettingById ($id){
+		public function getById ($id){
 			return new UserSetting($id, 0, 0, "test_value");
 		}
 	}

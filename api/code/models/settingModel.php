@@ -20,6 +20,9 @@
 			return $this->defaultValue;
 		}
 
+		public function setId($value){
+			$this->id = $value;
+		}
 		public function setName($value){
 			$this->name = $value;
 		}

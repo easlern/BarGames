@@ -76,7 +76,7 @@
 				$controllerInstance->get($args);
 				break;
 			case "POST":
-				$args = GetSanitizedPostVars();
+				$args = array_values (GetSanitizedPostVars());
 				$controllerInstance->create($args);
 				break;
 			case "PUT":
