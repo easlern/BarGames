@@ -32,6 +32,29 @@
 			}
 		}
 
+		public function getAll(){
+			$repo = Repositories::getSecurityLevelRepository();
+			if (IsAuthorized()){
+				$securityLevel = $repo->getAll();
+				if (count ($securityLevel) > 0){
+					header ("HTTP/1.1 200 OK");
+					$models = array();
+					foreach ($securityLevel as &$model){
+						array_push ($models, $model->toStdClass());
+					}
+					print json_encode ($models);
+				}
+				else{
+					header ("HTTP/1.1 404 Not found");
+				}
+			}
+			else{
+				header ("HTTP/1.1 403 Forbidden");
+				$errorObject = new ApiErrorResponse("Not authenticated.");
+				print (json_encode($errorObject));
+			}
+		}
+
 		public function create ($args){
 			if (count ($args) < 1){
 				header ("HTTP/1.1 400 Bad Request");

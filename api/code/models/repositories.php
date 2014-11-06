@@ -30,6 +30,25 @@
 			}
 			return NULL;
 		}
+		public function getAll(){
+			$results = array();
+			$conn = connectAsWebUser();
+			if (!$conn) return $results;
+			$statement = $conn->prepare ("select id, locationId, name, sportId from game");
+			$statement->execute();
+
+			$id = 0;
+			$locationId = 0;
+			$name = "";
+			$sportId = 0;
+			$statement->bind_result ($id, $locationId, $name, $sportId);
+			$statement->store_result();
+			while ($statement->fetch()){
+				$model = new Game ($id, $locationId, $name, $sportId);
+				array_push ($results, $model);
+			}
+			return $results;
+		}
 
 	}
 
@@ -63,6 +82,23 @@
 			}
 			return NULL;
 		}
+		public function getAll(){
+			$results = array();
+			$conn = connectAsWebUser();
+			if (!$conn) return $results;
+			$statement = $conn->prepare ("select id, name from sport");
+			$statement->execute();
+
+			$id = 0;
+			$name = "";
+			$statement->bind_result ($id, $name);
+			$statement->store_result();
+			while ($statement->fetch()){
+				$model = new Sport ($id, $name);
+				array_push ($results, $model);
+			}
+			return $results;
+		}
 
 	}
 
@@ -95,6 +131,23 @@
 				return new Team ($id, $name);
 			}
 			return NULL;
+		}
+		public function getAll(){
+			$results = array();
+			$conn = connectAsWebUser();
+			if (!$conn) return $results;
+			$statement = $conn->prepare ("select id, name from team");
+			$statement->execute();
+
+			$id = 0;
+			$name = "";
+			$statement->bind_result ($id, $name);
+			$statement->store_result();
+			while ($statement->fetch()){
+				$model = new Team ($id, $name);
+				array_push ($results, $model);
+			}
+			return $results;
 		}
 
 	}
@@ -132,6 +185,26 @@
 			}
 			return NULL;
 		}
+		public function getAll(){
+			$results = array();
+			$conn = connectAsWebUser();
+			if (!$conn) return $results;
+			$statement = $conn->prepare ("select id, name, street, cityId, phone from location");
+			$statement->execute();
+
+			$id = 0;
+			$name = "";
+			$street = "";
+			$cityId = 0;
+			$phone = "";
+			$statement->bind_result ($id, $name, $street, $cityId, $phone);
+			$statement->store_result();
+			while ($statement->fetch()){
+				$model = new Location ($id, $name, $street, $cityId, $phone);
+				array_push ($results, $model);
+			}
+			return $results;
+		}
 
 	}
 
@@ -165,6 +238,23 @@
 			}
 			return NULL;
 		}
+		public function getAll(){
+			$results = array();
+			$conn = connectAsWebUser();
+			if (!$conn) return $results;
+			$statement = $conn->prepare ("select id, name from locationType");
+			$statement->execute();
+
+			$id = 0;
+			$name = "";
+			$statement->bind_result ($id, $name);
+			$statement->store_result();
+			while ($statement->fetch()){
+				$model = new LocationType ($id, $name);
+				array_push ($results, $model);
+			}
+			return $results;
+		}
 
 	}
 
@@ -197,6 +287,23 @@
 				return new Tag ($id, $name);
 			}
 			return NULL;
+		}
+		public function getAll(){
+			$results = array();
+			$conn = connectAsWebUser();
+			if (!$conn) return $results;
+			$statement = $conn->prepare ("select id, name from tag");
+			$statement->execute();
+
+			$id = 0;
+			$name = "";
+			$statement->bind_result ($id, $name);
+			$statement->store_result();
+			while ($statement->fetch()){
+				$model = new Tag ($id, $name);
+				array_push ($results, $model);
+			}
+			return $results;
 		}
 
 	}
@@ -236,6 +343,28 @@
 			}
 			return NULL;
 		}
+		public function getAll(){
+			$results = array();
+			$conn = connectAsWebUser();
+			if (!$conn) return $results;
+			$statement = $conn->prepare ("select id, type, method, passHash, nameFirst, nameLast, securityLevelId from user");
+			$statement->execute();
+
+			$email = "";
+			$type = 0;
+			$method = 0;
+			$passHash = "";
+			$nameFirst = "";
+			$nameLast = "";
+			$securityLevelId = 0;
+			$statement->bind_result ($email, $type, $method, $passHash, $nameFirst, $nameLast, $securityLevelId);
+			$statement->store_result();
+			while ($statement->fetch()){
+				$model = new User ($email, $type, $method, $passHash, $nameFirst, $nameLast, $securityLevelId);
+				array_push ($results, $model);
+			}
+			return $results;
+		}
 
 	}
 
@@ -268,6 +397,23 @@
 				return new SecurityLevel ($id, $name);
 			}
 			return NULL;
+		}
+		public function getAll(){
+			$results = array();
+			$conn = connectAsWebUser();
+			if (!$conn) return $results;
+			$statement = $conn->prepare ("select id, name from securityLevel");
+			$statement->execute();
+
+			$id = 0;
+			$name = "";
+			$statement->bind_result ($id, $name);
+			$statement->store_result();
+			while ($statement->fetch()){
+				$model = new SecurityLevel ($id, $name);
+				array_push ($results, $model);
+			}
+			return $results;
 		}
 
 	}
@@ -306,6 +452,27 @@
 			}
 			return NULL;
 		}
+		public function getAll(){
+			$results = array();
+			$conn = connectAsWebUser();
+			if (!$conn) return $results;
+			$statement = $conn->prepare ("select id, name, state, country, longitude, latitude from city");
+			$statement->execute();
+
+			$id = 0;
+			$name = "";
+			$state = "";
+			$country = "";
+			$longitude = 0;
+			$latitude = 0;
+			$statement->bind_result ($id, $name, $state, $country, $longitude, $latitude);
+			$statement->store_result();
+			while ($statement->fetch()){
+				$model = new City ($id, $name, $state, $country, $longitude, $latitude);
+				array_push ($results, $model);
+			}
+			return $results;
+		}
 
 	}
 
@@ -340,6 +507,24 @@
 			}
 			return NULL;
 		}
+		public function getAll(){
+			$results = array();
+			$conn = connectAsWebUser();
+			if (!$conn) return $results;
+			$statement = $conn->prepare ("select id, name, defaultValue from setting");
+			$statement->execute();
+
+			$id = 0;
+			$name = "";
+			$defaultValue = "";
+			$statement->bind_result ($id, $name, $defaultValue);
+			$statement->store_result();
+			while ($statement->fetch()){
+				$model = new Setting ($id, $name, $defaultValue);
+				array_push ($results, $model);
+			}
+			return $results;
+		}
 
 	}
 
@@ -373,6 +558,24 @@
 				return new UserSetting ($userId, $settingId, $value);
 			}
 			return NULL;
+		}
+		public function getAll(){
+			$results = array();
+			$conn = connectAsWebUser();
+			if (!$conn) return $results;
+			$statement = $conn->prepare ("select id, userId, settingId, value from userSetting");
+			$statement->execute();
+
+			$userId = 0;
+			$settingId = 0;
+			$value = "";
+			$statement->bind_result ($userId, $settingId, $value);
+			$statement->store_result();
+			while ($statement->fetch()){
+				$model = new UserSetting ($userId, $settingId, $value);
+				array_push ($results, $model);
+			}
+			return $results;
 		}
 
 	}

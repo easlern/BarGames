@@ -62,16 +62,19 @@
 			$this->securityLevelId = $value;
 		}
 
+		public function toStdClass(){
+			$std = new stdClass();
+			$std->email = $this->getEmail();
+			$std->type = $this->getType();
+			$std->method = $this->getMethod();
+			$std->passHash = $this->getPassHash();
+			$std->nameFirst = $this->getNameFirst();
+			$std->nameLast = $this->getNameLast();
+			$std->securityLevelId = $this->getSecurityLevelId();
+			return $std;
+		}
 		public function toJson(){
-			$json = new stdClass();
-			$json->email = $this->getEmail();
-			$json->type = $this->getType();
-			$json->method = $this->getMethod();
-			$json->passHash = $this->getPassHash();
-			$json->nameFirst = $this->getNameFirst();
-			$json->nameLast = $this->getNameLast();
-			$json->securityLevelId = $this->getSecurityLevelId();
-			return json_encode ($json);
+			return json_encode ($this->toStdClass());
 		}
 	}
 ?>

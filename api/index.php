@@ -31,7 +31,7 @@
 
 	$command = SanitizeStringArray (array_values ($route));
 	$controllerName = strtolower ($command [0]);
-	$args = array_slice ($command, 1);
+	$args = array_filter (array_slice ($command, 1));
 	$controllerInstance = NULL;
 
 	switch ($controllerName){
@@ -73,7 +73,8 @@
 	if ($controllerInstance !== NULL){
 		switch ($_SERVER["REQUEST_METHOD"]){
 			case "GET":
-				$controllerInstance->get($args);
+				if (count ($args) == 0) $controllerInstance->getAll();
+				else $controllerInstance->get($args);
 				break;
 			case "POST":
 				$args = array_values (GetSanitizedPostVars());

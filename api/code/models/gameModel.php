@@ -54,15 +54,18 @@
 			$this->teamIds = $value;
 		}
 
+		public function toStdClass(){
+			$std = new stdClass();
+			$std->id = $this->getId();
+			$std->locationId = $this->getLocationId();
+			$std->name = $this->getName();
+			$std->tagIds = $this->getTagIds();
+			$std->sportId = $this->getSportId();
+			$std->teamIds = $this->getTeamIds();
+			return $std;
+		}
 		public function toJson(){
-			$json = new stdClass();
-			$json->id = $this->getId();
-			$json->locationId = $this->getLocationId();
-			$json->name = $this->getName();
-			$json->tagIds = $this->getTagIds();
-			$json->sportId = $this->getSportId();
-			$json->teamIds = $this->getTeamIds();
-			return json_encode ($json);
+			return json_encode ($this->toStdClass());
 		}
 	}
 ?>

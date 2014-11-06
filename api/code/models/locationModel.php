@@ -54,15 +54,18 @@
 			$this->locationTypeIds = $value;
 		}
 
+		public function toStdClass(){
+			$std = new stdClass();
+			$std->id = $this->getId();
+			$std->name = $this->getName();
+			$std->street = $this->getStreet();
+			$std->cityId = $this->getCityId();
+			$std->phone = $this->getPhone();
+			$std->locationTypeIds = $this->getLocationTypeIds();
+			return $std;
+		}
 		public function toJson(){
-			$json = new stdClass();
-			$json->id = $this->getId();
-			$json->name = $this->getName();
-			$json->street = $this->getStreet();
-			$json->cityId = $this->getCityId();
-			$json->phone = $this->getPhone();
-			$json->locationTypeIds = $this->getLocationTypeIds();
-			return json_encode ($json);
+			return json_encode ($this->toStdClass());
 		}
 	}
 ?>

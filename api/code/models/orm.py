@@ -41,14 +41,17 @@ def makeObjects():
             outputFile.write ('\t\tpublic function set' + cap(propertyName) + '($value){\n')
             outputFile.write ('\t\t\t$this->' + propertyName + ' = $value;\n')
             outputFile.write ('\t\t}\n')
-        outputFile.write ('\n\t\tpublic function toJson(){\n')
-        outputFile.write ('\t\t\t$json = new stdClass();\n')
+        outputFile.write ('\n\t\tpublic function toStdClass(){\n')
+        outputFile.write ('\t\t\t$std = new stdClass();\n')
         for prop in properties:
             propName = prop.getAttribute('name')
-            outputFile.write ('\t\t\t$json->' + propName + ' = $this->get' + cap(propName) + '();\n')
-        outputFile.write ('\t\t\treturn json_encode ($json);\n')
+            outputFile.write ('\t\t\t$std->' + propName + ' = $this->get' + cap(propName) + '();\n')
+        outputFile.write ('\t\t\treturn $std;\n')
         outputFile.write ('\t\t}\n')
-        outputFile.write ('\t}\n?>\n')
+        outputFile.write ('\t\tpublic function toJson(){')
+        outputFile.write ('\n\t\t\treturn json_encode ($this->toStdClass());')
+        outputFile.write ('\n\t\t}')
+        outputFile.write ('\n\t}\n?>\n')
         outputFile.close()
 
 def makeWebAccessors():
@@ -75,7 +78,7 @@ def makeWebAccessors():
     outputFile.write ('\t}\n')
     outputFile.write ('\n\t$command = SanitizeStringArray (array_values ($route));\n')
     outputFile.write ('\t$controllerName = strtolower ($command [0]);\n')
-    outputFile.write ('\t$args = array_slice ($command, 1);\n')
+    outputFile.write ('\t$args = array_filter (array_slice ($command, 1));\n')
     outputFile.write ('\t$controllerInstance = NULL;\n')
     outputFile.write ('\n\tswitch ($controllerName){\n')
     for model in models:
@@ -87,7 +90,8 @@ def makeWebAccessors():
     outputFile.write ('\n\tif ($controllerInstance !== NULL){\n')
     outputFile.write ('\t\tswitch ($_SERVER["REQUEST_METHOD"]){\n')
     outputFile.write ('\t\t\tcase "GET":\n')
-    outputFile.write ('\t\t\t\t$controllerInstance->get($args);\n')
+    outputFile.write ('\t\t\t\tif (count ($args) == 0) $controllerInstance->getAll();\n')
+    outputFile.write ('\t\t\t\telse $controllerInstance->get($args);\n')
     outputFile.write ('\t\t\t\tbreak;\n')
     outputFile.write ('\t\t\tcase "POST":\n')
     outputFile.write ('\t\t\t\t$args = array_values (GetSanitizedPostVars());\n')
@@ -127,7 +131,7 @@ def makeControllers():
         outputFile.write ('\trequire_once (\'repositories.php\');\n')
         outputFile.write ('\n\tclass ' + cap (modelName) + 'Controller{\n')
 
-        # GET
+        # GET one
         outputFile.write ('\t\tpublic function get ($args){\n')
         outputFile.write ('\t\t\tif (count ($args) < 1){\n')
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 400 Bad Request");\n')
@@ -152,6 +156,29 @@ def makeControllers():
         outputFile.write ('\t\t\t\tprint (json_encode($errorObject));\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\t\t}\n')
+        # GET all
+        outputFile.write ('\n\t\tpublic function getAll(){')
+        outputFile.write ('\n\t\t\t$repo = Repositories::get' + cap(modelName) + 'Repository();\n')
+        outputFile.write ('\t\t\tif (IsAuthorized()){\n')
+        outputFile.write ('\t\t\t\t$' + modelName + ' = $repo->getAll();\n')
+        outputFile.write ('\t\t\t\tif (count ($' + modelName + ') > 0){\n')
+        outputFile.write ('\t\t\t\t\theader ("HTTP/1.1 200 OK");\n')
+        outputFile.write ('\t\t\t\t\t$models = array();\n')
+        outputFile.write ('\t\t\t\t\tforeach ($' + modelName + ' as &$model){\n')
+        outputFile.write ('\t\t\t\t\t\tarray_push ($models, $model->toStdClass());\n')
+        outputFile.write ('\t\t\t\t\t}\n')
+        outputFile.write ('\t\t\t\t\tprint json_encode ($models);\n')
+        outputFile.write ('\t\t\t\t}\n')
+        outputFile.write ('\t\t\t\telse{\n')
+        outputFile.write ('\t\t\t\t\theader ("HTTP/1.1 404 Not found");\n')
+        outputFile.write ('\t\t\t\t}\n')
+        outputFile.write ('\t\t\t}\n')
+        outputFile.write ('\t\t\telse{\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 403 Forbidden");\n')
+        outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse("Not authenticated.");\n')
+        outputFile.write ('\t\t\t\tprint (json_encode($errorObject));\n')
+        outputFile.write ('\t\t\t}')
+        outputFile.write ('\n\t\t}\n')
 
         # CREATE
         outputFile.write ('\n\t\tpublic function create ($args){\n')
@@ -333,6 +360,49 @@ def makeRepositories():
         outputFile.write ('\n\t\t\t}')
         outputFile.write ('\n\t\t\treturn NULL;')
         outputFile.write ('\n\t\t}\n')
+
+        outputFile.write ('\t\tpublic function getAll(){')
+        outputFile.write ('\n\t\t\t$results = array();')
+        outputFile.write ('\n\t\t\t$conn = connectAsWebUser();')
+        outputFile.write ('\n\t\t\tif (!$conn) return $results;')
+        outputFile.write ('\n\t\t\t$statement = $conn->prepare ("select id')
+        for prop in properties:
+            if (prop.getAttribute ('type').lower() != 'primary key' and 'array' not in prop.getAttribute ('data').lower()):
+                outputFile.write (', ' + prop.getAttribute ('name'))
+        outputFile.write (' from ' + modelName + '");')
+        outputFile.write ('\n\t\t\t$statement->execute();\n')
+        for prop in properties:
+            if ('array' not in prop.getAttribute ('data').lower()):
+                outputFile.write ('\n\t\t\t$' + prop.getAttribute ('name') + ' = ')
+                if (propDataToDbType (prop.getAttribute ('data').lower()) == 'varchar'):
+                    outputFile.write ('"";')
+                else:
+                    outputFile.write ('0;')
+        outputFile.write ('\n\t\t\t$statement->bind_result (');
+        first = True
+        for prop in properties:
+            if ('array' not in prop.getAttribute ('data').lower()):
+                if (not first):
+                    outputFile.write (', ')
+                first = False
+                outputFile.write ('$' + prop.getAttribute ('name'));
+        outputFile.write (');')
+        outputFile.write ('\n\t\t\t$statement->store_result();');
+        outputFile.write ('\n\t\t\twhile ($statement->fetch()){')
+        outputFile.write ('\n\t\t\t\t$model = new ' + cap(modelName) + ' (');
+        first = True
+        for prop in properties:
+            if ('array' not in prop.getAttribute ('data').lower()):
+                if (not first):
+                    outputFile.write (', ')
+                first = False
+                outputFile.write ('$' + prop.getAttribute ('name'));
+        outputFile.write (');')
+        outputFile.write ('\n\t\t\t\tarray_push ($results, $model);')
+        outputFile.write ('\n\t\t\t}')
+        outputFile.write ('\n\t\t\treturn $results;')
+        outputFile.write ('\n\t\t}\n')
+        
         outputFile.write ('\n\t}\n')
         outputFile.write ('\n\tclass Test' + cap(modelName) + 'Repository{\n')
         outputFile.write ('\t\tpublic function getById ($id){\n')

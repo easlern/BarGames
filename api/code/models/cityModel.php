@@ -54,15 +54,18 @@
 			$this->latitude = $value;
 		}
 
+		public function toStdClass(){
+			$std = new stdClass();
+			$std->id = $this->getId();
+			$std->name = $this->getName();
+			$std->state = $this->getState();
+			$std->country = $this->getCountry();
+			$std->longitude = $this->getLongitude();
+			$std->latitude = $this->getLatitude();
+			return $std;
+		}
 		public function toJson(){
-			$json = new stdClass();
-			$json->id = $this->getId();
-			$json->name = $this->getName();
-			$json->state = $this->getState();
-			$json->country = $this->getCountry();
-			$json->longitude = $this->getLongitude();
-			$json->latitude = $this->getLatitude();
-			return json_encode ($json);
+			return json_encode ($this->toStdClass());
 		}
 	}
 ?>

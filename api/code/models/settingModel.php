@@ -30,12 +30,15 @@
 			$this->defaultValue = $value;
 		}
 
+		public function toStdClass(){
+			$std = new stdClass();
+			$std->id = $this->getId();
+			$std->name = $this->getName();
+			$std->defaultValue = $this->getDefaultValue();
+			return $std;
+		}
 		public function toJson(){
-			$json = new stdClass();
-			$json->id = $this->getId();
-			$json->name = $this->getName();
-			$json->defaultValue = $this->getDefaultValue();
-			return json_encode ($json);
+			return json_encode ($this->toStdClass());
 		}
 	}
 ?>

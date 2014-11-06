@@ -30,12 +30,15 @@
 			$this->value = $value;
 		}
 
+		public function toStdClass(){
+			$std = new stdClass();
+			$std->userId = $this->getUserId();
+			$std->settingId = $this->getSettingId();
+			$std->value = $this->getValue();
+			return $std;
+		}
 		public function toJson(){
-			$json = new stdClass();
-			$json->userId = $this->getUserId();
-			$json->settingId = $this->getSettingId();
-			$json->value = $this->getValue();
-			return json_encode ($json);
+			return json_encode ($this->toStdClass());
 		}
 	}
 ?>
