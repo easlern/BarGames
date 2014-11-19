@@ -5,18 +5,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b863b66-528d-4730-9b1f-4570ac2b8b64" name="Default" comment="Added new controllers and service, implemented one page app design.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/bargames/controllers/userProfile/userProfileGroupsCtrl.js" />
-      <change type="MOVED" beforePath="C:\Users\rduffing.NHA\BarGames\scripts\bargames\partials\userProfile\userProfile-profile.html" afterPath="$PROJECT_DIR$/scripts/bargames/partials/userProfile/userProfile-groups.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/app.js" afterPath="$PROJECT_DIR$/scripts/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/bargames/config/config.js" afterPath="$PROJECT_DIR$/scripts/bargames/config/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/styles.css" afterPath="$PROJECT_DIR$/css/styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/bargames/partials/userProfile/userProfile-profile.html" afterPath="$PROJECT_DIR$/scripts/bargames/partials/userProfile/userProfile-profile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/bargames/partials/userProfile/userProfile.html" afterPath="$PROJECT_DIR$/scripts/bargames/partials/userProfile/userProfile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/bargames/controllers/userProfile/userProfileProfileCtrl.js" afterPath="$PROJECT_DIR$/scripts/bargames/controllers/userProfile/userProfileProfileCtrl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/code/models/gen.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/code/models/models.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/api/code/models/orm.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Bargames.iml" afterPath="$PROJECT_DIR$/.idea/Bargames.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/ng-annotate/node_modules/.bin/esparse" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/ng-annotate/node_modules/.bin/esparse" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/ng-annotate/node_modules/.bin/esvalidate" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/ng-annotate/node_modules/.bin/esvalidate" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/.bin/gulp" afterPath="$PROJECT_DIR$/scripts/node_modules/.bin/gulp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-concat/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/has-ansi" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-concat/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/has-ansi" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/has-ansi" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/has-ansi" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-uglify/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/has-ansi" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-uglify/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/has-ansi" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-watch/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/has-ansi" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-watch/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/has-ansi" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/chalk/node_modules/.bin/has-ansi" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/chalk/node_modules/.bin/has-ansi" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/vinyl-fs/node_modules/.bin/mkdirp" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/vinyl-fs/node_modules/.bin/mkdirp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/.bin/ng-annotate" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/.bin/ng-annotate" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/.bin/semver" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/.bin/semver" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-concat/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/strip-ansi" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-concat/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/strip-ansi" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/strip-ansi" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/strip-ansi" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-uglify/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/strip-ansi" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-uglify/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/strip-ansi" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-watch/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/strip-ansi" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-watch/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/strip-ansi" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/chalk/node_modules/.bin/strip-ansi" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/chalk/node_modules/.bin/strip-ansi" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-watch/node_modules/vinyl-file/node_modules/.bin/strip-bom" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-watch/node_modules/vinyl-file/node_modules/.bin/strip-bom" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/vinyl-fs/node_modules/.bin/strip-bom" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/vinyl-fs/node_modules/.bin/strip-bom" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-concat/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/supports-color" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-concat/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/supports-color" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/supports-color" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/supports-color" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-uglify/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/supports-color" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-uglify/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/supports-color" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-watch/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/supports-color" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-watch/node_modules/gulp-util/node_modules/chalk/node_modules/.bin/supports-color" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/chalk/node_modules/.bin/supports-color" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/chalk/node_modules/.bin/supports-color" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-uglify/node_modules/.bin/uglifyjs" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-uglify/node_modules/.bin/uglifyjs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/tildify/node_modules/.bin/user-home" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp/node_modules/tildify/node_modules/.bin/user-home" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Bargames.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,20 +60,106 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="userProfile.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="userProfile.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/bargames/partials/userProfile/userProfile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="1020">
+            <state vertical-scroll-proportion="-0.0" vertical-offset="30" max-vertical-offset="900">
               <caret line="2" column="61" selection-start-line="2" selection-start-column="61" selection-end-line="2" selection-end-column="61" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="styles.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="cityController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/code/controllers/cityController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="1815">
+              <caret line="21" column="44" selection-start-line="21" selection-start-column="44" selection-end-line="21" selection-end-column="44" />
+              <folding>
+                <marker date="1416365685000" expanded="true" signature="798:818" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Gruntfile.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Gruntfile.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="402" max-vertical-offset="1095">
+              <caret line="45" column="43" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
+              <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="repositories.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/api/code/repositories.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.2690583" vertical-offset="0" max-vertical-offset="9465">
+              <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+              <folding>
+                <marker date="1416365685000" expanded="true" signature="231:292" placeholder="insert into ..." />
+                <marker date="1416365685000" expanded="true" signature="586:645" placeholder="select id, l..game..." />
+                <marker date="1416365685000" expanded="true" signature="1088:1134" placeholder="select id, l..game..." />
+                <marker date="1416365685000" expanded="true" signature="1780:1815" placeholder="insert into ..." />
+                <marker date="1416365685000" expanded="true" signature="2060:2099" placeholder="select id, n..sport..." />
+                <marker date="1416365685000" expanded="true" signature="2460:2486" placeholder="select id, n..sport..." />
+                <marker date="1416365685000" expanded="true" signature="3017:3051" placeholder="insert into ..." />
+                <marker date="1416365685000" expanded="true" signature="3296:3334" placeholder="select id, n..team..." />
+                <marker date="1416365685000" expanded="true" signature="3694:3719" placeholder="select id, n..team..." />
+                <marker date="1416365685000" expanded="true" signature="4251:4321" placeholder="insert into ..." />
+                <marker date="1416365685000" expanded="true" signature="4631:4696" placeholder="select id, n..location..." />
+                <marker date="1416365685000" expanded="true" signature="5161:5213" placeholder="select id, n..location..." />
+                <marker date="1416365685000" expanded="true" signature="5908:5950" placeholder="insert into ..." />
+                <marker date="1416365685000" expanded="true" signature="6195:6241" placeholder="select id, n..locationType..." />
+                <marker date="1416365685000" expanded="true" signature="6609:6642" placeholder="select id, n..locationType..." />
+                <marker date="1416365685000" expanded="true" signature="7193:7226" placeholder="insert into ..." />
+                <marker date="1416365685000" expanded="true" signature="7471:7508" placeholder="select id, n..tag..." />
+                <marker date="1416365685000" expanded="true" signature="7867:7891" placeholder="select id, n..tag..." />
+                <marker date="1416365685000" expanded="true" signature="8416:8521" placeholder="insert into ..." />
+                <marker date="1416365685000" expanded="true" signature="8892:8986" placeholder="select id, t..user..." />
+                <marker date="1416365685000" expanded="true" signature="9576:9657" placeholder="select id, t..user..." />
+                <marker date="1416365685000" expanded="true" signature="10472:10515" placeholder="insert into ..." />
+                <marker date="1416365685000" expanded="true" signature="10760:10807" placeholder="select id, n..securityLevel..." />
+                <marker date="1416365685000" expanded="true" signature="11176:11210" placeholder="select id, n..securityLevel..." />
+                <marker date="1416365685000" expanded="true" signature="11765:11848" placeholder="insert into ..." />
+                <marker date="1416365685000" expanded="true" signature="12186:12261" placeholder="select id, n..city..." />
+                <marker date="1416365685000" expanded="true" signature="12774:12836" placeholder="select id, n..city..." />
+                <marker date="1416365685000" expanded="true" signature="13556:13610" placeholder="insert into ..." />
+                <marker date="1416365685000" expanded="true" signature="13883:13938" placeholder="select id, n..setting..." />
+                <marker date="1416365685000" expanded="true" signature="14354:14396" placeholder="select id, n..setting..." />
+                <marker date="1416365685000" expanded="true" signature="15014:15081" placeholder="insert into ..." />
+                <marker date="1416365685000" expanded="true" signature="15374:15439" placeholder="select id, u..userSetting..." />
+                <marker date="1416365685000" expanded="true" signature="15864:15916" placeholder="select id, u..userSetting..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="225">
+              <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="styles.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3398058" vertical-offset="8562" max-vertical-offset="16762">
+            <state vertical-scroll-proportion="0.0" vertical-offset="7740" max-vertical-offset="14790">
               <caret line="516" column="23" selection-start-line="516" selection-start-column="23" selection-end-line="516" selection-end-column="23" />
               <folding />
             </state>
@@ -110,14 +220,25 @@
         <option value="$PROJECT_DIR$/scripts/bargames/partials/userProfile/userProfile-profile.html" />
         <option value="$PROJECT_DIR$/scripts/bargames/partials/userProfile/userProfile.html" />
         <option value="$PROJECT_DIR$/css/styles.css" />
+        <option value="$PROJECT_DIR$/api/code/controllers/cityController.php" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/Gruntfile.js" />
       </list>
     </option>
   </component>
+  <component name="JsGruntFileManager">
+    <gruntfiles>
+      <GruntfileState>
+        <gruntfile-path>$PROJECT_DIR$/Gruntfile.js</gruntfile-path>
+      </GruntfileState>
+    </gruntfiles>
+    <initial>false</initial>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="754" />
+    <option name="width" value="1366" />
+    <option name="height" value="768" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -173,7 +294,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
+              <option name="myItemId" value="api" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -187,73 +308,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
+              <option name="myItemId" value="api" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="bargames" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Bargames" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BarGames" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bargames" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="partials" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Bargames" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BarGames" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bargames" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="partials" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="userProfile" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Bargames" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BarGames" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
+              <option name="myItemId" value="code" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -264,9 +323,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="FullScreen" value="false" />
+    <property name="FullScreen" value="true" />
     <property name="recentsLimit" value="5" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -274,68 +334,50 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api/code" />
       <recent name="$PROJECT_DIR$/scripts/bargames/services/userProfile" />
       <recent name="$PROJECT_DIR$/scripts/bargames/services/search" />
       <recent name="$PROJECT_DIR$/scripts/bargames/services/groupPage" />
       <recent name="$PROJECT_DIR$/scripts/bargames/services/businessProfile" />
-      <recent name="$PROJECT_DIR$/scripts/bargames/partials/home" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.gulpfile.js">
+  <component name="RunManager">
     <configuration default="false" name="gulpfile.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="/usr/bin/node" path-to-js-file="gulpfile.js" working-dir="$PROJECT_DIR$/scripts">
       <RunnerSettings RunnerId="NodeJS.run" />
       <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
     </configuration>
-    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="name" value="Dart" />
-      <option name="saveOutputToFile" value="false" />
-      <option name="showConsoleOnStdErr" value="false" />
-      <option name="showConsoleOnStdOut" value="false" />
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
       <method />
     </configuration>
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
-      <setting name="configLocationType" value="CONFIG_FILE" />
-      <setting name="settingsFile" value="" />
-      <setting name="serverType" value="INTERNAL" />
-      <setting name="preferredDebugBrowser" value="Chrome" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="CucumberJavaScriptRunConfigurationType" factoryName="Cucumber.js">
-      <option name="cucumberJsArguments" />
-      <option name="executablePath" />
-      <option name="filePath" />
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
     <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server" server_id="0d91a1ac-b748-4bb8-a792-b7b499cad8f4" server_name="expirednews.net">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <pass-parent-env-vars>false</pass-parent-env-vars>
+      <envs />
       <method />
     </configuration>
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="Node.js.gulpfile.js" />
     </list>
-    <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Node.js.gulpfile.js" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
@@ -345,41 +387,49 @@
     <task active="true" id="Default" summary="Default task">
       <changelist id="3b863b66-528d-4730-9b1f-4570ac2b8b64" name="Default" comment="" />
       <created>1411874012294</created>
+      <option name="number" value="Default" />
       <updated>1411874012294</updated>
     </task>
     <task id="LOCAL-00001" summary="Refactored angular code and added gulp">
       <created>1411936232798</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
       <updated>1411936232798</updated>
     </task>
     <task id="LOCAL-00002" summary="Added new controllers and service, implemented one page app design.">
       <created>1411956060727</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
       <updated>1411956060727</updated>
     </task>
     <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="false" />
+    <frame x="0" y="0" width="1366" height="768" extended-state="0" />
+    <editor active="true" />
     <layout>
+      <window_info id="Grunt" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22474378" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972136" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32817337" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32817337" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46693796" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -406,58 +456,9 @@
     <breakpoint-manager>
       <option name="time" value="1" />
     </breakpoint-manager>
+    <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/scripts/bargames/config/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1088" max-vertical-offset="1632">
-          <caret line="64" column="48" selection-start-line="64" selection-start-column="48" selection-end-line="64" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/bargames/partials/userProfile/userProfile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="476">
-          <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/bargames/controllers/businessProfile/businessProfileCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="198">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="5" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/bargames/config/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="486">
-          <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/bargames/partials/home/homeNav.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="432" max-vertical-offset="540">
-          <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/bargames/partials/home/homeContent.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1404" max-vertical-offset="1836">
-          <caret line="78" column="10" selection-start-line="78" selection-start-column="10" selection-end-line="78" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="18" max-vertical-offset="126">
-          <caret line="1" column="768" selection-start-line="1" selection-start-column="768" selection-end-line="1" selection-end-column="768" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="324" max-vertical-offset="468">
@@ -514,7 +515,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2430" max-vertical-offset="111258">
           <caret line="9" column="3" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -529,7 +529,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.6526315" vertical-offset="2430" max-vertical-offset="111258">
           <caret line="9" column="3" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -544,7 +543,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="393984">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -749,7 +747,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.60967183" vertical-offset="1160" max-vertical-offset="2074">
           <caret line="89" column="20" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -757,23 +754,116 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-17.0" vertical-offset="0" max-vertical-offset="629">
           <caret line="26" column="38" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="7740" max-vertical-offset="14790">
+          <caret line="516" column="23" selection-start-line="516" selection-start-column="23" selection-end-line="516" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/bargames/partials/userProfile/userProfile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="1020">
+        <state vertical-scroll-proportion="-0.0" vertical-offset="30" max-vertical-offset="900">
           <caret line="2" column="61" selection-start-line="2" selection-start-column="61" selection-end-line="2" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/styles.css">
+    <entry file="file://$PROJECT_DIR$/api/code/controllers/cityController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3398058" vertical-offset="8562" max-vertical-offset="16762">
-          <caret line="516" column="23" selection-start-line="516" selection-start-column="23" selection-end-line="516" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="1815">
+          <caret line="21" column="44" selection-start-line="21" selection-start-column="44" selection-end-line="21" selection-end-column="44" />
+          <folding>
+            <marker date="1416365685000" expanded="true" signature="798:818" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="225">
+          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="693">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gruntfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="402" max-vertical-offset="1095">
+          <caret line="45" column="43" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
+          <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/code/orm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35786435" vertical-offset="1702" max-vertical-offset="8025">
+          <caret line="130" column="69" selection-start-line="130" selection-start-column="69" selection-end-line="130" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/code/repositories.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2690583" vertical-offset="0" max-vertical-offset="9465">
+          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+          <folding>
+            <marker date="1416365685000" expanded="true" signature="231:292" placeholder="insert into ..." />
+            <marker date="1416365685000" expanded="true" signature="586:645" placeholder="select id, l..game..." />
+            <marker date="1416365685000" expanded="true" signature="1088:1134" placeholder="select id, l..game..." />
+            <marker date="1416365685000" expanded="true" signature="1780:1815" placeholder="insert into ..." />
+            <marker date="1416365685000" expanded="true" signature="2060:2099" placeholder="select id, n..sport..." />
+            <marker date="1416365685000" expanded="true" signature="2460:2486" placeholder="select id, n..sport..." />
+            <marker date="1416365685000" expanded="true" signature="3017:3051" placeholder="insert into ..." />
+            <marker date="1416365685000" expanded="true" signature="3296:3334" placeholder="select id, n..team..." />
+            <marker date="1416365685000" expanded="true" signature="3694:3719" placeholder="select id, n..team..." />
+            <marker date="1416365685000" expanded="true" signature="4251:4321" placeholder="insert into ..." />
+            <marker date="1416365685000" expanded="true" signature="4631:4696" placeholder="select id, n..location..." />
+            <marker date="1416365685000" expanded="true" signature="5161:5213" placeholder="select id, n..location..." />
+            <marker date="1416365685000" expanded="true" signature="5908:5950" placeholder="insert into ..." />
+            <marker date="1416365685000" expanded="true" signature="6195:6241" placeholder="select id, n..locationType..." />
+            <marker date="1416365685000" expanded="true" signature="6609:6642" placeholder="select id, n..locationType..." />
+            <marker date="1416365685000" expanded="true" signature="7193:7226" placeholder="insert into ..." />
+            <marker date="1416365685000" expanded="true" signature="7471:7508" placeholder="select id, n..tag..." />
+            <marker date="1416365685000" expanded="true" signature="7867:7891" placeholder="select id, n..tag..." />
+            <marker date="1416365685000" expanded="true" signature="8416:8521" placeholder="insert into ..." />
+            <marker date="1416365685000" expanded="true" signature="8892:8986" placeholder="select id, t..user..." />
+            <marker date="1416365685000" expanded="true" signature="9576:9657" placeholder="select id, t..user..." />
+            <marker date="1416365685000" expanded="true" signature="10472:10515" placeholder="insert into ..." />
+            <marker date="1416365685000" expanded="true" signature="10760:10807" placeholder="select id, n..securityLevel..." />
+            <marker date="1416365685000" expanded="true" signature="11176:11210" placeholder="select id, n..securityLevel..." />
+            <marker date="1416365685000" expanded="true" signature="11765:11848" placeholder="insert into ..." />
+            <marker date="1416365685000" expanded="true" signature="12186:12261" placeholder="select id, n..city..." />
+            <marker date="1416365685000" expanded="true" signature="12774:12836" placeholder="select id, n..city..." />
+            <marker date="1416365685000" expanded="true" signature="13556:13610" placeholder="insert into ..." />
+            <marker date="1416365685000" expanded="true" signature="13883:13938" placeholder="select id, n..setting..." />
+            <marker date="1416365685000" expanded="true" signature="14354:14396" placeholder="select id, n..setting..." />
+            <marker date="1416365685000" expanded="true" signature="15014:15081" placeholder="insert into ..." />
+            <marker date="1416365685000" expanded="true" signature="15374:15439" placeholder="select id, u..userSetting..." />
+            <marker date="1416365685000" expanded="true" signature="15864:15916" placeholder="select id, u..userSetting..." />
+          </folding>
         </state>
       </provider>
     </entry>

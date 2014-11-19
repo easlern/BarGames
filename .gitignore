@@ -1,0 +1,5 @@
+dist/
+api/code/controllers/
+api/code/data/
+api/code/models/
+nbproject/
