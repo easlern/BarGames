@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b863b66-528d-4730-9b1f-4570ac2b8b64" name="Default" comment="Added new controllers and service, implemented one page app design.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/api/code/models/gen.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/api/code/models/models.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/api/code/models/orm.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Bargames.iml" afterPath="$PROJECT_DIR$/.idea/Bargames.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/ng-annotate/node_modules/.bin/esparse" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/ng-annotate/node_modules/.bin/esparse" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/ng-annotate/node_modules/.bin/esvalidate" afterPath="$PROJECT_DIR$/scripts/node_modules/gulp-ng-annotate/node_modules/ng-annotate/node_modules/.bin/esvalidate" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/node_modules/.bin/gulp" afterPath="$PROJECT_DIR$/scripts/node_modules/.bin/gulp" />
@@ -92,20 +88,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
-              <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.10822511" vertical-offset="0" max-vertical-offset="693">
+              <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="repositories.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="repositories.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/code/repositories.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2690583" vertical-offset="0" max-vertical-offset="9465">
+            <state vertical-scroll-proportion="-7.5" vertical-offset="0" max-vertical-offset="9465">
               <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
               <folding>
                 <marker date="1416365685000" expanded="true" signature="231:292" placeholder="insert into ..." />
@@ -222,8 +218,8 @@
         <option value="$PROJECT_DIR$/css/styles.css" />
         <option value="$PROJECT_DIR$/api/code/controllers/cityController.php" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/Gruntfile.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -809,14 +805,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
-          <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/code/orm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.35786435" vertical-offset="1702" max-vertical-offset="8025">
@@ -827,7 +815,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/code/repositories.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2690583" vertical-offset="0" max-vertical-offset="9465">
+        <state vertical-scroll-proportion="-7.5" vertical-offset="0" max-vertical-offset="9465">
           <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
           <folding>
             <marker date="1416365685000" expanded="true" signature="231:292" placeholder="insert into ..." />
@@ -864,6 +852,14 @@
             <marker date="1416365685000" expanded="true" signature="15374:15439" placeholder="select id, u..userSetting..." />
             <marker date="1416365685000" expanded="true" signature="15864:15916" placeholder="select id, u..userSetting..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10822511" vertical-offset="0" max-vertical-offset="693">
+          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
