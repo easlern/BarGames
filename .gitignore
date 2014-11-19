@@ -3,4 +3,5 @@ api/code/controllers/
 api/code/data/
 api/code/models/
 nbproject/
-.idea/
+.idea/workspace.xml
+.idea/tasks.xml
