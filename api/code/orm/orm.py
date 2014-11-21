@@ -76,7 +76,7 @@ def makeWebAccessors():
     outputFile.write ('\t\t$queryLoc = strpos ($val, "?");\n')
     outputFile.write ('\t\tif ($queryLoc !== FALSE) $route[$key] = substr ($val, 0, $queryLoc);\n')
     outputFile.write ('\t}\n')
-    outputFile.write ('\n\t$command = SanitizeStringArray (array_values ($route));\n')
+    outputFile.write ('\n\t$command = SanitizeStringArray ($route);\n')
     outputFile.write ('\t$controllerName = strtolower ($command [0]);\n')
     outputFile.write ('\t$args = array_filter (array_slice ($command, 1));\n')
     outputFile.write ('\t$controllerInstance = NULL;\n')
@@ -94,11 +94,11 @@ def makeWebAccessors():
     outputFile.write ('\t\t\t\telse $controllerInstance->get($args);\n')
     outputFile.write ('\t\t\t\tbreak;\n')
     outputFile.write ('\t\t\tcase "POST":\n')
-    outputFile.write ('\t\t\t\t$args = array_values (GetSanitizedPostVars());\n')
+    outputFile.write ('\t\t\t\t$args = GetSanitizedPostVars();\n')
     outputFile.write ('\t\t\t\t$controllerInstance->create($args);\n')
     outputFile.write ('\t\t\t\tbreak;\n')
     outputFile.write ('\t\t\tcase "PUT":\n')
-    outputFile.write ('\t\t\t\t$id = $args[0]; // Pull the index to be updated.\n')
+    outputFile.write ('\t\t\t\t$id = $args["id"]; // Pull the index to be updated.\n')
     outputFile.write ('\t\t\t\t$args = GetSanitizedPutVars();\n')
     outputFile.write ('\t\t\t\tif (is_numeric ($id)) array_unshift ($args, $id);\n')
     outputFile.write ('\t\t\t\t$controllerInstance->update($args);\n')
@@ -187,7 +187,17 @@ def makeControllers():
             #print (prop.getAttribute ('type'))
             if (prop.getAttribute ('type') != 'primary key'):
                 nonPrimaryPropCount += 1
-        outputFile.write ('\t\t\tif (count ($args) < ' + str (nonPrimaryPropCount) + '){\n')
+        outputFile.write ('\t\t\t$argNamesSatisfied = TRUE;\n');
+        outputFile.write ('\t\t\t$requiredArgs = array();\n');
+        for prop in properties:
+            if (prop.getAttribute ('required').lower() == 'always'):
+                outputFile.write ('\t\t\tarray_push ($requiredArgs, "' + prop.getAttribute ('name') + '");\n');
+        outputFile.write ('\t\t\tforeach ($requiredArgs as $requiredArg){\n');
+        outputFile.write ('\t\t\t\tif (!in_array ($requiredArg, $args)){\n');
+        outputFile.write ('\t\t\t\t\t$argNamesSatisfied = FALSE;\n');
+        outputFile.write ('\t\t\t\t}\n');
+        outputFile.write ('\t\t\t}\n');
+        outputFile.write ('\t\t\tif (count ($args) < ' + str (nonPrimaryPropCount) + ' || !$argNamesSatisfied){\n')
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 400 Bad Request");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode ($errorObject));\n')
@@ -196,11 +206,19 @@ def makeControllers():
 
         outputFile.write ('\t\t\tif (IsAdminAuthorized() && IsCsrfGood()){\n')
         outputFile.write ('\t\t\t\t$repo = Repositories::get' + cap(modelName) + 'Repository();\n')
+        for prop in properties:
+            if (prop.getAttribute ('type') != 'primary key'):
+                outputFile.write ('\t\t\t\t$' + prop.getAttribute ('name') + ' = ')
+                dbType = propDataToDbType (prop.getAttribute ('data').lower())
+                default = 0
+                if (dbType == 'varchar'):
+                    default = '""';
+                outputFile.write ('in_array ("' + prop.getAttribute ('name') + '", $args) ? $args["' + prop.getAttribute ('name') + '"] : ' + str (default) + ';\n')
         outputFile.write ('\t\t\t\t$model = new ' + cap(modelName) + '(-1')
         count = 0
         for prop in properties:
             if ('array' not in prop.getAttribute ('data') and prop.getAttribute ('type') != 'primary key'):
-                outputFile.write (', $args[' + str(count) + ']')
+                outputFile.write (', $' + prop.getAttribute ('name'))
                 count += 1
         outputFile.write (');\n')
         outputFile.write ('\t\t\t\t$repo->create($model);\n')

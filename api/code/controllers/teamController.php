@@ -56,7 +56,14 @@
 		}
 
 		public function create ($args){
-			if (count ($args) < 1){
+			$argNamesSatisfied = TRUE;
+			$requiredArgs = array();
+			foreach ($requiredArgs as $requiredArg){
+				if (!in_array ($requiredArg, $args)){
+					$argNamesSatisfied = FALSE;
+				}
+			}
+			if (count ($args) < 1 || !$argNamesSatisfied){
 				header ("HTTP/1.1 400 Bad Request");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
@@ -64,7 +71,8 @@
 			}
 			if (IsAdminAuthorized() && IsCsrfGood()){
 				$repo = Repositories::getTeamRepository();
-				$model = new Team(-1, $args[0]);
+				$name = in_array ("name", $args) ? $args["name"] : "";
+				$model = new Team(-1, $name);
 				$repo->create($model);
 				header ("HTTP/1.1 303 See Other");
 				header ("Location: /api/team/" . $model->getId());

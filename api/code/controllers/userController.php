@@ -56,7 +56,20 @@
 		}
 
 		public function create ($args){
-			if (count ($args) < 6){
+			$argNamesSatisfied = TRUE;
+			$requiredArgs = array();
+			array_push ($requiredArgs, "type");
+			array_push ($requiredArgs, "method");
+			array_push ($requiredArgs, "passHash");
+			array_push ($requiredArgs, "nameFirst");
+			array_push ($requiredArgs, "nameLast");
+			array_push ($requiredArgs, "securityLevelId");
+			foreach ($requiredArgs as $requiredArg){
+				if (!in_array ($requiredArg, $args)){
+					$argNamesSatisfied = FALSE;
+				}
+			}
+			if (count ($args) < 6 || !$argNamesSatisfied){
 				header ("HTTP/1.1 400 Bad Request");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
@@ -64,7 +77,13 @@
 			}
 			if (IsAdminAuthorized() && IsCsrfGood()){
 				$repo = Repositories::getUserRepository();
-				$model = new User(-1, $args[0], $args[1], $args[2], $args[3], $args[4], $args[5]);
+				$type = in_array ("type", $args) ? $args["type"] : 0;
+				$method = in_array ("method", $args) ? $args["method"] : 0;
+				$passHash = in_array ("passHash", $args) ? $args["passHash"] : "";
+				$nameFirst = in_array ("nameFirst", $args) ? $args["nameFirst"] : "";
+				$nameLast = in_array ("nameLast", $args) ? $args["nameLast"] : "";
+				$securityLevelId = in_array ("securityLevelId", $args) ? $args["securityLevelId"] : 0;
+				$model = new User(-1, $type, $method, $passHash, $nameFirst, $nameLast, $securityLevelId);
 				$repo->create($model);
 				header ("HTTP/1.1 303 See Other");
 				header ("Location: /api/user/" . $model->getId());

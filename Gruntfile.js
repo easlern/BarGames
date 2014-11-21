@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                 tasks: ['jshint', 'qunit']
             },
             orm: {
-                files: ['api/code/models.xml'],
+                files: ['api/code/models.xml', 'api/code/orm/orm.py'],
                 tasks: ['exec:generateOrm']
             }
         },

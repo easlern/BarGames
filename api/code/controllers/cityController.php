@@ -56,7 +56,18 @@
 		}
 
 		public function create ($args){
-			if (count ($args) < 5){
+			$argNamesSatisfied = TRUE;
+			$requiredArgs = array();
+			array_push ($requiredArgs, "name");
+			array_push ($requiredArgs, "state");
+			array_push ($requiredArgs, "longitude");
+			array_push ($requiredArgs, "latitude");
+			foreach ($requiredArgs as $requiredArg){
+				if (!in_array ($requiredArg, $args)){
+					$argNamesSatisfied = FALSE;
+				}
+			}
+			if (count ($args) < 5 || !$argNamesSatisfied){
 				header ("HTTP/1.1 400 Bad Request");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
@@ -64,7 +75,12 @@
 			}
 			if (IsAdminAuthorized() && IsCsrfGood()){
 				$repo = Repositories::getCityRepository();
-				$model = new City(-1, $args[0], $args[1], $args[2], $args[3], $args[4]);
+				$name = in_array ("name", $args) ? $args["name"] : "";
+				$state = in_array ("state", $args) ? $args["state"] : "";
+				$country = in_array ("country", $args) ? $args["country"] : "";
+				$longitude = in_array ("longitude", $args) ? $args["longitude"] : 0;
+				$latitude = in_array ("latitude", $args) ? $args["latitude"] : 0;
+				$model = new City(-1, $name, $state, $country, $longitude, $latitude);
 				$repo->create($model);
 				header ("HTTP/1.1 303 See Other");
 				header ("Location: /api/city/" . $model->getId());

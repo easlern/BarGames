@@ -56,7 +56,17 @@
 		}
 
 		public function create ($args){
-			if (count ($args) < 5){
+			$argNamesSatisfied = TRUE;
+			$requiredArgs = array();
+			array_push ($requiredArgs, "locationId");
+			array_push ($requiredArgs, "name");
+			array_push ($requiredArgs, "sportId");
+			foreach ($requiredArgs as $requiredArg){
+				if (!in_array ($requiredArg, $args)){
+					$argNamesSatisfied = FALSE;
+				}
+			}
+			if (count ($args) < 5 || !$argNamesSatisfied){
 				header ("HTTP/1.1 400 Bad Request");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
@@ -64,7 +74,12 @@
 			}
 			if (IsAdminAuthorized() && IsCsrfGood()){
 				$repo = Repositories::getGameRepository();
-				$model = new Game(-1, $args[0], $args[1], $args[2]);
+				$locationId = in_array ("locationId", $args) ? $args["locationId"] : 0;
+				$name = in_array ("name", $args) ? $args["name"] : "";
+				$tagIds = in_array ("tagIds", $args) ? $args["tagIds"] : 0;
+				$sportId = in_array ("sportId", $args) ? $args["sportId"] : 0;
+				$teamIds = in_array ("teamIds", $args) ? $args["teamIds"] : 0;
+				$model = new Game(-1, $locationId, $name, $sportId);
 				$repo->create($model);
 				header ("HTTP/1.1 303 See Other");
 				header ("Location: /api/game/" . $model->getId());
