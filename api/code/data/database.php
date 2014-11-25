@@ -8,9 +8,9 @@
 			$con->query ("drop table if exists game");
 			$con->query ("create table game (id int not null auto_increment, locationId int not null, name varchar(100) not null, sportId int not null, primary key(id))");
 			$con->query ("drop table if exists sport");
-			$con->query ("create table sport (id int not null auto_increment, name varchar(32), primary key(id))");
+			$con->query ("create table sport (id int not null auto_increment, name varchar(32) not null, primary key(id))");
 			$con->query ("drop table if exists team");
-			$con->query ("create table team (id int not null auto_increment, name varchar(100), primary key(id))");
+			$con->query ("create table team (id int not null auto_increment, name varchar(100) not null, primary key(id))");
 			$con->query ("drop table if exists location");
 			$con->query ("create table location (id int not null auto_increment, name varchar(100) not null, street varchar(100), cityId int, phone varchar(20), primary key(id))");
 			$con->query ("drop table if exists locationType");

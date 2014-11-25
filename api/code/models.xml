@@ -11,11 +11,11 @@
     </model>
     <model name="sport">
         <property name="id" type="primary key" data="integer"/>
-        <property name="name" data="string" length="32"/>
+        <property name="name" data="string" length="32" required="always"/>
     </model>
     <model name="team">
         <property name="id" type="primary key" data="integer"/>
-        <property name="name" data="string" length="100"/>
+        <property name="name" data="string" length="100" required="always"/>
     </model>
     <model name="location">
         <property name="id" type="primary key" data="integer"/>

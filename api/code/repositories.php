@@ -26,10 +26,27 @@
 			$sportId = 0;
 			$result->bind_result ($id, $locationId, $name, $sportId);
 			if ($result->fetch()){
-				return new Game ($id, $locationId, $name, $sportId);
+				return new Game ($id, $locationId, $name, array(), $sportId, array());
 			}
 			return NULL;
 		}
+
+		public function delete ($id){
+			LogInfo ("Deleting in repo game with id $id.");
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("delete from game where id = ?");
+			$statement->bind_param ("i", $id);
+			$statement->execute();
+		}
+		public function update ($model){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("update game set locationId = ?, name = ?, sportId = ? where id = ?");
+			$statement->bind_param ("isii", $model->getLocationId(), $model->getName(), $model->getSportId(), $model->getId());
+			$statement->execute();
+		}
+
 		public function getAll(){
 			$results = array();
 			$conn = connectAsWebUser();
@@ -44,7 +61,7 @@
 			$statement->bind_result ($id, $locationId, $name, $sportId);
 			$statement->store_result();
 			while ($statement->fetch()){
-				$model = new Game ($id, $locationId, $name, $sportId);
+				$model = new Game ($id, $locationId, $name, array(), $sportId, array());
 				array_push ($results, $model);
 			}
 			return $results;
@@ -82,6 +99,23 @@
 			}
 			return NULL;
 		}
+
+		public function delete ($id){
+			LogInfo ("Deleting in repo sport with id $id.");
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("delete from sport where id = ?");
+			$statement->bind_param ("i", $id);
+			$statement->execute();
+		}
+		public function update ($model){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("update sport set name = ? where id = ?");
+			$statement->bind_param ("si", $model->getName(), $model->getId());
+			$statement->execute();
+		}
+
 		public function getAll(){
 			$results = array();
 			$conn = connectAsWebUser();
@@ -132,6 +166,23 @@
 			}
 			return NULL;
 		}
+
+		public function delete ($id){
+			LogInfo ("Deleting in repo team with id $id.");
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("delete from team where id = ?");
+			$statement->bind_param ("i", $id);
+			$statement->execute();
+		}
+		public function update ($model){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("update team set name = ? where id = ?");
+			$statement->bind_param ("si", $model->getName(), $model->getId());
+			$statement->execute();
+		}
+
 		public function getAll(){
 			$results = array();
 			$conn = connectAsWebUser();
@@ -181,10 +232,27 @@
 			$phone = "";
 			$result->bind_result ($id, $name, $street, $cityId, $phone);
 			if ($result->fetch()){
-				return new Location ($id, $name, $street, $cityId, $phone);
+				return new Location ($id, $name, $street, $cityId, $phone, array());
 			}
 			return NULL;
 		}
+
+		public function delete ($id){
+			LogInfo ("Deleting in repo location with id $id.");
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("delete from location where id = ?");
+			$statement->bind_param ("i", $id);
+			$statement->execute();
+		}
+		public function update ($model){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("update location set name = ?, street = ?, cityId = ?, phone = ? where id = ?");
+			$statement->bind_param ("ssisi", $model->getName(), $model->getStreet(), $model->getCityId(), $model->getPhone(), $model->getId());
+			$statement->execute();
+		}
+
 		public function getAll(){
 			$results = array();
 			$conn = connectAsWebUser();
@@ -200,7 +268,7 @@
 			$statement->bind_result ($id, $name, $street, $cityId, $phone);
 			$statement->store_result();
 			while ($statement->fetch()){
-				$model = new Location ($id, $name, $street, $cityId, $phone);
+				$model = new Location ($id, $name, $street, $cityId, $phone, array());
 				array_push ($results, $model);
 			}
 			return $results;
@@ -238,6 +306,23 @@
 			}
 			return NULL;
 		}
+
+		public function delete ($id){
+			LogInfo ("Deleting in repo locationType with id $id.");
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("delete from locationType where id = ?");
+			$statement->bind_param ("i", $id);
+			$statement->execute();
+		}
+		public function update ($model){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("update locationType set name = ? where id = ?");
+			$statement->bind_param ("si", $model->getName(), $model->getId());
+			$statement->execute();
+		}
+
 		public function getAll(){
 			$results = array();
 			$conn = connectAsWebUser();
@@ -288,6 +373,23 @@
 			}
 			return NULL;
 		}
+
+		public function delete ($id){
+			LogInfo ("Deleting in repo tag with id $id.");
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("delete from tag where id = ?");
+			$statement->bind_param ("i", $id);
+			$statement->execute();
+		}
+		public function update ($model){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("update tag set name = ? where id = ?");
+			$statement->bind_param ("si", $model->getName(), $model->getId());
+			$statement->execute();
+		}
+
 		public function getAll(){
 			$results = array();
 			$conn = connectAsWebUser();
@@ -343,6 +445,23 @@
 			}
 			return NULL;
 		}
+
+		public function delete ($id){
+			LogInfo ("Deleting in repo user with id $id.");
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("delete from user where id = ?");
+			$statement->bind_param ("i", $id);
+			$statement->execute();
+		}
+		public function update ($model){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("update user set type = ?, method = ?, passHash = ?, nameFirst = ?, nameLast = ?, securityLevelId = ? where id = ?");
+			$statement->bind_param ("iisssii", $model->getType(), $model->getMethod(), $model->getPassHash(), $model->getNameFirst(), $model->getNameLast(), $model->getSecurityLevelId(), $model->getId());
+			$statement->execute();
+		}
+
 		public function getAll(){
 			$results = array();
 			$conn = connectAsWebUser();
@@ -398,6 +517,23 @@
 			}
 			return NULL;
 		}
+
+		public function delete ($id){
+			LogInfo ("Deleting in repo securityLevel with id $id.");
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("delete from securityLevel where id = ?");
+			$statement->bind_param ("i", $id);
+			$statement->execute();
+		}
+		public function update ($model){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("update securityLevel set name = ? where id = ?");
+			$statement->bind_param ("si", $model->getName(), $model->getId());
+			$statement->execute();
+		}
+
 		public function getAll(){
 			$results = array();
 			$conn = connectAsWebUser();
@@ -452,6 +588,23 @@
 			}
 			return NULL;
 		}
+
+		public function delete ($id){
+			LogInfo ("Deleting in repo city with id $id.");
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("delete from city where id = ?");
+			$statement->bind_param ("i", $id);
+			$statement->execute();
+		}
+		public function update ($model){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("update city set name = ?, state = ?, country = ?, longitude = ?, latitude = ? where id = ?");
+			$statement->bind_param ("sssffi", $model->getName(), $model->getState(), $model->getCountry(), $model->getLongitude(), $model->getLatitude(), $model->getId());
+			$statement->execute();
+		}
+
 		public function getAll(){
 			$results = array();
 			$conn = connectAsWebUser();
@@ -507,6 +660,23 @@
 			}
 			return NULL;
 		}
+
+		public function delete ($id){
+			LogInfo ("Deleting in repo setting with id $id.");
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("delete from setting where id = ?");
+			$statement->bind_param ("i", $id);
+			$statement->execute();
+		}
+		public function update ($model){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("update setting set name = ?, defaultValue = ? where id = ?");
+			$statement->bind_param ("ssi", $model->getName(), $model->getDefaultValue(), $model->getId());
+			$statement->execute();
+		}
+
 		public function getAll(){
 			$results = array();
 			$conn = connectAsWebUser();
@@ -559,6 +729,23 @@
 			}
 			return NULL;
 		}
+
+		public function delete ($id){
+			LogInfo ("Deleting in repo userSetting with id $id.");
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("delete from userSetting where id = ?");
+			$statement->bind_param ("i", $id);
+			$statement->execute();
+		}
+		public function update ($model){
+			$conn = connectAsWebUser();
+			if (!$conn) return NULL;
+			$statement = $conn->prepare ("update userSetting set userId = ?, settingId = ?, value = ? where id = ?");
+			$statement->bind_param ("iisi", $model->getUserId(), $model->getSettingId(), $model->getValue(), $model->getId());
+			$statement->execute();
+		}
+
 		public function getAll(){
 			$results = array();
 			$conn = connectAsWebUser();

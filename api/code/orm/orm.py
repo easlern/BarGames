@@ -98,7 +98,7 @@ def makeWebAccessors():
     outputFile.write ('\t\t\t\t$controllerInstance->create($args);\n')
     outputFile.write ('\t\t\t\tbreak;\n')
     outputFile.write ('\t\t\tcase "PUT":\n')
-    outputFile.write ('\t\t\t\t$id = $args["id"]; // Pull the index to be updated.\n')
+    outputFile.write ('\t\t\t\t$id = $args[0]; // Pull the index to be updated.\n')
     outputFile.write ('\t\t\t\t$args = GetSanitizedPutVars();\n')
     outputFile.write ('\t\t\t\tif (is_numeric ($id)) array_unshift ($args, $id);\n')
     outputFile.write ('\t\t\t\t$controllerInstance->update($args);\n')
@@ -115,7 +115,7 @@ def makeWebAccessors():
     outputFile.write ('\t\t}\n')
     outputFile.write ('\t}\n')
     outputFile.write ('\telse{\n')
-    outputFile.write ('\t\theader("HTTP/1.0 404 Not Found");\n')
+    outputFile.write ('\t\theader("HTTP/1.1 404 Not Found");\n')
     outputFile.write ('\t}\n')
     outputFile.write ('\n?>\n')
 
@@ -141,7 +141,7 @@ def makeControllers():
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\n\t\t\t$repo = Repositories::get' + cap(modelName) + 'Repository();\n')
         outputFile.write ('\t\t\tif (IsAuthorized()){\n')
-        outputFile.write ('\t\t\t\t$' + modelName + ' = $repo->getById($args[0]);\n')
+        outputFile.write ('\t\t\t\t$' + modelName + ' = $repo->getById ($args[0]);\n')
         outputFile.write ('\t\t\t\tif ($' + modelName + ' != NULL){\n')
         outputFile.write ('\t\t\t\t\theader ("HTTP/1.1 200 OK");\n')
         outputFile.write ('\t\t\t\t\tprint ($' + modelName + '->toJson());\n')
@@ -187,13 +187,18 @@ def makeControllers():
             #print (prop.getAttribute ('type'))
             if (prop.getAttribute ('type') != 'primary key'):
                 nonPrimaryPropCount += 1
+        outputFile.write ('\t\t\tLogInfo ("Creating ' + modelName + ' with args: " . print_r ($args, true));\n')
         outputFile.write ('\t\t\t$argNamesSatisfied = TRUE;\n');
         outputFile.write ('\t\t\t$requiredArgs = array();\n');
         for prop in properties:
             if (prop.getAttribute ('required').lower() == 'always'):
                 outputFile.write ('\t\t\tarray_push ($requiredArgs, "' + prop.getAttribute ('name') + '");\n');
+        # outputFile.write ('\t\t\t$nonPrimaryKeyArgs = array();\n');
+        # for prop in properties:
+        #     if (prop.getAttribute ('type').lower() != 'primary key'):
+        #         outputFile.write ('\t\t\tarray_push ($nonPrimaryKeyArgs, "' + prop.getAttribute ('name') + '");\n');
         outputFile.write ('\t\t\tforeach ($requiredArgs as $requiredArg){\n');
-        outputFile.write ('\t\t\t\tif (!in_array ($requiredArg, $args)){\n');
+        outputFile.write ('\t\t\t\tif (!in_array ($requiredArg, array_keys ($args))){\n');
         outputFile.write ('\t\t\t\t\t$argNamesSatisfied = FALSE;\n');
         outputFile.write ('\t\t\t\t}\n');
         outputFile.write ('\t\t\t}\n');
@@ -213,12 +218,15 @@ def makeControllers():
                 default = 0
                 if (dbType == 'varchar'):
                     default = '""';
-                outputFile.write ('in_array ("' + prop.getAttribute ('name') + '", $args) ? $args["' + prop.getAttribute ('name') + '"] : ' + str (default) + ';\n')
+                outputFile.write ('in_array ("' + prop.getAttribute ('name') + '", array_keys ($args)) ? $args["' + prop.getAttribute ('name') + '"] : ' + str (default) + ';\n')
         outputFile.write ('\t\t\t\t$model = new ' + cap(modelName) + '(-1')
         count = 0
         for prop in properties:
-            if ('array' not in prop.getAttribute ('data') and prop.getAttribute ('type') != 'primary key'):
-                outputFile.write (', $' + prop.getAttribute ('name'))
+            if (prop.getAttribute ('type') != 'primary key'):
+                if ('array' in prop.getAttribute ('data')):
+                    outputFile.write (', array()')
+                else:
+                    outputFile.write (', $' + prop.getAttribute ('name'))
                 count += 1
         outputFile.write (');\n')
         outputFile.write ('\t\t\t\t$repo->create($model);\n')
@@ -234,19 +242,30 @@ def makeControllers():
 
         # UPDATE
         outputFile.write ('\n\t\tpublic function update ($args){\n')
-        nonPrimaryPropCount = 0
+        primaryPropCount = 0
         for prop in properties:
             #print (prop.getAttribute ('type'))
-            if (prop.getAttribute ('type') != 'primary key'):
+            if (prop.getAttribute ('type') == 'primary key'):
                 nonPrimaryPropCount += 1
-        outputFile.write ('\t\t\tif (count ($args) < ' + str (nonPrimaryPropCount) + '){\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 400 Bad Request");\n')
+        outputFile.write ('\t\t\tLogInfo ("Updating ' + modelName + ' with args: " . print_r ($args, true));\n')
+        outputFile.write ('\t\t\t$repo = Repositories::get' + cap(modelName) + 'Repository();\n')
+        outputFile.write ('\t\t\t$existing = $repo->getById ($args[0]);\n');
+        outputFile.write ('\t\t\tif ($existing == NULL){\n')
+        outputFile.write ('\t\t\t\theader ("HTTP/1.1 404 Not Found");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode ($errorObject));\n')
         outputFile.write ('\t\t\t\texit();\n')
         outputFile.write ('\t\t\t}\n')
         
         outputFile.write ('\t\t\tif (IsAdminAuthorized() && IsCsrfGood()){\n')
+        outputFile.write ('\t\t\t\tforeach ($args as $key => $value){\n')
+        for prop in properties:
+            if (prop.getAttribute ('type') == 'primary key' or 'array' in prop.getAttribute ('data')):
+                continue
+            propName = prop.getAttribute ('name')
+            outputFile.write ('\t\t\t\t\tif ($key == "' + propName + '") $existing->set' + cap (propName) + ' ($value);\n')
+        outputFile.write ('\t\t\t\t}\n')
+        outputFile.write ('\t\t\t\t$repo->update ($existing);\n')
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 200 OK");\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\t\t\telse{\n')
@@ -263,7 +282,7 @@ def makeControllers():
             #print (prop.getAttribute ('type'))
             if (prop.getAttribute ('type') == 'primary key'):
                 primaryPropCount += 1
-        outputFile.write ('\t\t\tLogInfo ("Deleting ' + modelName + ' with args " . print_r ($args, true));\n')
+        outputFile.write ('\t\t\tLogInfo ("Deleting ' + modelName + ' with args: " . print_r ($args, true));\n')
         outputFile.write ('\t\t\tif (count ($args) < ' + str (primaryPropCount) + '){\n')
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 400 Bad Request");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
@@ -272,9 +291,13 @@ def makeControllers():
         outputFile.write ('\t\t\t}\n')
         
         outputFile.write ('\t\t\tif (IsAdminAuthorized() && IsCsrfGood()){\n')
+        outputFile.write ('\t\t\t\tLogInfo ("Delete is authorized.");\n')
+        outputFile.write ('\t\t\t\t$repo = Repositories::get' + cap(modelName) + 'Repository();\n')
+        outputFile.write ('\t\t\t\t$repo->delete ($args[0]);\n')
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 204 No Content");\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\t\t\telse{\n')
+        outputFile.write ('\t\t\t\tLogInfo ("Delete is not authorized.");\n')
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 403 Forbidden");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse("Not authenticated or CSRF token is invalid.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode($errorObject));\n')
@@ -369,15 +392,66 @@ def makeRepositories():
         outputFile.write ('\n\t\t\t\treturn new ' + cap(modelName) + ' (');
         first = True
         for prop in properties:
-            if ('array' not in prop.getAttribute ('data').lower()):
-                if (not first):
-                    outputFile.write (', ')
-                first = False
+            if (not first):
+                outputFile.write (', ')
+            first = False;
+            if ('array' in prop.getAttribute ('data').lower()):
+                outputFile.write ('array()')
+            else:
                 outputFile.write ('$' + prop.getAttribute ('name'));
         outputFile.write (');')
         outputFile.write ('\n\t\t\t}')
         outputFile.write ('\n\t\t\treturn NULL;')
         outputFile.write ('\n\t\t}\n')
+
+        # DELETE
+        outputFile.write ('\n\t\tpublic function delete ($id){')
+        outputFile.write ('\n\t\t\tLogInfo ("Deleting in repo ' + modelName + ' with id $id.");')
+        outputFile.write ('\n\t\t\t$conn = connectAsWebUser();')
+        outputFile.write ('\n\t\t\tif (!$conn) return NULL;')
+        outputFile.write ('\n\t\t\t$statement = $conn->prepare ("delete from ' + modelName + ' where id = ?");')
+        outputFile.write ('\n\t\t\t$statement->bind_param ("i", $id);')
+        outputFile.write ('\n\t\t\t$statement->execute();')
+        outputFile.write ('\n\t\t}')
+
+        # UPDATE
+        outputFile.write ('\n\t\tpublic function update ($model){')
+        outputFile.write ('\n\t\t\t$conn = connectAsWebUser();')
+        outputFile.write ('\n\t\t\tif (!$conn) return NULL;')
+        outputFile.write ('\n\t\t\t$statement = $conn->prepare ("update ' + modelName + ' set ')
+        first = True
+        for prop in properties:
+            if (prop.getAttribute ('type') != 'primary key' and 'array' not in prop.getAttribute ('data').lower()):
+                if (not first):
+                    outputFile.write (', ')
+                first = False
+                nonPrimaryPropCount += 1
+                name = prop.getAttribute ('name')
+                outputFile.write (name + ' = ?')
+        outputFile.write (' where id = ?");')
+        outputFile.write ('\n\t\t\t$statement->bind_param ("')
+        for prop in properties:
+            if ('array' not in prop.getAttribute ('data').lower() and 'primary key' != prop.getAttribute ('type')):
+                dbType = propDataToDbType (prop.getAttribute ('data').lower())
+                if (dbType == 'varchar'):
+                    outputFile.write ('s')
+                elif (dbType == 'int'):
+                    outputFile.write ('i')
+                elif (dbType == 'float'):
+                    outputFile.write ('f')
+                elif (dbType == 'decimal'):
+                    outputFile.write ('d')
+        outputFile.write ('i", ')
+        first = True
+        for prop in properties:
+            if ('array' not in prop.getAttribute ('data').lower() and 'primary key' != prop.getAttribute ('type')):
+                if (not first):
+                    outputFile.write (', ')
+                first = False
+                outputFile.write ('$model->get' + cap (prop.getAttribute ('name')) + '()')
+        outputFile.write (', $model->getId());')
+        outputFile.write ('\n\t\t\t$statement->execute();')
+        outputFile.write ('\n\t\t}\n\n')
 
         outputFile.write ('\t\tpublic function getAll(){')
         outputFile.write ('\n\t\t\t$results = array();')
@@ -410,11 +484,13 @@ def makeRepositories():
         outputFile.write ('\n\t\t\t\t$model = new ' + cap(modelName) + ' (');
         first = True
         for prop in properties:
-            if ('array' not in prop.getAttribute ('data').lower()):
-                if (not first):
-                    outputFile.write (', ')
-                first = False
+            if (not first):
+                outputFile.write (', ')
+            if ('array' in prop.getAttribute ('data')):
+                outputFile.write ('array()')
+            else:
                 outputFile.write ('$' + prop.getAttribute ('name'));
+            first = False
         outputFile.write (');')
         outputFile.write ('\n\t\t\t\tarray_push ($results, $model);')
         outputFile.write ('\n\t\t\t}')

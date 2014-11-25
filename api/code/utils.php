@@ -15,9 +15,11 @@ function GetCsrfToken(){
 
 function SanitizeStringArray ($arr){
     $vars = array();
+    LogInfo ('Sanitizing ' . print_r ($arr, true));
     foreach ($arr as $key=>$val){
         if (strlen ($key) < 1024 && strlen ($val) < 1024) $vars [$key] = SanitizePlainText ($val);
     }
+    LogInfo ('Sanitized to ' . print_r ($vars, true));
     return $vars;
 }
 function GetSanitizedGetVars(){

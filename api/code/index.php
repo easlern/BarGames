@@ -81,7 +81,7 @@
 				$controllerInstance->create($args);
 				break;
 			case "PUT":
-				$id = $args["id"]; // Pull the index to be updated.
+				$id = $args[0]; // Pull the index to be updated.
 				$args = GetSanitizedPutVars();
 				if (is_numeric ($id)) array_unshift ($args, $id);
 				$controllerInstance->update($args);
@@ -98,7 +98,7 @@
 		}
 	}
 	else{
-		header("HTTP/1.0 404 Not Found");
+		header("HTTP/1.1 404 Not Found");
 	}
 
 ?>
