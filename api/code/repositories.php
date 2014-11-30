@@ -565,7 +565,7 @@
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("insert into city (name, state, country, longitude, latitude) values (?, ?, ?, ?, ?)");
-			$statement->bind_param ("sssff", $model->getName(), $model->getState(), $model->getCountry(), $model->getLongitude(), $model->getLatitude());
+			$statement->bind_param ("sssdd", $model->getName(), $model->getState(), $model->getCountry(), $model->getLongitude(), $model->getLatitude());
 			$statement->execute();
 			$model->setId ($conn->insert_id);
 		}
@@ -601,7 +601,7 @@
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("update city set name = ?, state = ?, country = ?, longitude = ?, latitude = ? where id = ?");
-			$statement->bind_param ("sssffi", $model->getName(), $model->getState(), $model->getCountry(), $model->getLongitude(), $model->getLatitude(), $model->getId());
+			$statement->bind_param ("sssddi", $model->getName(), $model->getState(), $model->getCountry(), $model->getLongitude(), $model->getLatitude(), $model->getId());
 			$statement->execute();
 		}
 

@@ -77,13 +77,14 @@ def makeWebAccessors():
     outputFile.write ('\t\tif ($queryLoc !== FALSE) $route[$key] = substr ($val, 0, $queryLoc);\n')
     outputFile.write ('\t}\n')
     outputFile.write ('\n\t$command = SanitizeStringArray ($route);\n')
-    outputFile.write ('\t$controllerName = strtolower ($command [0]);\n')
+    outputFile.write ('\t$controllerName = array_values ($command);\n')
+    outputFile.write ('\t$controllerName = strtolower ($controllerName [0]);\n')
     outputFile.write ('\t$args = array_filter (array_slice ($command, 1));\n')
     outputFile.write ('\t$controllerInstance = NULL;\n')
     outputFile.write ('\n\tswitch ($controllerName){\n')
     for model in models:
         modelName = model.getAttribute ('name')
-        outputFile.write ('\t\tcase "' + modelName + '":\n')
+        outputFile.write ('\t\tcase "' + modelName.lower() + '":\n')
         outputFile.write ('\t\t\t$controllerInstance = new ' + cap (modelName) + 'Controller();\n')
         outputFile.write ('\t\t\tbreak;\n')
     outputFile.write ('\t}\n')
@@ -346,7 +347,7 @@ def makeRepositories():
                 elif (dbType == 'int'):
                     outputFile.write ('i')
                 elif (dbType == 'float'):
-                    outputFile.write ('f')
+                    outputFile.write ('d')
                 elif (dbType == 'decimal'):
                     outputFile.write ('d')
         outputFile.write ('", ')
@@ -438,7 +439,7 @@ def makeRepositories():
                 elif (dbType == 'int'):
                     outputFile.write ('i')
                 elif (dbType == 'float'):
-                    outputFile.write ('f')
+                    outputFile.write ('d')
                 elif (dbType == 'decimal'):
                     outputFile.write ('d')
         outputFile.write ('i", ')

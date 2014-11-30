@@ -29,8 +29,9 @@
 		if ($queryLoc !== FALSE) $route[$key] = substr ($val, 0, $queryLoc);
 	}
 
-	$command = SanitizeStringArray (array_values ($route));
-	$controllerName = strtolower ($command [0]);
+	$command = SanitizeStringArray ($route);
+	$controllerName = array_values ($command);
+	$controllerName = strtolower ($controllerName [0]);
 	$args = array_filter (array_slice ($command, 1));
 	$controllerInstance = NULL;
 
@@ -47,7 +48,7 @@
 		case "location":
 			$controllerInstance = new LocationController();
 			break;
-		case "locationType":
+		case "locationtype":
 			$controllerInstance = new LocationTypeController();
 			break;
 		case "tag":
@@ -56,7 +57,7 @@
 		case "user":
 			$controllerInstance = new UserController();
 			break;
-		case "securityLevel":
+		case "securitylevel":
 			$controllerInstance = new SecurityLevelController();
 			break;
 		case "city":
@@ -65,7 +66,7 @@
 		case "setting":
 			$controllerInstance = new SettingController();
 			break;
-		case "userSetting":
+		case "usersetting":
 			$controllerInstance = new UserSettingController();
 			break;
 	}
@@ -78,7 +79,6 @@
 				break;
 			case "POST":
 				$args = GetSanitizedPostVars();
-                LogInfo ('POST got straight values ' . print_r ($args, true));
 				$controllerInstance->create($args);
 				break;
 			case "PUT":
@@ -99,7 +99,7 @@
 		}
 	}
 	else{
-		header("HTTP/1.0 404 Not Found");
+		header("HTTP/1.1 404 Not Found");
 	}
 
 ?>

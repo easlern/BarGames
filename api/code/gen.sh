@@ -3,3 +3,4 @@ python orm/orm.py
 mv *Controller.php controllers/
 mv database.php data/
 mv *Model.php models/
+mv index.php ../

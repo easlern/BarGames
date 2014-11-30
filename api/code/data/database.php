@@ -30,6 +30,7 @@
 			$con->query ("alter table game add constraint fk_game_location foreign key (locationId) references location(id)");
 			$con->query ("alter table user add constraint fk_user_securityLevel foreign key (securityLevelId) references securityLevel(id)");
 			$con->query ("alter table userSetting add constraint fk_userSetting_setting foreign key (settingId) references setting(id)");
+			$con->query ("alter table userSetting add constraint fk_userSetting_user foreign key (userId) references user(id)");
 			$con->query ("drop table if exists mtm_game_tag");
 			$con->query ("create table mtm_game_tag (gameId int not null, tagId int not null)");
 			$con->query ("drop table if exists mtm_game_team");

@@ -68,6 +68,7 @@
     <relationship type="manyToOne" from="game" to="location"/>
     <relationship type="manyToOne" from="user" to="securityLevel"/>
     <relationship type="manyToOne" from="userSetting" to="setting"/>
+    <relationship type="manyToOne" from="userSetting" to="user"/>
     <relationship type="manyToMany" from="game" to="tag"/>
     <relationship type="manyToMany" from="game" to="team"/>
     <relationship type="manyToOne" from="game" to="sport"/>
