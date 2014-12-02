@@ -66,7 +66,7 @@ def makeWebAccessors():
     outputFile.write ('\t$scriptName = explode(\'/\',$_SERVER[\'SCRIPT_NAME\']);\n')
     outputFile.write ('\tfor($i = 0; $i < sizeof ($scriptName); $i++)\n')
     outputFile.write ('\t{\n')
-    outputFile.write ('\t\tif ($requestURI [$i] == $scriptName [$i])\n')
+    outputFile.write ('\t\tif ($requestURI [$i] === $scriptName [$i])\n')
     outputFile.write ('\t\t{\n')
     outputFile.write ('\t\t\tunset($requestURI [$i]);\n')
     outputFile.write ('\t\t}\n')
@@ -183,27 +183,18 @@ def makeControllers():
 
         # CREATE
         outputFile.write ('\n\t\tpublic function create ($args){\n')
-        nonPrimaryPropCount = 0
-        for prop in properties:
-            #print (prop.getAttribute ('type'))
-            if (prop.getAttribute ('type') != 'primary key'):
-                nonPrimaryPropCount += 1
         outputFile.write ('\t\t\tLogInfo ("Creating ' + modelName + ' with args: " . print_r ($args, true));\n')
         outputFile.write ('\t\t\t$argNamesSatisfied = TRUE;\n');
         outputFile.write ('\t\t\t$requiredArgs = array();\n');
         for prop in properties:
             if (prop.getAttribute ('required').lower() == 'always'):
                 outputFile.write ('\t\t\tarray_push ($requiredArgs, "' + prop.getAttribute ('name') + '");\n');
-        # outputFile.write ('\t\t\t$nonPrimaryKeyArgs = array();\n');
-        # for prop in properties:
-        #     if (prop.getAttribute ('type').lower() != 'primary key'):
-        #         outputFile.write ('\t\t\tarray_push ($nonPrimaryKeyArgs, "' + prop.getAttribute ('name') + '");\n');
         outputFile.write ('\t\t\tforeach ($requiredArgs as $requiredArg){\n');
         outputFile.write ('\t\t\t\tif (!in_array ($requiredArg, array_keys ($args))){\n');
         outputFile.write ('\t\t\t\t\t$argNamesSatisfied = FALSE;\n');
         outputFile.write ('\t\t\t\t}\n');
         outputFile.write ('\t\t\t}\n');
-        outputFile.write ('\t\t\tif (count ($args) < ' + str (nonPrimaryPropCount) + ' || !$argNamesSatisfied){\n')
+        outputFile.write ('\t\t\tif (!$argNamesSatisfied){\n')
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 400 Bad Request");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
         outputFile.write ('\t\t\t\tprint (json_encode ($errorObject));\n')
@@ -215,24 +206,34 @@ def makeControllers():
         for prop in properties:
             if (prop.getAttribute ('type') != 'primary key'):
                 outputFile.write ('\t\t\t\t$' + prop.getAttribute ('name') + ' = ')
-                dbType = propDataToDbType (prop.getAttribute ('data').lower())
-                default = 0
-                if (dbType == 'varchar'):
-                    default = '""';
-                outputFile.write ('in_array ("' + prop.getAttribute ('name') + '", array_keys ($args)) ? $args["' + prop.getAttribute ('name') + '"] : ' + str (default) + ';\n')
+                if ('integer array' in prop.getAttribute ('data')):
+                    outputFile.write ('array();\n')
+                    outputFile.write ('\t\t\t\tif (in_array ("' + prop.getAttribute ('name') + '", array_keys ($args))){\n')
+                    outputFile.write ('\t\t\t\t\t$decodedArray = json_decode ($args ["' + prop.getAttribute ('name') + '"], TRUE, 1);\n')
+                    outputFile.write ('\t\t\t\t\tforeach ($decodedArray as $key => $value){\n')
+                    outputFile.write ('\t\t\t\t\t\tarray_push ($decodedArray, $value);\n')
+                    outputFile.write ('\t\t\t\t\t}\n')
+                    outputFile.write ('\t\t\t\t}\n')
+                else:
+                    dbType = propDataToDbType (prop.getAttribute ('data').lower())
+                    default = 0
+                    if (dbType == 'varchar'):
+                        default = '""'
+                    outputFile.write ('in_array ("' + prop.getAttribute ('name') + '", array_keys ($args)) ? $args["' + prop.getAttribute ('name') + '"] : ' + str (default) + ';\n')
         outputFile.write ('\t\t\t\t$model = new ' + cap(modelName) + '(-1')
         count = 0
         for prop in properties:
             if (prop.getAttribute ('type') != 'primary key'):
-                if ('array' in prop.getAttribute ('data')):
-                    outputFile.write (', array()')
-                else:
-                    outputFile.write (', $' + prop.getAttribute ('name'))
+                outputFile.write (', $' + prop.getAttribute ('name'))
                 count += 1
         outputFile.write (');\n')
-        outputFile.write ('\t\t\t\t$repo->create($model);\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 303 See Other");\n')
-        outputFile.write ('\t\t\t\theader ("Location: /api/' + modelName + '/" . $model->getId());\n')
+        outputFile.write ('\t\t\t\tif ($repo->create($model)){\n')
+        outputFile.write ('\t\t\t\t\theader ("HTTP/1.1 303 See Other");\n')
+        outputFile.write ('\t\t\t\t\theader ("Location: /api/' + modelName + '/" . $model->getId());\n')
+        outputFile.write ('\t\t\t\t}\n')
+        outputFile.write ('\t\t\t\telse{\n')
+        outputFile.write ('\t\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\t}\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\t\t\telse{\n')
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 403 Forbidden");\n')
@@ -243,14 +244,9 @@ def makeControllers():
 
         # UPDATE
         outputFile.write ('\n\t\tpublic function update ($args){\n')
-        primaryPropCount = 0
-        for prop in properties:
-            #print (prop.getAttribute ('type'))
-            if (prop.getAttribute ('type') == 'primary key'):
-                nonPrimaryPropCount += 1
         outputFile.write ('\t\t\tLogInfo ("Updating ' + modelName + ' with args: " . print_r ($args, true));\n')
         outputFile.write ('\t\t\t$repo = Repositories::get' + cap(modelName) + 'Repository();\n')
-        outputFile.write ('\t\t\t$existing = $repo->getById ($args[0]);\n');
+        outputFile.write ('\t\t\t$existing = $repo->getById ($args[0]);\n')
         outputFile.write ('\t\t\tif ($existing == NULL){\n')
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 404 Not Found");\n')
         outputFile.write ('\t\t\t\t$errorObject = new ApiErrorResponse ("Missing required parameters.");\n')
@@ -264,10 +260,14 @@ def makeControllers():
             if (prop.getAttribute ('type') == 'primary key' or 'array' in prop.getAttribute ('data')):
                 continue
             propName = prop.getAttribute ('name')
-            outputFile.write ('\t\t\t\t\tif ($key == "' + propName + '") $existing->set' + cap (propName) + ' ($value);\n')
+            outputFile.write ('\t\t\t\t\tif ($key === "' + propName + '") $existing->set' + cap (propName) + ' ($value);\n')
         outputFile.write ('\t\t\t\t}\n')
-        outputFile.write ('\t\t\t\t$repo->update ($existing);\n')
-        outputFile.write ('\t\t\t\theader ("HTTP/1.1 200 OK");\n')
+        outputFile.write ('\t\t\t\tif ($repo->update ($existing)){\n')
+        outputFile.write ('\t\t\t\t\theader ("HTTP/1.1 200 OK");\n')
+        outputFile.write ('\t\t\t\t}\n')
+        outputFile.write ('\t\t\t\telse{\n')
+        outputFile.write ('\t\t\t\t\theader ("HTTP/1.1 500 Internal Server Error");\n')
+        outputFile.write ('\t\t\t\t}\n')
         outputFile.write ('\t\t\t}\n')
         outputFile.write ('\t\t\telse{\n')
         outputFile.write ('\t\t\t\theader ("HTTP/1.1 403 Forbidden");\n')
@@ -320,6 +320,7 @@ def makeRepositories():
         properties = model.getElementsByTagName ('property')
         outputFile.write ('\n\tclass MySql' + cap(modelName) + 'Repository{\n')
         outputFile.write ('\t\tpublic function create ($model){')
+        outputFile.write ('\n\t\t\tLogInfo ("Creating ' + modelName + '");\n')
         outputFile.write ('\n\t\t\t$conn = connectAsWebUser();')
         outputFile.write ('\n\t\t\tif (!$conn) return NULL;')
         outputFile.write ('\n\t\t\t$statement = $conn->prepare ("insert into ' + modelName + ' (')
@@ -359,8 +360,13 @@ def makeRepositories():
                 first = False
                 outputFile.write ('$model->get' + cap (prop.getAttribute ('name')) + '()')
         outputFile.write (');')
-        outputFile.write ('\n\t\t\t$statement->execute();')
+        outputFile.write ('\n\t\t\t$result = $statement->execute();')
+        outputFile.write ('\n\t\t\tif (!$result){')
+        outputFile.write ('\n\t\t\t\tLogInfo ("SQL error: " . $statement->error);')
+        outputFile.write ('\n\t\t\t\treturn FALSE;')
+        outputFile.write ('\n\t\t\t}')
         outputFile.write ('\n\t\t\t$model->setId ($conn->insert_id);')
+        outputFile.write ('\n\t\t\treturn TRUE;')
         outputFile.write ('\n\t\t}')
         outputFile.write ('\n')
         outputFile.write ('\t\tpublic function getById ($id){')
@@ -390,16 +396,16 @@ def makeRepositories():
                 outputFile.write ('$' + prop.getAttribute ('name'));
         outputFile.write (');')
         outputFile.write ('\n\t\t\tif ($result->fetch()){')
-        outputFile.write ('\n\t\t\t\treturn new ' + cap(modelName) + ' (');
+        outputFile.write ('\n\t\t\t\treturn new ' + cap(modelName) + ' (')
         first = True
         for prop in properties:
             if (not first):
                 outputFile.write (', ')
-            first = False;
+            first = False
             if ('array' in prop.getAttribute ('data').lower()):
                 outputFile.write ('array()')
             else:
-                outputFile.write ('$' + prop.getAttribute ('name'));
+                outputFile.write ('$' + prop.getAttribute ('name'))
         outputFile.write (');')
         outputFile.write ('\n\t\t\t}')
         outputFile.write ('\n\t\t\treturn NULL;')
@@ -418,7 +424,7 @@ def makeRepositories():
         # UPDATE
         outputFile.write ('\n\t\tpublic function update ($model){')
         outputFile.write ('\n\t\t\t$conn = connectAsWebUser();')
-        outputFile.write ('\n\t\t\tif (!$conn) return NULL;')
+        outputFile.write ('\n\t\t\tif (!$conn) return FALSE;')
         outputFile.write ('\n\t\t\t$statement = $conn->prepare ("update ' + modelName + ' set ')
         first = True
         for prop in properties:
@@ -426,7 +432,6 @@ def makeRepositories():
                 if (not first):
                     outputFile.write (', ')
                 first = False
-                nonPrimaryPropCount += 1
                 name = prop.getAttribute ('name')
                 outputFile.write (name + ' = ?')
         outputFile.write (' where id = ?");')
@@ -451,7 +456,12 @@ def makeRepositories():
                 first = False
                 outputFile.write ('$model->get' + cap (prop.getAttribute ('name')) + '()')
         outputFile.write (', $model->getId());')
-        outputFile.write ('\n\t\t\t$statement->execute();')
+        outputFile.write ('\n\t\t\t$result = $statement->execute();')
+        outputFile.write ('\n\t\t\tif (!$result){')
+        outputFile.write ('\n\t\t\t\tLogInfo ("SQL error: " . $statement->error);')
+        outputFile.write ('\n\t\t\t\treturn FALSE;')
+        outputFile.write ('\n\t\t\t}')
+        outputFile.write ('\n\t\t\treturn TRUE;')
         outputFile.write ('\n\t\t}\n\n')
 
         outputFile.write ('\t\tpublic function getAll(){')

@@ -1,3 +1,5 @@
+#!/bin/sh
+
 python orm/orm.py
 #find . -name '*.php' -not -name '*Model.php' -not -name 'repos*php' -exec mv {} ../../ \; -print
 mv *Controller.php controllers/

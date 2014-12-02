@@ -67,7 +67,7 @@
 					$argNamesSatisfied = FALSE;
 				}
 			}
-			if (count ($args) < 3 || !$argNamesSatisfied){
+			if (!$argNamesSatisfied){
 				header ("HTTP/1.1 400 Bad Request");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
@@ -79,9 +79,13 @@
 				$settingId = in_array ("settingId", array_keys ($args)) ? $args["settingId"] : 0;
 				$value = in_array ("value", array_keys ($args)) ? $args["value"] : "";
 				$model = new UserSetting(-1, $userId, $settingId, $value);
-				$repo->create($model);
-				header ("HTTP/1.1 303 See Other");
-				header ("Location: /api/userSetting/" . $model->getId());
+				if ($repo->create($model)){
+					header ("HTTP/1.1 303 See Other");
+					header ("Location: /api/userSetting/" . $model->getId());
+				}
+				else{
+					header ("HTTP/1.1 500 Internal Server Error");
+				}
 			}
 			else{
 				header ("HTTP/1.1 403 Forbidden");
@@ -102,12 +106,16 @@
 			}
 			if (IsAdminAuthorized() && IsCsrfGood()){
 				foreach ($args as $key => $value){
-					if ($key == "userId") $existing->setUserId ($value);
-					if ($key == "settingId") $existing->setSettingId ($value);
-					if ($key == "value") $existing->setValue ($value);
+					if ($key === "userId") $existing->setUserId ($value);
+					if ($key === "settingId") $existing->setSettingId ($value);
+					if ($key === "value") $existing->setValue ($value);
 				}
-				$repo->update ($existing);
-				header ("HTTP/1.1 200 OK");
+				if ($repo->update ($existing)){
+					header ("HTTP/1.1 200 OK");
+				}
+				else{
+					header ("HTTP/1.1 500 Internal Server Error");
+				}
 			}
 			else{
 				header ("HTTP/1.1 403 Forbidden");

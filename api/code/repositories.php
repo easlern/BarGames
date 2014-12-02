@@ -6,12 +6,19 @@
 
 	class MySqlGameRepository{
 		public function create ($model){
+			LogInfo ("Creating game");
+
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("insert into game (locationId, name, sportId) values (?, ?, ?)");
 			$statement->bind_param ("isi", $model->getLocationId(), $model->getName(), $model->getSportId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
 			$model->setId ($conn->insert_id);
+			return TRUE;
 		}
 		public function getById ($id){
 			$conn = connectAsWebUser();
@@ -41,10 +48,15 @@
 		}
 		public function update ($model){
 			$conn = connectAsWebUser();
-			if (!$conn) return NULL;
+			if (!$conn) return FALSE; 
 			$statement = $conn->prepare ("update game set locationId = ?, name = ?, sportId = ? where id = ?");
 			$statement->bind_param ("isii", $model->getLocationId(), $model->getName(), $model->getSportId(), $model->getId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
+			return TRUE;
 		}
 
 		public function getAll(){
@@ -77,12 +89,19 @@
 
 	class MySqlSportRepository{
 		public function create ($model){
+			LogInfo ("Creating sport");
+
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("insert into sport (name) values (?)");
 			$statement->bind_param ("s", $model->getName());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
 			$model->setId ($conn->insert_id);
+			return TRUE;
 		}
 		public function getById ($id){
 			$conn = connectAsWebUser();
@@ -110,10 +129,15 @@
 		}
 		public function update ($model){
 			$conn = connectAsWebUser();
-			if (!$conn) return NULL;
+			if (!$conn) return FALSE;
 			$statement = $conn->prepare ("update sport set name = ? where id = ?");
 			$statement->bind_param ("si", $model->getName(), $model->getId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
+			return TRUE;
 		}
 
 		public function getAll(){
@@ -144,12 +168,19 @@
 
 	class MySqlTeamRepository{
 		public function create ($model){
+			LogInfo ("Creating team");
+
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("insert into team (name) values (?)");
 			$statement->bind_param ("s", $model->getName());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
 			$model->setId ($conn->insert_id);
+			return TRUE;
 		}
 		public function getById ($id){
 			$conn = connectAsWebUser();
@@ -177,10 +208,15 @@
 		}
 		public function update ($model){
 			$conn = connectAsWebUser();
-			if (!$conn) return NULL;
+			if (!$conn) return FALSE;
 			$statement = $conn->prepare ("update team set name = ? where id = ?");
 			$statement->bind_param ("si", $model->getName(), $model->getId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
+			return TRUE;
 		}
 
 		public function getAll(){
@@ -211,12 +247,19 @@
 
 	class MySqlLocationRepository{
 		public function create ($model){
+			LogInfo ("Creating location");
+
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("insert into location (name, street, cityId, phone) values (?, ?, ?, ?)");
 			$statement->bind_param ("ssis", $model->getName(), $model->getStreet(), $model->getCityId(), $model->getPhone());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
 			$model->setId ($conn->insert_id);
+			return TRUE;
 		}
 		public function getById ($id){
 			$conn = connectAsWebUser();
@@ -247,10 +290,15 @@
 		}
 		public function update ($model){
 			$conn = connectAsWebUser();
-			if (!$conn) return NULL;
+			if (!$conn) return FALSE;
 			$statement = $conn->prepare ("update location set name = ?, street = ?, cityId = ?, phone = ? where id = ?");
 			$statement->bind_param ("ssisi", $model->getName(), $model->getStreet(), $model->getCityId(), $model->getPhone(), $model->getId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
+			return TRUE;
 		}
 
 		public function getAll(){
@@ -284,12 +332,19 @@
 
 	class MySqlLocationTypeRepository{
 		public function create ($model){
+			LogInfo ("Creating locationType");
+
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("insert into locationType (name) values (?)");
 			$statement->bind_param ("s", $model->getName());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
 			$model->setId ($conn->insert_id);
+			return TRUE;
 		}
 		public function getById ($id){
 			$conn = connectAsWebUser();
@@ -317,10 +372,15 @@
 		}
 		public function update ($model){
 			$conn = connectAsWebUser();
-			if (!$conn) return NULL;
+			if (!$conn) return FALSE;
 			$statement = $conn->prepare ("update locationType set name = ? where id = ?");
 			$statement->bind_param ("si", $model->getName(), $model->getId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
+			return TRUE;
 		}
 
 		public function getAll(){
@@ -351,12 +411,19 @@
 
 	class MySqlTagRepository{
 		public function create ($model){
+			LogInfo ("Creating tag");
+
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("insert into tag (name) values (?)");
 			$statement->bind_param ("s", $model->getName());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
 			$model->setId ($conn->insert_id);
+			return TRUE;
 		}
 		public function getById ($id){
 			$conn = connectAsWebUser();
@@ -384,10 +451,15 @@
 		}
 		public function update ($model){
 			$conn = connectAsWebUser();
-			if (!$conn) return NULL;
+			if (!$conn) return FALSE;
 			$statement = $conn->prepare ("update tag set name = ? where id = ?");
 			$statement->bind_param ("si", $model->getName(), $model->getId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
+			return TRUE;
 		}
 
 		public function getAll(){
@@ -418,12 +490,19 @@
 
 	class MySqlUserRepository{
 		public function create ($model){
+			LogInfo ("Creating user");
+
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("insert into user (type, method, passHash, nameFirst, nameLast, securityLevelId) values (?, ?, ?, ?, ?, ?)");
 			$statement->bind_param ("iisssi", $model->getType(), $model->getMethod(), $model->getPassHash(), $model->getNameFirst(), $model->getNameLast(), $model->getSecurityLevelId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
 			$model->setId ($conn->insert_id);
+			return TRUE;
 		}
 		public function getById ($id){
 			$conn = connectAsWebUser();
@@ -456,10 +535,15 @@
 		}
 		public function update ($model){
 			$conn = connectAsWebUser();
-			if (!$conn) return NULL;
+			if (!$conn) return FALSE;
 			$statement = $conn->prepare ("update user set type = ?, method = ?, passHash = ?, nameFirst = ?, nameLast = ?, securityLevelId = ? where id = ?");
 			$statement->bind_param ("iisssii", $model->getType(), $model->getMethod(), $model->getPassHash(), $model->getNameFirst(), $model->getNameLast(), $model->getSecurityLevelId(), $model->getId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
+			return TRUE;
 		}
 
 		public function getAll(){
@@ -495,12 +579,19 @@
 
 	class MySqlSecurityLevelRepository{
 		public function create ($model){
+			LogInfo ("Creating securityLevel");
+
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("insert into securityLevel (name) values (?)");
 			$statement->bind_param ("s", $model->getName());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
 			$model->setId ($conn->insert_id);
+			return TRUE;
 		}
 		public function getById ($id){
 			$conn = connectAsWebUser();
@@ -528,10 +619,15 @@
 		}
 		public function update ($model){
 			$conn = connectAsWebUser();
-			if (!$conn) return NULL;
+			if (!$conn) return FALSE;
 			$statement = $conn->prepare ("update securityLevel set name = ? where id = ?");
 			$statement->bind_param ("si", $model->getName(), $model->getId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
+			return TRUE;
 		}
 
 		public function getAll(){
@@ -562,12 +658,19 @@
 
 	class MySqlCityRepository{
 		public function create ($model){
+			LogInfo ("Creating city");
+
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("insert into city (name, state, country, longitude, latitude) values (?, ?, ?, ?, ?)");
 			$statement->bind_param ("sssdd", $model->getName(), $model->getState(), $model->getCountry(), $model->getLongitude(), $model->getLatitude());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
 			$model->setId ($conn->insert_id);
+			return TRUE;
 		}
 		public function getById ($id){
 			$conn = connectAsWebUser();
@@ -599,10 +702,15 @@
 		}
 		public function update ($model){
 			$conn = connectAsWebUser();
-			if (!$conn) return NULL;
+			if (!$conn) return FALSE;
 			$statement = $conn->prepare ("update city set name = ?, state = ?, country = ?, longitude = ?, latitude = ? where id = ?");
 			$statement->bind_param ("sssddi", $model->getName(), $model->getState(), $model->getCountry(), $model->getLongitude(), $model->getLatitude(), $model->getId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
+			return TRUE;
 		}
 
 		public function getAll(){
@@ -637,12 +745,19 @@
 
 	class MySqlSettingRepository{
 		public function create ($model){
+			LogInfo ("Creating setting");
+
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("insert into setting (name, defaultValue) values (?, ?)");
 			$statement->bind_param ("ss", $model->getName(), $model->getDefaultValue());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
 			$model->setId ($conn->insert_id);
+			return TRUE;
 		}
 		public function getById ($id){
 			$conn = connectAsWebUser();
@@ -671,10 +786,15 @@
 		}
 		public function update ($model){
 			$conn = connectAsWebUser();
-			if (!$conn) return NULL;
+			if (!$conn) return FALSE;
 			$statement = $conn->prepare ("update setting set name = ?, defaultValue = ? where id = ?");
 			$statement->bind_param ("ssi", $model->getName(), $model->getDefaultValue(), $model->getId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
+			return TRUE;
 		}
 
 		public function getAll(){
@@ -706,12 +826,19 @@
 
 	class MySqlUserSettingRepository{
 		public function create ($model){
+			LogInfo ("Creating userSetting");
+
 			$conn = connectAsWebUser();
 			if (!$conn) return NULL;
 			$statement = $conn->prepare ("insert into userSetting (userId, settingId, value) values (?, ?, ?)");
 			$statement->bind_param ("iis", $model->getUserId(), $model->getSettingId(), $model->getValue());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
 			$model->setId ($conn->insert_id);
+			return TRUE;
 		}
 		public function getById ($id){
 			$conn = connectAsWebUser();
@@ -740,10 +867,15 @@
 		}
 		public function update ($model){
 			$conn = connectAsWebUser();
-			if (!$conn) return NULL;
+			if (!$conn) return FALSE;
 			$statement = $conn->prepare ("update userSetting set userId = ?, settingId = ?, value = ? where id = ?");
 			$statement->bind_param ("iisi", $model->getUserId(), $model->getSettingId(), $model->getValue(), $model->getId());
-			$statement->execute();
+			$result = $statement->execute();
+			if (!$result){
+				LogInfo ("SQL error: " . $statement->error);
+				return FALSE;
+			}
+			return TRUE;
 		}
 
 		public function getAll(){

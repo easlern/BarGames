@@ -67,7 +67,7 @@
 					$argNamesSatisfied = FALSE;
 				}
 			}
-			if (count ($args) < 5 || !$argNamesSatisfied){
+			if (!$argNamesSatisfied){
 				header ("HTTP/1.1 400 Bad Request");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
@@ -77,13 +77,29 @@
 				$repo = Repositories::getGameRepository();
 				$locationId = in_array ("locationId", array_keys ($args)) ? $args["locationId"] : 0;
 				$name = in_array ("name", array_keys ($args)) ? $args["name"] : "";
-				$tagIds = in_array ("tagIds", array_keys ($args)) ? $args["tagIds"] : 0;
+				$tagIds = array();
+				if (in_array ("tagIds", array_keys ($args))){
+					$decodedArray = json_decode ($args ["tagIds"], TRUE, 1);
+					foreach ($decodedArray as $key => $value){
+						array_push ($decodedArray, $value);
+					}
+				}
 				$sportId = in_array ("sportId", array_keys ($args)) ? $args["sportId"] : 0;
-				$teamIds = in_array ("teamIds", array_keys ($args)) ? $args["teamIds"] : 0;
-				$model = new Game(-1, $locationId, $name, array(), $sportId, array());
-				$repo->create($model);
-				header ("HTTP/1.1 303 See Other");
-				header ("Location: /api/game/" . $model->getId());
+				$teamIds = array();
+				if (in_array ("teamIds", array_keys ($args))){
+					$decodedArray = json_decode ($args ["teamIds"], TRUE, 1);
+					foreach ($decodedArray as $key => $value){
+						array_push ($decodedArray, $value);
+					}
+				}
+				$model = new Game(-1, $locationId, $name, $tagIds, $sportId, $teamIds);
+				if ($repo->create($model)){
+					header ("HTTP/1.1 303 See Other");
+					header ("Location: /api/game/" . $model->getId());
+				}
+				else{
+					header ("HTTP/1.1 500 Internal Server Error");
+				}
 			}
 			else{
 				header ("HTTP/1.1 403 Forbidden");
@@ -104,12 +120,16 @@
 			}
 			if (IsAdminAuthorized() && IsCsrfGood()){
 				foreach ($args as $key => $value){
-					if ($key == "locationId") $existing->setLocationId ($value);
-					if ($key == "name") $existing->setName ($value);
-					if ($key == "sportId") $existing->setSportId ($value);
+					if ($key === "locationId") $existing->setLocationId ($value);
+					if ($key === "name") $existing->setName ($value);
+					if ($key === "sportId") $existing->setSportId ($value);
 				}
-				$repo->update ($existing);
-				header ("HTTP/1.1 200 OK");
+				if ($repo->update ($existing)){
+					header ("HTTP/1.1 200 OK");
+				}
+				else{
+					header ("HTTP/1.1 500 Internal Server Error");
+				}
 			}
 			else{
 				header ("HTTP/1.1 403 Forbidden");

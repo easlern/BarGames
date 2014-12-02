@@ -50,6 +50,9 @@ module.exports = function(grunt) {
             generateOrm: {
                 command: 'cd api/code && ./gen.sh',
                 stdout: true
+            },
+            runEndpointTests: {
+                command: 'sleep 60 && python3.4 api/tests/endpointTests.py'
             }
         }
     });

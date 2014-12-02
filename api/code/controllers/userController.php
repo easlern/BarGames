@@ -70,7 +70,7 @@
 					$argNamesSatisfied = FALSE;
 				}
 			}
-			if (count ($args) < 6 || !$argNamesSatisfied){
+			if (!$argNamesSatisfied){
 				header ("HTTP/1.1 400 Bad Request");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");
 				print (json_encode ($errorObject));
@@ -85,9 +85,13 @@
 				$nameLast = in_array ("nameLast", array_keys ($args)) ? $args["nameLast"] : "";
 				$securityLevelId = in_array ("securityLevelId", array_keys ($args)) ? $args["securityLevelId"] : 0;
 				$model = new User(-1, $type, $method, $passHash, $nameFirst, $nameLast, $securityLevelId);
-				$repo->create($model);
-				header ("HTTP/1.1 303 See Other");
-				header ("Location: /api/user/" . $model->getId());
+				if ($repo->create($model)){
+					header ("HTTP/1.1 303 See Other");
+					header ("Location: /api/user/" . $model->getId());
+				}
+				else{
+					header ("HTTP/1.1 500 Internal Server Error");
+				}
 			}
 			else{
 				header ("HTTP/1.1 403 Forbidden");
@@ -108,15 +112,19 @@
 			}
 			if (IsAdminAuthorized() && IsCsrfGood()){
 				foreach ($args as $key => $value){
-					if ($key == "type") $existing->setType ($value);
-					if ($key == "method") $existing->setMethod ($value);
-					if ($key == "passHash") $existing->setPassHash ($value);
-					if ($key == "nameFirst") $existing->setNameFirst ($value);
-					if ($key == "nameLast") $existing->setNameLast ($value);
-					if ($key == "securityLevelId") $existing->setSecurityLevelId ($value);
+					if ($key === "type") $existing->setType ($value);
+					if ($key === "method") $existing->setMethod ($value);
+					if ($key === "passHash") $existing->setPassHash ($value);
+					if ($key === "nameFirst") $existing->setNameFirst ($value);
+					if ($key === "nameLast") $existing->setNameLast ($value);
+					if ($key === "securityLevelId") $existing->setSecurityLevelId ($value);
 				}
-				$repo->update ($existing);
-				header ("HTTP/1.1 200 OK");
+				if ($repo->update ($existing)){
+					header ("HTTP/1.1 200 OK");
+				}
+				else{
+					header ("HTTP/1.1 500 Internal Server Error");
+				}
 			}
 			else{
 				header ("HTTP/1.1 403 Forbidden");
