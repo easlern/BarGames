@@ -6,14 +6,16 @@
 		private $cityId;
 		private $phone;
 		private $locationTypeIds;
+		private $sportIds;
 
-		function __construct ($id, $name, $street, $cityId, $phone, $locationTypeIds){
+		function __construct ($id, $name, $street, $cityId, $phone, $locationTypeIds, $sportIds){
 			$this->id = $id;
 			$this->name = $name;
 			$this->street = $street;
 			$this->cityId = $cityId;
 			$this->phone = $phone;
 			$this->locationTypeIds = $locationTypeIds;
+			$this->sportIds = $sportIds;
 		}
 
 		public function getId(){
@@ -34,6 +36,9 @@
 		public function getLocationTypeIds(){
 			return $this->locationTypeIds;
 		}
+		public function getSportIds(){
+			return $this->sportIds;
+		}
 
 		public function setId($value){
 			$this->id = $value;
@@ -53,6 +58,9 @@
 		public function setLocationTypeIds($value){
 			$this->locationTypeIds = $value;
 		}
+		public function setSportIds($value){
+			$this->sportIds = $value;
+		}
 
 		public function toStdClass(){
 			$std = new stdClass();
@@ -62,6 +70,7 @@
 			$std->cityId = $this->getCityId();
 			$std->phone = $this->getPhone();
 			$std->locationTypeIds = $this->getLocationTypeIds();
+			$std->sportIds = $this->getSportIds();
 			return $std;
 		}
 		public function toJson(){

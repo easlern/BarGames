@@ -17,6 +17,12 @@ def makeObjects():
         for prop in properties:
             propertyName = prop.getAttribute('name')
             outputFile.write ('\t\tprivate $' + propertyName + ';\n')
+        # for relationship in relationships:
+        #     relFrom = relationship.getAttribute ('from')
+        #     relTo = relationship.getAttribute ('to')
+        #     relType = relationship.getAttribute ('type')
+        #     if (modelName == relFrom and relType.lower() == 'manytomany'):
+        #         outputFile.write ('\t\tprivate $' + relTo + 'Ids;\n')
         outputFile.write ('\n')
         outputFile.write ('\t\tfunction __construct (')
         firstProp = True
@@ -209,9 +215,9 @@ def makeControllers():
                 if ('integer array' in prop.getAttribute ('data')):
                     outputFile.write ('array();\n')
                     outputFile.write ('\t\t\t\tif (in_array ("' + prop.getAttribute ('name') + '", array_keys ($args))){\n')
-                    outputFile.write ('\t\t\t\t\t$decodedArray = json_decode ($args ["' + prop.getAttribute ('name') + '"], TRUE, 1);\n')
+                    outputFile.write ('\t\t\t\t\t$decodedArray = json_decode ($args ["' + prop.getAttribute ('name') + '"], TRUE, 2);\n')
                     outputFile.write ('\t\t\t\t\tforeach ($decodedArray as $key => $value){\n')
-                    outputFile.write ('\t\t\t\t\t\tarray_push ($decodedArray, $value);\n')
+                    outputFile.write ('\t\t\t\t\t\tarray_push ($' + prop.getAttribute ('name') + ', $value);\n')
                     outputFile.write ('\t\t\t\t\t}\n')
                     outputFile.write ('\t\t\t\t}\n')
                 else:
@@ -366,6 +372,21 @@ def makeRepositories():
         outputFile.write ('\n\t\t\t\treturn FALSE;')
         outputFile.write ('\n\t\t\t}')
         outputFile.write ('\n\t\t\t$model->setId ($conn->insert_id);')
+        for relationship in relationships:
+            fromModel = relationship.getAttribute ('from').lower()
+            toModel = relationship.getAttribute ('to').lower()
+            relType = relationship.getAttribute ('type').lower()
+            if (modelName in fromModel and 'manytomany' in relType):
+                arrayName = toModel + 'Ids'
+                outputFile.write ('\n\t\t\tforeach ($model->get' + cap (arrayName) + '() as $id){')
+                outputFile.write ('\n\t\t\t\t$statement = $conn->prepare ("insert into mtm_' + fromModel + '_' + toModel + ' (')
+                outputFile.write (fromModel + 'Id, ' + toModel + 'Id) values (?, ?)");')
+                outputFile.write ('\n\t\t\t\t$statement->bind_param ("ii", $model->getId(), $id);')
+                outputFile.write ('\n\t\t\t\t$result = $statement->execute();')
+                outputFile.write ('\n\t\t\t\tif (!$result){')
+                outputFile.write ('\n\t\t\t\t\tLogInfo ("SQL error: " . $statement->error);')
+                outputFile.write ('\n\t\t\t\t}')
+                outputFile.write ('\n\t\t\t}')
         outputFile.write ('\n\t\t\treturn TRUE;')
         outputFile.write ('\n\t\t}')
         outputFile.write ('\n')

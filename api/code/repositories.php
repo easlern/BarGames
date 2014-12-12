@@ -18,6 +18,22 @@
 				return FALSE;
 			}
 			$model->setId ($conn->insert_id);
+			foreach ($model->getTagIds() as $id){
+				$statement = $conn->prepare ("insert into mtm_game_tag (gameId, tagId) values (?, ?)");
+				$statement->bind_param ("ii", $model->getId(), $id);
+				$result = $statement->execute();
+				if (!$result){
+					LogInfo ("SQL error: " . $statement->error);
+				}
+			}
+			foreach ($model->getTeamIds() as $id){
+				$statement = $conn->prepare ("insert into mtm_game_team (gameId, teamId) values (?, ?)");
+				$statement->bind_param ("ii", $model->getId(), $id);
+				$result = $statement->execute();
+				if (!$result){
+					LogInfo ("SQL error: " . $statement->error);
+				}
+			}
 			return TRUE;
 		}
 		public function getById ($id){
@@ -48,7 +64,7 @@
 		}
 		public function update ($model){
 			$conn = connectAsWebUser();
-			if (!$conn) return FALSE; 
+			if (!$conn) return FALSE;
 			$statement = $conn->prepare ("update game set locationId = ?, name = ?, sportId = ? where id = ?");
 			$statement->bind_param ("isii", $model->getLocationId(), $model->getName(), $model->getSportId(), $model->getId());
 			$result = $statement->execute();
@@ -259,6 +275,22 @@
 				return FALSE;
 			}
 			$model->setId ($conn->insert_id);
+			foreach ($model->getLocationtypeIds() as $id){
+				$statement = $conn->prepare ("insert into mtm_location_locationtype (locationId, locationtypeId) values (?, ?)");
+				$statement->bind_param ("ii", $model->getId(), $id);
+				$result = $statement->execute();
+				if (!$result){
+					LogInfo ("SQL error: " . $statement->error);
+				}
+			}
+			foreach ($model->getSportIds() as $id){
+				$statement = $conn->prepare ("insert into mtm_location_sport (locationId, sportId) values (?, ?)");
+				$statement->bind_param ("ii", $model->getId(), $id);
+				$result = $statement->execute();
+				if (!$result){
+					LogInfo ("SQL error: " . $statement->error);
+				}
+			}
 			return TRUE;
 		}
 		public function getById ($id){
@@ -275,7 +307,7 @@
 			$phone = "";
 			$result->bind_result ($id, $name, $street, $cityId, $phone);
 			if ($result->fetch()){
-				return new Location ($id, $name, $street, $cityId, $phone, array());
+				return new Location ($id, $name, $street, $cityId, $phone, array(), array());
 			}
 			return NULL;
 		}
@@ -316,7 +348,7 @@
 			$statement->bind_result ($id, $name, $street, $cityId, $phone);
 			$statement->store_result();
 			while ($statement->fetch()){
-				$model = new Location ($id, $name, $street, $cityId, $phone, array());
+				$model = new Location ($id, $name, $street, $cityId, $phone, array(), array());
 				array_push ($results, $model);
 			}
 			return $results;
@@ -326,7 +358,7 @@
 
 	class TestLocationRepository{
 		public function getById ($id){
-			return new Location($id, "test_name", "test_street", 0, "test_phone", array(0,1,2));
+			return new Location($id, "test_name", "test_street", 0, "test_phone", array(0,1,2), array(0,1,2));
 		}
 	}
 

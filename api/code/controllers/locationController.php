@@ -79,12 +79,19 @@
 				$phone = in_array ("phone", array_keys ($args)) ? $args["phone"] : "";
 				$locationTypeIds = array();
 				if (in_array ("locationTypeIds", array_keys ($args))){
-					$decodedArray = json_decode ($args ["locationTypeIds"], TRUE, 1);
+					$decodedArray = json_decode ($args ["locationTypeIds"], TRUE, 2);
 					foreach ($decodedArray as $key => $value){
-						array_push ($decodedArray, $value);
+						array_push ($locationTypeIds, $value);
 					}
 				}
-				$model = new Location(-1, $name, $street, $cityId, $phone, $locationTypeIds);
+				$sportIds = array();
+				if (in_array ("sportIds", array_keys ($args))){
+					$decodedArray = json_decode ($args ["sportIds"], TRUE, 2);
+					foreach ($decodedArray as $key => $value){
+						array_push ($sportIds, $value);
+					}
+				}
+				$model = new Location(-1, $name, $street, $cityId, $phone, $locationTypeIds, $sportIds);
 				if ($repo->create($model)){
 					header ("HTTP/1.1 303 See Other");
 					header ("Location: /api/location/" . $model->getId());

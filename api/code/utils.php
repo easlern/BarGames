@@ -40,7 +40,7 @@ function GetSanitizedDeleteVars(){
 }
 
 function SanitizePlainText($text){
-    $safeChars = "0123456789 +=_@.,'?!_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/()\r\n";
+    $safeChars = "0123456789 +=_@.,'?!_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/()[]\r\n";
     $sanitizedText = "";
 
     for($i=0;$i<strlen($text);$i++) 

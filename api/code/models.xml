@@ -24,6 +24,7 @@
         <property name="cityId" data="integer"/>
         <property name="phone" data="string" length="20"/>
         <property name="locationTypeIds" data="integer array"/>
+        <property name="sportIds" data="integer array"/>
     </model>
     <model name="locationType">
         <property name="id" type="primary key" data="integer"/>

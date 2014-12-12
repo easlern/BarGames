@@ -1,5 +1,6 @@
 import unittest
 import requests
+import json
 
 
 class EndpointTests (unittest.TestCase):
@@ -41,14 +42,18 @@ class EndpointTests (unittest.TestCase):
         sportId = self.create ('sport', {'name':'bouncyball'}).json() ['id']
         cityId = self.create ('city', {'name':'Grand Rapids', 'state':'MI', 'country':'US', 'latitude':'123.45', 'longitude':'43.21'}).json() ['id']
         locationId = self.create ('location', {'name':'sock hop', 'street':'123 main', 'cityId':cityId, 'phone':'6168675309'}).json() ['id']
+        teamIds = list()
+        teamIds.append (self.create ('team', {'name':'louies losers'}).json() ['id'])
+        teamIds.append (self.create ('team', {'name':'bad news bears'}).json() ['id'])
         model = 'game'
-        game = self.create (model, {'name':'rumble in the jungle', 'locationId':locationId, 'sportId':sportId})
+        game = self.create (model, {'name':'rumble in the jungle', 'locationId':locationId, 'sportId':sportId, 'teamIds':json.dumps (teamIds)})
         self.assertEqual (game.json() ['sportId'], sportId)
         self.assertEqual (200, game.status_code)
         gameId = game.json() ['id']
 
         game = self.get (model, gameId)
         self.assertEqual (200, game.status_code)
+        self.assertEqual (json.dumps (teamIds), game.json() ['teamIds'])
 
         game = self.update (model, gameId, {'name':'rumble in the bronx'})
         self.assertEqual (200, game.status_code)

@@ -79,17 +79,17 @@
 				$name = in_array ("name", array_keys ($args)) ? $args["name"] : "";
 				$tagIds = array();
 				if (in_array ("tagIds", array_keys ($args))){
-					$decodedArray = json_decode ($args ["tagIds"], TRUE, 1);
+					$decodedArray = json_decode ($args ["tagIds"], TRUE, 2);
 					foreach ($decodedArray as $key => $value){
-						array_push ($decodedArray, $value);
+						array_push ($tagIds, $value);
 					}
 				}
 				$sportId = in_array ("sportId", array_keys ($args)) ? $args["sportId"] : 0;
 				$teamIds = array();
 				if (in_array ("teamIds", array_keys ($args))){
-					$decodedArray = json_decode ($args ["teamIds"], TRUE, 1);
+					$decodedArray = json_decode ($args ["teamIds"], TRUE, 2);
 					foreach ($decodedArray as $key => $value){
-						array_push ($decodedArray, $value);
+						array_push ($teamIds, $value);
 					}
 				}
 				$model = new Game(-1, $locationId, $name, $tagIds, $sportId, $teamIds);
