@@ -1,7 +1,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 col-sm-3 userProfileImageSection">
-            <img class="img-responsive img-responsive-small" src="C:\Users\rduffing.NHA\BarGames\images\profile.jpg">
+            <img class="img-responsive img-responsive-small" ng-src="{{user.mainInfo.ProfileImagePath}}">
+            <p>{{user.mainInfo.Blurb}}</p>
         </div>
         <div class="col-md-9 col-sm-9">
             <div class="row">
@@ -9,13 +10,13 @@
                     <button type="button" class="btn btn-default btn-md messageButton">
                         <i class="fa fa-envelope"></i> Send Message
                     </button>
-                    <h3 class="userDisplayName">John Appleseed</h3>
-                    <h4 class="userLocation"><i class="fa fa-globe"></i> Grand Rapids, Michigan</h4>
+                    <h3 class="userDisplayName">{{user.mainInfo.FirstName}} {{user.mainInfo.LastName}}</h3>
+                    <h4 class="userLocation"><i class="fa fa-globe"></i> {{user.mainInfo.City}}, {{user.mainInfo.State}}</h4>
                     <ul class="profileNavigation">
                         <li>
                             <div>
                                 <a ui-sref=".friends">
-                                    <span class="navNumber">231</span>
+                                    <span class="navNumber">{{user.mainInfo.FriendQuantity}}</span>
                                     <span>Friends</span>
                                 </a>
                             </div>
@@ -23,7 +24,7 @@
                         <li>
                             <div>
                                 <a ui-sref=".following">
-                                    <span class="navNumber">25</span>
+                                    <span class="navNumber">{{user.mainInfo.FollowingQuantity}}</span>
                                     <span>Following</span>
                                 </a>
                             </div>
@@ -31,7 +32,7 @@
                         <li>
                             <div>
                                 <a ui-sref=".followers">
-                                    <span class="navNumber">352</span>
+                                    <span class="navNumber">{{user.mainInfo.FollowerQuantity}}</span>
                                     <span>Followers</span>
                                 </a>
                             </div>
@@ -39,7 +40,7 @@
                         <li>
                             <div>
                                 <a ui-sref=".groups">
-                                    <span class="navNumber">352</span>
+                                    <span class="navNumber">{{user.mainInfo.GroupQuantity}}</span>
                                     <span>Groups</span>
                                 </a>
                             </div>

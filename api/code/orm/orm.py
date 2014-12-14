@@ -559,7 +559,7 @@ def makeRepositories():
     outputFile.close()
 
 def propDataToDbType (propData):
-    dbMap = {'integer':'int', 'string':'varchar', 'integer array':'int', 'float':'float', 'decimal':'decimal'}
+    dbMap = {'integer':'int', 'string':'varchar', 'integer array':'int', 'float':'float', 'decimal':'decimal', 'datetime':'datetime', 'boolean':'boolean'}
     if (not propData in dbMap):
         return ''
     return dbMap[propData]
@@ -607,10 +607,14 @@ def makeDatabase():
     for relationship in relationships:
         relType = relationship.getAttribute ('type')
         relName = relType
-        if (relType == 'manyToOne'):
+        if (relType == 'manyToOne' or relType == 'oneToOne'):
             relFromModel = relationship.getAttribute ('from')
             relToModel = relationship.getAttribute ('to')
-            outputFile.write ('\t\t\t$con->query ("alter table ' + relFromModel + ' add constraint fk_' + relFromModel + '_' + relToModel + ' foreign key (' + relToModel + 'Id) references ' + relToModel + '(id)");\n')
+            relForeignKey = relationship.getAttribute ('foreignkey')
+            if (relForeignKey == ''):
+                outputFile.write ('\t\t\t$con->query ("alter table ' + relFromModel + ' add constraint fk_' + relFromModel + '_' + relToModel + ' foreign key (' + relToModel + 'ID) references ' + relToModel + '(' + relToModel + 'ID)");\n')
+            if (relForeignKey != ''):
+                outputFile.write ('\t\t\t$con->query ("alter table ' + relFromModel + ' add constraint fk_' + relFromModel + '_' + relToModel + ' foreign key (' + relForeignKey +') references ' + relToModel + '(' + relToModel + 'ID)");\n')
         if (relType == 'manyToMany'):
             relName = 'mtm';
             relFromModel = relationship.getAttribute ('from')

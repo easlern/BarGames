@@ -541,6 +541,7 @@ media
 
 .mainContent {
     min-height: 800px;
+    height: 100vh;
     position: relative;
     text-align: center;
 }
@@ -560,7 +561,8 @@ media
     color: #FFFFFF;
     font-size: 85px;
     font-family: 'FuturaLTBold', sans-serif;
-    margin-top: 100px;
+    margin-top: 150px;
+    margin-top: 150px;
     text-transform: uppercase;
 }
 

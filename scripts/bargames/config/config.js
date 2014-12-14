@@ -42,14 +42,14 @@ angular.module('bargamesApp').config(function ($stateProvider, $urlRouterProvide
                 },
                 'mainContent': {
                     templateUrl: "scripts/bargames/partials/userProfile/userProfile.html",
-                    controller: "userProfileCtrl"
+                    controller: "userProfileCtrl as user"
                 }
             }
         })
         .state('userProfile.profile', {
             url: "",
             templateUrl: "scripts/bargames/partials/userProfile/userProfile-profile.html",
-            controller: "userProfileProfileCtrl"
+            controller: "userProfileProfileCtrl as userProfile"
         })
         .state('userProfile.friends', {
             url: "/userFriends",
