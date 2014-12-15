@@ -53,13 +53,14 @@ class EndpointTests (unittest.TestCase):
 
         game = self.get (model, gameId)
         self.assertEqual (200, game.status_code)
-        self.assertEqual (json.dumps (teamIds), game.json() ['teamIds'])
+        self.assertEqual (teamIds, game.json() ['teamIds'])
 
-        game = self.update (model, gameId, {'name':'rumble in the bronx'})
+        game = self.update (model, gameId, {'name':'rumble in the bronx', 'teamIds':'[]'})
         self.assertEqual (200, game.status_code)
         game = self.get (model, gameId)
         self.assertEqual (200, game.status_code)
         self.assertEqual ('rumble in the bronx', game.json() ['name'])
+        self.assertEqual ([], game.json() ['teamIds'])
 
         game = self.delete (model, gameId)
         self.assertEqual (204, game.status_code)

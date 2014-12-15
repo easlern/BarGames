@@ -49,7 +49,30 @@
 			$sportId = 0;
 			$result->bind_result ($id, $locationId, $name, $sportId);
 			if ($result->fetch()){
-				return new Game ($id, $locationId, $name, array(), $sportId, array());
+				$mtmConn = connectAsWebUser();
+				$foreignId = 0;
+				$tagIds = array();
+				$mtmResult = $mtmConn->prepare ("select tagId from mtm_game_tag where gameId = ?");
+				$mtmResult->bind_param ("i", $id);
+				$mtmResult->bind_result ($foreignId);
+				$mtmResult->execute();
+				while ($mtmResult->fetch()){
+					array_push ($tagIds, $foreignId);
+				}
+				$mtmResult->close();
+				$foreignId = 0;
+				$teamIds = array();
+				$mtmResult = $mtmConn->prepare ("select teamId from mtm_game_team where gameId = ?");
+				$mtmResult->bind_param ("i", $id);
+				$mtmResult->bind_result ($foreignId);
+				$mtmResult->execute();
+				while ($mtmResult->fetch()){
+					array_push ($teamIds, $foreignId);
+				}
+				$mtmResult->close();
+				$mtmConn->close();
+
+				return new Game ($id, $locationId, $name, $tagIds, $sportId, $teamIds);
 			}
 			return NULL;
 		}
@@ -89,7 +112,30 @@
 			$statement->bind_result ($id, $locationId, $name, $sportId);
 			$statement->store_result();
 			while ($statement->fetch()){
-				$model = new Game ($id, $locationId, $name, array(), $sportId, array());
+				$mtmConn = connectAsWebUser();
+				$foreignId = 0;
+				$tagIds = array();
+				$mtmResult = $mtmConn->prepare ("select tagId from mtm_game_tag where gameId = ?");
+				$mtmResult->bind_param ("i", $id);
+				$mtmResult->bind_result ($foreignId);
+				$mtmResult->execute();
+				while ($mtmResult->fetch()){
+					array_push ($tagIds, $foreignId);
+				}
+				$mtmResult->close();
+				$foreignId = 0;
+				$teamIds = array();
+				$mtmResult = $mtmConn->prepare ("select teamId from mtm_game_team where gameId = ?");
+				$mtmResult->bind_param ("i", $id);
+				$mtmResult->bind_result ($foreignId);
+				$mtmResult->execute();
+				while ($mtmResult->fetch()){
+					array_push ($teamIds, $foreignId);
+				}
+				$mtmResult->close();
+				$mtmConn->close();
+
+				$model = new Game ($id, $locationId, $name, $tagIds, $sportId, $teamIds);
 				array_push ($results, $model);
 			}
 			return $results;
@@ -130,6 +176,9 @@
 			$name = "";
 			$result->bind_result ($id, $name);
 			if ($result->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				return new Sport ($id, $name);
 			}
 			return NULL;
@@ -168,6 +217,9 @@
 			$statement->bind_result ($id, $name);
 			$statement->store_result();
 			while ($statement->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				$model = new Sport ($id, $name);
 				array_push ($results, $model);
 			}
@@ -209,6 +261,9 @@
 			$name = "";
 			$result->bind_result ($id, $name);
 			if ($result->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				return new Team ($id, $name);
 			}
 			return NULL;
@@ -247,6 +302,9 @@
 			$statement->bind_result ($id, $name);
 			$statement->store_result();
 			while ($statement->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				$model = new Team ($id, $name);
 				array_push ($results, $model);
 			}
@@ -307,7 +365,30 @@
 			$phone = "";
 			$result->bind_result ($id, $name, $street, $cityId, $phone);
 			if ($result->fetch()){
-				return new Location ($id, $name, $street, $cityId, $phone, array(), array());
+				$mtmConn = connectAsWebUser();
+				$foreignId = 0;
+				$locationTypeIds = array();
+				$mtmResult = $mtmConn->prepare ("select locationTypeId from mtm_location_locationType where locationId = ?");
+				$mtmResult->bind_param ("i", $id);
+				$mtmResult->bind_result ($foreignId);
+				$mtmResult->execute();
+				while ($mtmResult->fetch()){
+					array_push ($locationTypeIds, $foreignId);
+				}
+				$mtmResult->close();
+				$foreignId = 0;
+				$sportIds = array();
+				$mtmResult = $mtmConn->prepare ("select sportId from mtm_location_sport where locationId = ?");
+				$mtmResult->bind_param ("i", $id);
+				$mtmResult->bind_result ($foreignId);
+				$mtmResult->execute();
+				while ($mtmResult->fetch()){
+					array_push ($sportIds, $foreignId);
+				}
+				$mtmResult->close();
+				$mtmConn->close();
+
+				return new Location ($id, $name, $street, $cityId, $phone, $locationTypeIds, $sportIds);
 			}
 			return NULL;
 		}
@@ -348,7 +429,30 @@
 			$statement->bind_result ($id, $name, $street, $cityId, $phone);
 			$statement->store_result();
 			while ($statement->fetch()){
-				$model = new Location ($id, $name, $street, $cityId, $phone, array(), array());
+				$mtmConn = connectAsWebUser();
+				$foreignId = 0;
+				$locationTypeIds = array();
+				$mtmResult = $mtmConn->prepare ("select locationTypeId from mtm_location_locationType where locationId = ?");
+				$mtmResult->bind_param ("i", $id);
+				$mtmResult->bind_result ($foreignId);
+				$mtmResult->execute();
+				while ($mtmResult->fetch()){
+					array_push ($locationTypeIds, $foreignId);
+				}
+				$mtmResult->close();
+				$foreignId = 0;
+				$sportIds = array();
+				$mtmResult = $mtmConn->prepare ("select sportId from mtm_location_sport where locationId = ?");
+				$mtmResult->bind_param ("i", $id);
+				$mtmResult->bind_result ($foreignId);
+				$mtmResult->execute();
+				while ($mtmResult->fetch()){
+					array_push ($sportIds, $foreignId);
+				}
+				$mtmResult->close();
+				$mtmConn->close();
+
+				$model = new Location ($id, $name, $street, $cityId, $phone, $locationTypeIds, $sportIds);
 				array_push ($results, $model);
 			}
 			return $results;
@@ -389,6 +493,9 @@
 			$name = "";
 			$result->bind_result ($id, $name);
 			if ($result->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				return new LocationType ($id, $name);
 			}
 			return NULL;
@@ -427,6 +534,9 @@
 			$statement->bind_result ($id, $name);
 			$statement->store_result();
 			while ($statement->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				$model = new LocationType ($id, $name);
 				array_push ($results, $model);
 			}
@@ -468,6 +578,9 @@
 			$name = "";
 			$result->bind_result ($id, $name);
 			if ($result->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				return new Tag ($id, $name);
 			}
 			return NULL;
@@ -506,6 +619,9 @@
 			$statement->bind_result ($id, $name);
 			$statement->store_result();
 			while ($statement->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				$model = new Tag ($id, $name);
 				array_push ($results, $model);
 			}
@@ -552,6 +668,9 @@
 			$securityLevelId = 0;
 			$result->bind_result ($email, $type, $method, $passHash, $nameFirst, $nameLast, $securityLevelId);
 			if ($result->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				return new User ($email, $type, $method, $passHash, $nameFirst, $nameLast, $securityLevelId);
 			}
 			return NULL;
@@ -595,6 +714,9 @@
 			$statement->bind_result ($email, $type, $method, $passHash, $nameFirst, $nameLast, $securityLevelId);
 			$statement->store_result();
 			while ($statement->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				$model = new User ($email, $type, $method, $passHash, $nameFirst, $nameLast, $securityLevelId);
 				array_push ($results, $model);
 			}
@@ -636,6 +758,9 @@
 			$name = "";
 			$result->bind_result ($id, $name);
 			if ($result->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				return new SecurityLevel ($id, $name);
 			}
 			return NULL;
@@ -674,6 +799,9 @@
 			$statement->bind_result ($id, $name);
 			$statement->store_result();
 			while ($statement->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				$model = new SecurityLevel ($id, $name);
 				array_push ($results, $model);
 			}
@@ -719,6 +847,9 @@
 			$latitude = 0;
 			$result->bind_result ($id, $name, $state, $country, $longitude, $latitude);
 			if ($result->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				return new City ($id, $name, $state, $country, $longitude, $latitude);
 			}
 			return NULL;
@@ -761,6 +892,9 @@
 			$statement->bind_result ($id, $name, $state, $country, $longitude, $latitude);
 			$statement->store_result();
 			while ($statement->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				$model = new City ($id, $name, $state, $country, $longitude, $latitude);
 				array_push ($results, $model);
 			}
@@ -803,6 +937,9 @@
 			$defaultValue = "";
 			$result->bind_result ($id, $name, $defaultValue);
 			if ($result->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				return new Setting ($id, $name, $defaultValue);
 			}
 			return NULL;
@@ -842,6 +979,9 @@
 			$statement->bind_result ($id, $name, $defaultValue);
 			$statement->store_result();
 			while ($statement->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				$model = new Setting ($id, $name, $defaultValue);
 				array_push ($results, $model);
 			}
@@ -884,6 +1024,9 @@
 			$value = "";
 			$result->bind_result ($userId, $settingId, $value);
 			if ($result->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				return new UserSetting ($userId, $settingId, $value);
 			}
 			return NULL;
@@ -923,6 +1066,9 @@
 			$statement->bind_result ($userId, $settingId, $value);
 			$statement->store_result();
 			while ($statement->fetch()){
+				$mtmConn = connectAsWebUser();
+				$mtmConn->close();
+
 				$model = new UserSetting ($userId, $settingId, $value);
 				array_push ($results, $model);
 			}

@@ -417,16 +417,31 @@ def makeRepositories():
                 outputFile.write ('$' + prop.getAttribute ('name'));
         outputFile.write (');')
         outputFile.write ('\n\t\t\tif ($result->fetch()){')
+        outputFile.write ('\n\t\t\t\t$mtmConn = connectAsWebUser();')
+        for rel in relationships:
+            relFrom = rel.getAttribute ('from')
+            relTo = rel.getAttribute ('to')
+            relType = rel.getAttribute ('type')
+            if (relFrom == modelName and relType == 'manyToMany'):
+                outputFile.write ('\n\t\t\t\t$foreignId = 0;')
+                outputFile.write ('\n\t\t\t\t$' + relTo + 'Ids = array();')
+                outputFile.write ('\n\t\t\t\t$mtmResult = $mtmConn->prepare ("select ' + relTo + 'Id from mtm_' + relFrom + '_' + relTo + ' where ' + modelName + 'Id = ?");')
+                outputFile.write ('\n\t\t\t\t$mtmResult->bind_param ("i", $id);')
+                outputFile.write ('\n\t\t\t\t$mtmResult->bind_result ($foreignId);')
+                outputFile.write ('\n\t\t\t\t$mtmResult->execute();')
+                outputFile.write ('\n\t\t\t\twhile ($mtmResult->fetch()){')
+                outputFile.write ('\n\t\t\t\t\tarray_push ($' + relTo + 'Ids, $foreignId);')
+                outputFile.write ('\n\t\t\t\t}')
+                outputFile.write ('\n\t\t\t\t$mtmResult->close();')
+        outputFile.write ('\n\t\t\t\t$mtmConn->close();\n')
         outputFile.write ('\n\t\t\t\treturn new ' + cap(modelName) + ' (')
         first = True
         for prop in properties:
+            propName = prop.getAttribute ('name')
             if (not first):
                 outputFile.write (', ')
             first = False
-            if ('array' in prop.getAttribute ('data').lower()):
-                outputFile.write ('array()')
-            else:
-                outputFile.write ('$' + prop.getAttribute ('name'))
+            outputFile.write ('$' + propName)
         outputFile.write (');')
         outputFile.write ('\n\t\t\t}')
         outputFile.write ('\n\t\t\treturn NULL;')
@@ -513,15 +528,29 @@ def makeRepositories():
         outputFile.write (');')
         outputFile.write ('\n\t\t\t$statement->store_result();');
         outputFile.write ('\n\t\t\twhile ($statement->fetch()){')
+        outputFile.write ('\n\t\t\t\t$mtmConn = connectAsWebUser();')
+        for rel in relationships:
+            relFrom = rel.getAttribute ('from')
+            relTo = rel.getAttribute ('to')
+            relType = rel.getAttribute ('type')
+            if (relFrom == modelName and relType == 'manyToMany'):
+                outputFile.write ('\n\t\t\t\t$foreignId = 0;')
+                outputFile.write ('\n\t\t\t\t$' + relTo + 'Ids = array();')
+                outputFile.write ('\n\t\t\t\t$mtmResult = $mtmConn->prepare ("select ' + relTo + 'Id from mtm_' + relFrom + '_' + relTo + ' where ' + modelName + 'Id = ?");')
+                outputFile.write ('\n\t\t\t\t$mtmResult->bind_param ("i", $id);')
+                outputFile.write ('\n\t\t\t\t$mtmResult->bind_result ($foreignId);')
+                outputFile.write ('\n\t\t\t\t$mtmResult->execute();')
+                outputFile.write ('\n\t\t\t\twhile ($mtmResult->fetch()){')
+                outputFile.write ('\n\t\t\t\t\tarray_push ($' + relTo + 'Ids, $foreignId);')
+                outputFile.write ('\n\t\t\t\t}')
+                outputFile.write ('\n\t\t\t\t$mtmResult->close();')
+        outputFile.write ('\n\t\t\t\t$mtmConn->close();\n')
         outputFile.write ('\n\t\t\t\t$model = new ' + cap(modelName) + ' (');
         first = True
         for prop in properties:
             if (not first):
                 outputFile.write (', ')
-            if ('array' in prop.getAttribute ('data')):
-                outputFile.write ('array()')
-            else:
-                outputFile.write ('$' + prop.getAttribute ('name'));
+            outputFile.write ('$' + prop.getAttribute ('name'));
             first = False
         outputFile.write (');')
         outputFile.write ('\n\t\t\t\tarray_push ($results, $model);')
@@ -606,17 +635,16 @@ def makeDatabase():
         outputFile.write (')");\n')
     for relationship in relationships:
         relType = relationship.getAttribute ('type')
-        relName = relType
         if (relType == 'manyToOne' or relType == 'oneToOne'):
             relFromModel = relationship.getAttribute ('from')
             relToModel = relationship.getAttribute ('to')
             relForeignKey = relationship.getAttribute ('foreignkey')
             if (relForeignKey == ''):
-                outputFile.write ('\t\t\t$con->query ("alter table ' + relFromModel + ' add constraint fk_' + relFromModel + '_' + relToModel + ' foreign key (' + relToModel + 'ID) references ' + relToModel + '(' + relToModel + 'ID)");\n')
+                outputFile.write ('\t\t\t$con->query ("alter table ' + relFromModel + ' add constraint fk_' + relFromModel + '_' + relToModel + ' foreign key (' + relToModel + 'Id) references ' + relToModel + '(id)");\n')
             if (relForeignKey != ''):
                 outputFile.write ('\t\t\t$con->query ("alter table ' + relFromModel + ' add constraint fk_' + relFromModel + '_' + relToModel + ' foreign key (' + relForeignKey +') references ' + relToModel + '(' + relToModel + 'ID)");\n')
         if (relType == 'manyToMany'):
-            relName = 'mtm';
+            relName = 'mtm'
             relFromModel = relationship.getAttribute ('from')
             relToModel = relationship.getAttribute ('to')
             crossName = relName + "_" + relFromModel + "_" + relToModel
