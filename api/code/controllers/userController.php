@@ -1,7 +1,7 @@
 <?php
 
 	require_once ('code/startup.php');
-	require_once ('userModel.php');
+	require_once ('UserModel.php');
 	require_once ('restfulSetup.php');
 	require_once ('repositories.php');
 
@@ -16,10 +16,10 @@
 
 			$repo = Repositories::getUserRepository();
 			if (IsAuthorized()){
-				$user = $repo->getById ($args[0]);
-				if ($user != NULL){
+				$User = $repo->getById ($args[0]);
+				if ($User != NULL){
 					header ("HTTP/1.1 200 OK");
-					print ($user->toJson());
+					print ($User->toJson());
 				}
 				else{
 					header ("HTTP/1.1 404 Not found");
@@ -35,11 +35,11 @@
 		public function getAll(){
 			$repo = Repositories::getUserRepository();
 			if (IsAuthorized()){
-				$user = $repo->getAll();
-				if (count ($user) > 0){
+				$User = $repo->getAll();
+				if (count ($User) > 0){
 					header ("HTTP/1.1 200 OK");
 					$models = array();
-					foreach ($user as &$model){
+					foreach ($User as &$model){
 						array_push ($models, $model->toStdClass());
 					}
 					print json_encode ($models);
@@ -56,15 +56,14 @@
 		}
 
 		public function create ($args){
-			LogInfo ("Creating user with args: " . print_r ($args, true));
+			LogInfo ("Creating User with args: " . print_r ($args, true));
 			$argNamesSatisfied = TRUE;
 			$requiredArgs = array();
-			array_push ($requiredArgs, "type");
-			array_push ($requiredArgs, "method");
-			array_push ($requiredArgs, "passHash");
-			array_push ($requiredArgs, "nameFirst");
-			array_push ($requiredArgs, "nameLast");
-			array_push ($requiredArgs, "securityLevelId");
+			array_push ($requiredArgs, "FirstName");
+			array_push ($requiredArgs, "LastName");
+			array_push ($requiredArgs, "Email");
+			array_push ($requiredArgs, "CityID");
+			array_push ($requiredArgs, "CREATEDATE");
 			foreach ($requiredArgs as $requiredArg){
 				if (!in_array ($requiredArg, array_keys ($args))){
 					$argNamesSatisfied = FALSE;
@@ -78,16 +77,21 @@
 			}
 			if (IsAdminAuthorized() && IsCsrfGood()){
 				$repo = Repositories::getUserRepository();
-				$type = in_array ("type", array_keys ($args)) ? $args["type"] : 0;
-				$method = in_array ("method", array_keys ($args)) ? $args["method"] : 0;
-				$passHash = in_array ("passHash", array_keys ($args)) ? $args["passHash"] : "";
-				$nameFirst = in_array ("nameFirst", array_keys ($args)) ? $args["nameFirst"] : "";
-				$nameLast = in_array ("nameLast", array_keys ($args)) ? $args["nameLast"] : "";
-				$securityLevelId = in_array ("securityLevelId", array_keys ($args)) ? $args["securityLevelId"] : 0;
-				$model = new User(-1, $type, $method, $passHash, $nameFirst, $nameLast, $securityLevelId);
+				$AccountID = in_array ("AccountID", array_keys ($args)) ? $args["AccountID"] : 0;
+				$FirstName = in_array ("FirstName", array_keys ($args)) ? $args["FirstName"] : "";
+				$LastName = in_array ("LastName", array_keys ($args)) ? $args["LastName"] : "";
+				$Email = in_array ("Email", array_keys ($args)) ? $args["Email"] : "";
+				$CityID = in_array ("CityID", array_keys ($args)) ? $args["CityID"] : 0;
+				$MiddleName = in_array ("MiddleName", array_keys ($args)) ? $args["MiddleName"] : "";
+				$DisplayName = in_array ("DisplayName", array_keys ($args)) ? $args["DisplayName"] : "";
+				$Description = in_array ("Description", array_keys ($args)) ? $args["Description"] : "";
+				$BirthDate = in_array ("BirthDate", array_keys ($args)) ? $args["BirthDate"] : 0;
+				$CREATEDATE = in_array ("CREATEDATE", array_keys ($args)) ? $args["CREATEDATE"] : 0;
+				$LASTMODIFIEDDATE = in_array ("LASTMODIFIEDDATE", array_keys ($args)) ? $args["LASTMODIFIEDDATE"] : 0;
+				$model = new User(-1, $AccountID, $FirstName, $LastName, $Email, $CityID, $MiddleName, $DisplayName, $Description, $BirthDate, $CREATEDATE, $LASTMODIFIEDDATE);
 				if ($repo->create($model)){
 					header ("HTTP/1.1 303 See Other");
-					header ("Location: /api/user/" . $model->getId());
+					header ("Location: /api/User/" . $model->getId());
 				}
 				else{
 					header ("HTTP/1.1 500 Internal Server Error");
@@ -101,7 +105,7 @@
 		}
 
 		public function update ($args){
-			LogInfo ("Updating user with args: " . print_r ($args, true));
+			LogInfo ("Updating User with args: " . print_r ($args, true));
 			$repo = Repositories::getUserRepository();
 			$existing = $repo->getById ($args[0]);
 			if ($existing == NULL){
@@ -112,12 +116,17 @@
 			}
 			if (IsAdminAuthorized() && IsCsrfGood()){
 				foreach ($args as $key => $value){
-					if ($key === "type") $existing->setType ($value);
-					if ($key === "method") $existing->setMethod ($value);
-					if ($key === "passHash") $existing->setPassHash ($value);
-					if ($key === "nameFirst") $existing->setNameFirst ($value);
-					if ($key === "nameLast") $existing->setNameLast ($value);
-					if ($key === "securityLevelId") $existing->setSecurityLevelId ($value);
+					if ($key === "AccountID") $existing->setAccountID ($value);
+					if ($key === "FirstName") $existing->setFirstName ($value);
+					if ($key === "LastName") $existing->setLastName ($value);
+					if ($key === "Email") $existing->setEmail ($value);
+					if ($key === "CityID") $existing->setCityID ($value);
+					if ($key === "MiddleName") $existing->setMiddleName ($value);
+					if ($key === "DisplayName") $existing->setDisplayName ($value);
+					if ($key === "Description") $existing->setDescription ($value);
+					if ($key === "BirthDate") $existing->setBirthDate ($value);
+					if ($key === "CREATEDATE") $existing->setCREATEDATE ($value);
+					if ($key === "LASTMODIFIEDDATE") $existing->setLASTMODIFIEDDATE ($value);
 				}
 				if ($repo->update ($existing)){
 					header ("HTTP/1.1 200 OK");
@@ -134,7 +143,7 @@
 		}
 
 		public function delete ($args){
-			LogInfo ("Deleting user with args: " . print_r ($args, true));
+			LogInfo ("Deleting User with args: " . print_r ($args, true));
 			if (count ($args) < 1){
 				header ("HTTP/1.1 400 Bad Request");
 				$errorObject = new ApiErrorResponse ("Missing required parameters.");

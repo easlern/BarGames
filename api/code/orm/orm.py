@@ -640,9 +640,9 @@ def makeDatabase():
             relToModel = relationship.getAttribute ('to')
             relForeignKey = relationship.getAttribute ('foreignkey')
             if (relForeignKey == ''):
-                outputFile.write ('\t\t\t$con->query ("alter table ' + relFromModel + ' add constraint fk_' + relFromModel + '_' + relToModel + ' foreign key (' + relToModel + 'Id) references ' + relToModel + '(id)");\n')
+                outputFile.write ('\t\t\t$con->query ("alter table ' + relFromModel + ' add constraint fk_' + relFromModel + '_' + relToModel + ' foreign key (' + relToModel + 'ID) references ' + relToModel + '(ID)");\n')
             if (relForeignKey != ''):
-                outputFile.write ('\t\t\t$con->query ("alter table ' + relFromModel + ' add constraint fk_' + relFromModel + '_' + relToModel + ' foreign key (' + relForeignKey +') references ' + relToModel + '(' + relToModel + 'ID)");\n')
+                outputFile.write ('\t\t\t$con->query ("alter table ' + relFromModel + ' add constraint fk_' + relFromModel + '_' + relToModel + ' foreign key (' + relForeignKey +') references ' + relToModel + '(ID)");\n')
         if (relType == 'manyToMany'):
             relName = 'mtm'
             relFromModel = relationship.getAttribute ('from')

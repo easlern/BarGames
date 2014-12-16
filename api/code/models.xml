@@ -1,79 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <root>
-    <model name="game">
-        <property name="id" type="primary key" data="integer"/>
-        <property name="locationId" data="integer" required="always"/>
-        <property name="name" data="string" length="100" required="always"/>
-        <property name="tagIds" data="integer array"/>
-        <property name="sportId" data="integer" required="always"/>
-        <property name="teamIds" data="integer array"/>
+    <model name="Account">
+        <property name="ID" type="primary key" data="integer" />
+		<property name="Password" data="string" length="1000" required="always" />
+		<property name="Username" data="string" length="1000" required="always" />
+		<property name="AccountPicturePath" data="string" length="2000" required="always" />
+		<property name="AccountTypeID" data="integer" required="always" />
+		<property name="IsDisabled" data="boolean" required="always" />
+		<property name="LastLoginDate" data="datetime" />
+		<property name="CREATEDATE" data="datetime" required="always" />
+		<property name="LASTMODIFIEDDATE" data="datetime" />
     </model>
-    <model name="sport">
-        <property name="id" type="primary key" data="integer"/>
-        <property name="name" data="string" length="32" required="always"/>
+	<model name="User">
+        <property name="ID" type="primary key" data="integer" />
+		<property name="AccountID" data="integer" />
+		<property name="FirstName" data="string" length="200" required="always" />
+		<property name="LastName" data="string" length="200" required="always" />
+		<property name="Email" data="string" length="2000" required="always" />
+		<property name="CityID" data="integer" required="always" />
+		<property name="MiddleName" data="string" length="200" />
+		<property name="DisplayName" data="string" length="1000" />
+		<property name="Description" data="string" length="2000" />
+		<property name="BirthDate" data="datetime" />
+		<property name="CREATEDATE" data="datetime" required="always" />
+		<property name="LASTMODIFIEDDATE" data="datetime" />
     </model>
-    <model name="team">
-        <property name="id" type="primary key" data="integer"/>
-        <property name="name" data="string" length="100" required="always"/>
+	<model name="UserProfile">
+        <property name="ID" type="primary key" data="integer"/>
+        <property name="UserID" data="integer" required="always" />
+		<property name="AboutMe" data="string" length="5000" />
+		<property name="Interests" data="string" length="5000" />
+		<property name="CREATEDATE" data="datetime" required="always" />
+		<property name="LASTMODIFIEDDATE" data="datetime" />
     </model>
-    <model name="location">
-        <property name="id" type="primary key" data="integer"/>
-        <property name="name" data="string" length = "100" required="always"/>
-        <property name="street" data="string" length = "100"/>
-        <property name="cityId" data="integer"/>
-        <property name="phone" data="string" length="20"/>
-        <property name="locationTypeIds" data="integer array"/>
-        <property name="sportIds" data="integer array"/>
+	<model name="City">
+        <property name="ID" type="primary key" data="integer"/>
+		<property name="Name" data="string" length="500" required="always" />
+		<property name="State" data="string" length="50" required="always" />
+		<property name="Country" data="string" length="150" required="always" />
+		<property name="Longitude" data="float" length="150" required="always" />
+		<property name="Latitude" data="float" length="150" required="always" />
+		<property name="CREATEDATE" data="datetime" required="always" />
+		<property name="LASTMODIFIEDDATE" data="datetime" />
     </model>
-    <model name="locationType">
-        <property name="id" type="primary key" data="integer"/>
-        <property name="name" data="string" length="32"/>
-    </model>
-    <model name="tag">
-        <property name="id" type="primary key" data="integer"/>
-        <property name="name" data="string" length="100" required="always"/>
-    </model>
-    <model name="user">
-        <property name="email" type="primary key" data="string" length="100"/>
-        <property name="type" data="integer" required="always"/>
-        <property name="method" data="integer" required="always"/>
-        <property name="passHash" data="string" length="256" required="always"/>
-        <property name="nameFirst" data="string" length="256" required="always"/>
-        <property name="nameLast" data="string" length="256" required="always"/>
-        <property name="securityLevelId" data="integer" required="always"/>
-    </model>
-    <model name="securityLevel">
-        <property name="id" type="primary key" data="integer"/>
-        <property name="name" data="string" length="32" required="always"/>
-    </model>
-    <model name="city">
-        <property name="id" type="primary key" data="integer"/>
-        <property name="name" data="string" length="100" required="always"/>
-        <property name="state" data="string" length="2" required="always"/>
-        <property name="country" data="string" length="100"/>
-        <property name="longitude" data="float" required="always"/>
-        <property name="latitude" data="float" required="always"/>
-    </model>
-    <model name="setting">
-        <property name="id" type="primary key" data="integer"/>
-        <property name="name" data="string" length="32"/>
-        <property name="defaultValue" data="string" length="100"/>
-    </model>
-    <model name="userSetting">
-        <property name="userId" data="integer" required="always"/>
-        <property name="settingId" data="integer" required="always"/>
-        <property name="value" data="string" required="always"/>
-    </model>
+
     
-    <relationship type="manyToOne" from="game" to="location"/>
-    <relationship type="manyToOne" from="user" to="securityLevel"/>
-    <relationship type="manyToOne" from="userSetting" to="setting"/>
-    <relationship type="manyToOne" from="userSetting" to="user"/>
-    <relationship type="manyToMany" from="game" to="tag"/>
-    <relationship type="manyToMany" from="game" to="team"/>
-    <relationship type="manyToOne" from="game" to="sport"/>
-    <relationship type="manyToMany" from="location" to="locationType"/>
-    <relationship type="manyToMany" from="location" to="sport"/>
-    <relationship type="manyToOne" from="location" to="city"/>
+    <relationship type="oneToOne" from="User" to="Account" />
+	<relationship type="manyToOne" from="User" to="City" />
+	<relationship type="oneToOne" from="UserProfile" to="User" />
 </root>

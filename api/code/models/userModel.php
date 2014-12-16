@@ -1,76 +1,121 @@
 <?php
 	class User{
-		private $email;
-		private $type;
-		private $method;
-		private $passHash;
-		private $nameFirst;
-		private $nameLast;
-		private $securityLevelId;
+		private $ID;
+		private $AccountID;
+		private $FirstName;
+		private $LastName;
+		private $Email;
+		private $CityID;
+		private $MiddleName;
+		private $DisplayName;
+		private $Description;
+		private $BirthDate;
+		private $CREATEDATE;
+		private $LASTMODIFIEDDATE;
 
-		function __construct ($email, $type, $method, $passHash, $nameFirst, $nameLast, $securityLevelId){
-			$this->email = $email;
-			$this->type = $type;
-			$this->method = $method;
-			$this->passHash = $passHash;
-			$this->nameFirst = $nameFirst;
-			$this->nameLast = $nameLast;
-			$this->securityLevelId = $securityLevelId;
+		function __construct ($ID, $AccountID, $FirstName, $LastName, $Email, $CityID, $MiddleName, $DisplayName, $Description, $BirthDate, $CREATEDATE, $LASTMODIFIEDDATE){
+			$this->ID = $ID;
+			$this->AccountID = $AccountID;
+			$this->FirstName = $FirstName;
+			$this->LastName = $LastName;
+			$this->Email = $Email;
+			$this->CityID = $CityID;
+			$this->MiddleName = $MiddleName;
+			$this->DisplayName = $DisplayName;
+			$this->Description = $Description;
+			$this->BirthDate = $BirthDate;
+			$this->CREATEDATE = $CREATEDATE;
+			$this->LASTMODIFIEDDATE = $LASTMODIFIEDDATE;
 		}
 
+		public function getID(){
+			return $this->ID;
+		}
+		public function getAccountID(){
+			return $this->AccountID;
+		}
+		public function getFirstName(){
+			return $this->FirstName;
+		}
+		public function getLastName(){
+			return $this->LastName;
+		}
 		public function getEmail(){
-			return $this->email;
+			return $this->Email;
 		}
-		public function getType(){
-			return $this->type;
+		public function getCityID(){
+			return $this->CityID;
 		}
-		public function getMethod(){
-			return $this->method;
+		public function getMiddleName(){
+			return $this->MiddleName;
 		}
-		public function getPassHash(){
-			return $this->passHash;
+		public function getDisplayName(){
+			return $this->DisplayName;
 		}
-		public function getNameFirst(){
-			return $this->nameFirst;
+		public function getDescription(){
+			return $this->Description;
 		}
-		public function getNameLast(){
-			return $this->nameLast;
+		public function getBirthDate(){
+			return $this->BirthDate;
 		}
-		public function getSecurityLevelId(){
-			return $this->securityLevelId;
+		public function getCREATEDATE(){
+			return $this->CREATEDATE;
+		}
+		public function getLASTMODIFIEDDATE(){
+			return $this->LASTMODIFIEDDATE;
 		}
 
+		public function setID($value){
+			$this->ID = $value;
+		}
+		public function setAccountID($value){
+			$this->AccountID = $value;
+		}
+		public function setFirstName($value){
+			$this->FirstName = $value;
+		}
+		public function setLastName($value){
+			$this->LastName = $value;
+		}
 		public function setEmail($value){
-			$this->email = $value;
+			$this->Email = $value;
 		}
-		public function setType($value){
-			$this->type = $value;
+		public function setCityID($value){
+			$this->CityID = $value;
 		}
-		public function setMethod($value){
-			$this->method = $value;
+		public function setMiddleName($value){
+			$this->MiddleName = $value;
 		}
-		public function setPassHash($value){
-			$this->passHash = $value;
+		public function setDisplayName($value){
+			$this->DisplayName = $value;
 		}
-		public function setNameFirst($value){
-			$this->nameFirst = $value;
+		public function setDescription($value){
+			$this->Description = $value;
 		}
-		public function setNameLast($value){
-			$this->nameLast = $value;
+		public function setBirthDate($value){
+			$this->BirthDate = $value;
 		}
-		public function setSecurityLevelId($value){
-			$this->securityLevelId = $value;
+		public function setCREATEDATE($value){
+			$this->CREATEDATE = $value;
+		}
+		public function setLASTMODIFIEDDATE($value){
+			$this->LASTMODIFIEDDATE = $value;
 		}
 
 		public function toStdClass(){
 			$std = new stdClass();
-			$std->email = $this->getEmail();
-			$std->type = $this->getType();
-			$std->method = $this->getMethod();
-			$std->passHash = $this->getPassHash();
-			$std->nameFirst = $this->getNameFirst();
-			$std->nameLast = $this->getNameLast();
-			$std->securityLevelId = $this->getSecurityLevelId();
+			$std->ID = $this->getID();
+			$std->AccountID = $this->getAccountID();
+			$std->FirstName = $this->getFirstName();
+			$std->LastName = $this->getLastName();
+			$std->Email = $this->getEmail();
+			$std->CityID = $this->getCityID();
+			$std->MiddleName = $this->getMiddleName();
+			$std->DisplayName = $this->getDisplayName();
+			$std->Description = $this->getDescription();
+			$std->BirthDate = $this->getBirthDate();
+			$std->CREATEDATE = $this->getCREATEDATE();
+			$std->LASTMODIFIEDDATE = $this->getLASTMODIFIEDDATE();
 			return $std;
 		}
 		public function toJson(){
